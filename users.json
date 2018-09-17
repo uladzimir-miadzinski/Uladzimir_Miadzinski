@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "name": "medinsky",
+    "password": "c4ca4238a0b923820dcc509a6f75849b",
+    "birthday": "1993-07-06",
+    "firstLogin": "2018-01-05",
+    "nextNotify": "2018-02-20",
+    "info": "express-dev"
+  },
+  {
+    "id": 2,
+    "name": "lugovski",
+    "password": "c81e728d9d4c2f636f067f89cc14862c",
+    "birthday": "1992-10-11",
+    "firstLogin": "2018-02-01",
+    "nextNotify": "2018-03-31",
+    "info": "angular-dev"
+  },
+  {
+    "id": 3,
+    "name": "vasjuk",
+    "password": "eccbc87e4b5ce2fe28308fd9f2a7baf3",
+    "birthday": "1990-11-16",
+    "firstLogin": "2018-02-25",
+    "nextNotify": "2018-02-27",
+    "info": "dev-ops"
+  },
+  {
+    "id": 4,
+    "name": "zaicev",
+    "password": "a87ff679a2f3e71d9181a67b7542122c",
+    "birthday": "1982-02-15",
+    "firstLogin": "2018-07-31",
+    "nextNotify": "2018-08-20",
+    "info": "leader"
+  },
+  {
+    "id": 5,
+    "name": "makarevich",
+    "password": "e4da3b7fbbce2345d7772b0674a318d5",
+    "birthday": "1994-12-01",
+    "firstLogin": "2018-03-07",
+    "nextNotify": "2018-03-27",
+    "info": "system administrator"
+  }
+]
