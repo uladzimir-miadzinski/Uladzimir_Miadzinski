@@ -1,9 +1,10 @@
-import * as bodyParser from 'body-parser';
 import * as express from 'express';
-import * as fs from 'fs';
-import * as spdy from 'spdy';
+import {createServer} from 'spdy';
+import {json, urlencoded} from 'body-parser';
+import {readFile} from 'fs';
+import {promisify} from 'util';
 import User from './user';
-import IResponseBody from "./IResponseBody";
+import ResponseBody from './responseBody';
 
 const PORT = 3000;
 const STATUS_FAIL = 'failed';
@@ -11,24 +12,34 @@ const STATUS_SUCCESS = 'success';
 
 const app = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-
-const key = fs.readFileSync('api.key');
-const cert = fs.readFileSync('api.crt');
-const serverOptions = {
-  key,
-  cert
+const urlencodedOptions = {
+  extended: true
 };
 
-spdy
-  .createServer(serverOptions, app)
-  .listen(PORT, (err: string) => {
-    if (err) {
-      throw new Error(err);
-    }
-    console.log(`Server started and listening on port ${PORT}`);
-  });
+app.use(json());
+app.use(urlencoded(urlencodedOptions));
+
+const key: Promise<string> = readFileAsync('api.key');
+const cert: Promise<string> = readFileAsync('api.crt');
+
+Promise.all([key, cert])
+  .then(contents => {
+    let [key, cert] = contents;
+    return {
+      key,
+      cert
+    };
+  })
+  .then(serverOptions => {
+    createServer(serverOptions, app).listen(PORT, (err: string) => {
+      if (err) {
+        throw new Error(err);
+      }
+      console.log(`Server started and listening on port ${PORT}`);
+    });
+  })
+  .catch(err => console.error(err));
+
 
 const parsedUsers: Array<any> = require('../users.json');
 const users: Array<User> = [];
@@ -64,7 +75,7 @@ app.post(['/users', '/users/add'], (req: express.Request, res: express.Response)
 app.put('/users/:id', (req: express.Request, res: express.Response) => {
   const put = req.body;
   const requestedId = req.params.id;
-  const resBody: IResponseBody = {};
+  const resBody: ResponseBody = {};
   let userIndex = findIndexByUserId(requestedId);
   if (userIndex >= 0) {
     Object.keys(put).forEach((key => {
@@ -84,7 +95,7 @@ app.put('/users/:id', (req: express.Request, res: express.Response) => {
 
 app.delete('/users/:id', (req: express.Request, res: express.Response) => {
   const requestedId = req.params.id;
-  const resBody: IResponseBody = {};
+  const resBody: ResponseBody = {};
   let userIndex = findIndexByUserId(requestedId);
   if (userIndex >= 0) {
     users.splice(userIndex, 1);
@@ -105,4 +116,13 @@ function findIndexByUserId(id: number | string): number {
 
 function isNotUndefined(param: any): boolean {
   return (typeof param !== 'undefined');
+}
+
+async function readFileAsync(filepath: string): Promise<string> {
+  try {
+    return await promisify(readFile)(filepath, 'utf8');
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
 }
