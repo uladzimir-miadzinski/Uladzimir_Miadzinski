@@ -1,4 +1,5 @@
 import * as express from 'express';
+import * as compression from 'compression';
 import {createServer} from 'spdy';
 import {json, urlencoded} from 'body-parser';
 import {readFile} from 'fs';
@@ -16,6 +17,7 @@ const urlencodedOptions = {
   extended: true
 };
 
+app.use(compression());
 app.use(json());
 app.use(urlencoded(urlencodedOptions));
 
