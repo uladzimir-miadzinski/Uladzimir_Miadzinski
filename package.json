@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "scripts": {
     "start": "concurrently --kill-others \"npm:start:frontend\" \"npm:start:backend\"",
-    "start:frontend": "ng serve",
+    "start:frontend": "ng serve --ssl true",
     "start:backend": "node dist/server.js",
     "build": "ng build --prod --build-optimizer && yarn build:backend",
     "build:backend": "tsc -p \"backend/tsconfig.json\" && ts-node \"include-statics.ts\"",

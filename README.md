@@ -1,4 +1,7 @@
-Nodejs API
+Nodejs API `https://localhost:3000/users`
+
+Angular Frontend `https://localhost:4200/`
+##
 
 Task: 
 
