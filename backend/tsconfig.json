@@ -1,11 +1,11 @@
 {
   "extends": "../tsconfig.json",
+  "target": "node",
   "compilerOptions": {
-    "outDir": "./build/frontend",
+    "outDir": "../build/backend",
     "types": []
   },
-  "exclude": [
-    "test.ts",
-    "**/*.spec.ts"
+  "include": [
+    "**/*.*"
   ]
 }
