@@ -2,7 +2,7 @@
   "extends": "../tsconfig.json",
   "target": "node",
   "compilerOptions": {
-    "outDir": "../build/backend",
+    "outDir": "../dist",
     "types": []
   },
   "include": [

@@ -23,7 +23,7 @@ export interface User {
 }
 
 const app = express();
-const users: User[] = require('../backend/users.json');
+const users: User[] = require('./users.json');
 const PORT = 3000;
 const urlencodedOptions = {
   extended: true
@@ -33,8 +33,10 @@ app.use(compression());
 app.use(json());
 app.use(urlencoded(urlencodedOptions));
 
-const key: Promise<string> = readFileAsync('backend/server.key');
-const cert: Promise<string> = readFileAsync('backend/server.crt');
+console.log(__dirname);
+
+const key: Promise<string> = readFileAsync(`${__dirname}/server.key`);
+const cert: Promise<string> = readFileAsync(`${__dirname}/server.crt`);
 
 Promise.all([key, cert])
   .then(contents => {
