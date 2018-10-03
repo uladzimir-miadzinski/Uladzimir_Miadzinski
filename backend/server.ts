@@ -105,16 +105,16 @@ app.delete('/users/:id', (req: express.Request, res: express.Response) => {
   }
 });
 
-function parseInt(id: number | string): number {
+function convertToInt(id: number | string): number {
   return typeof id === 'string' ? Number.parseInt(id, 10) : id;
 }
 
 function findIndexByUserId(id: number | string): number {
-  return users.findIndex((user: User) => user.id === parseInt(id));
+  return users.findIndex((user: User) => user.id === convertToInt(id));
 }
 
 function findUserById(id: number | string, deleted = false): User | boolean {
-  return users.find((user: User) => user.id === parseInt(id) && !deleted) || false;
+  return users.find((user: User) => user.id === convertToInt(id) && !deleted) || false;
 }
 
 function deleteUserById(id: number): User | boolean {
