@@ -1,0 +1,62 @@
+<div class="d-flex justify-content-center">
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="form">
+    <div class="form-group">
+      <mat-form-field class="full-width">
+        Name:
+        <input matInput formControlName="name" placeholder="Name:" autofocus>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        Age:
+        <input matInput formControlName="age" placeholder="Age:" autofocus>
+      </mat-form-field>
+      <p class="text-danger"
+                 *ngIf="age.errors !== null && (age.touched || age.dirty)">
+        Age must be <span *ngIf="age.errors.mustBeMore; else mustBeLess">more than 18</span>!
+        <ng-template #mustBeLess>less than 65</ng-template>
+      </p>
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        Birthday:
+        <input matInput formControlName="birthday" [matDatepicker]="picker" placeholder="Birthday:">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        Date of next notification:
+        <input matInput [matDatepicker]="pickerNextNotify" formControlName="nextNotify"
+               placeholder="Date of next notification:">
+        <mat-datepicker-toggle matSuffix [for]="pickerNextNotify"></mat-datepicker-toggle>
+        <mat-datepicker #pickerNextNotify></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        Date of first login:
+        <input matInput [matDatepicker]="pickerFirstLogin" formControlName="firstLogin"
+               placeholder="Date of first login:">
+        <mat-datepicker-toggle matSuffix [for]="pickerFirstLogin"></mat-datepicker-toggle>
+        <mat-datepicker #pickerFirstLogin></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field class="full-width">
+        Info:
+        <input matInput formControlName="info" placeholder="Info:" autofocus>
+      </mat-form-field>
+    </div>
+
+    <div *ngFor="let err of userForm.errors">
+      <span>{{err}}</span><br>
+    </div>
+
+    <div class="form-group text-center">
+      <button mat-button color="primary" type="submit" [disabled]="!userForm.valid">Send</button>
+      <button mat-button color="warn" type="button" (click)="showErrors();">Show errors in console</button>
+    </div>
+  </form>
+</div>
