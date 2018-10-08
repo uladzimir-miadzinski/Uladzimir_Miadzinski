@@ -4,11 +4,13 @@ export function notLegalAgeValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
     const minAge = 18;
     const maxAge = 65;
-    const age = control.value;
+    const age = (control.value !== '') ? Number.parseInt(control.value, 10) : 0;
     const error = (age < minAge) ? {
-      'mustBeMore': `${age} < ${minAge}`
+      'min': minAge,
+      'currentValue': age
     } : (age > maxAge) ? {
-      'mustBeLess': `${age} > ${maxAge}`
+      'max': maxAge,
+      'currentValue': age
     } : '';
     return error !== '' ? error : null;
   };
