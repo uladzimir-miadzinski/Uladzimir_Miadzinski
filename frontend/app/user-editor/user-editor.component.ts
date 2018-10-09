@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {notLegalAgeValidator} from '../validators/not-legal-age-validator.directive';
 import {dateValidator} from '../validators/date-validator.directive';
+import {camelCaseValidator} from '../validators/camel-case-validator.directive';
+import {twoWordsValidator} from '../validators/two-words-validator.directive';
+import {onlyLatinValidator} from '../validators/only-latin-validator.directive';
 
 @Component({
   selector: 'app-user-editor',
@@ -31,12 +34,15 @@ export class UserEditorComponent implements OnInit {
 
   createForm() {
     this.userForm = this.fb.group({
-      name: ['Uladzimir Miadzinski'],
-      age: ['55', [notLegalAgeValidator()]],
-      info: ['some info'],
-      birthday: ['2001/10/14', dateValidator()],
-      firstLogin: ['2010/12/14', dateValidator()],
-      nextNotify: ['2014/05/23', dateValidator()]
+      name: ['', {
+        asyncValidators: [twoWordsValidator(), camelCaseValidator(), onlyLatinValidator()],
+        updateOn: 'blur'
+      }],
+      age: ['', notLegalAgeValidator()],
+      info: [''],
+      birthday: ['', dateValidator()],
+      firstLogin: ['', dateValidator()],
+      nextNotify: ['', dateValidator()]
     });
   }
 
@@ -55,6 +61,10 @@ export class UserEditorComponent implements OnInit {
 
   get form() {
     return this.userForm.controls;
+  }
+
+  get name() {
+    return this.form.name;
   }
 
   get age() {
