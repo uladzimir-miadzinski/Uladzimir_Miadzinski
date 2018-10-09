@@ -1,5 +1,5 @@
-<div class="d-flex justify-content-center">
-  <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="form">
+<div class="d-flex flex-column">
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <mat-form-field class="full-width">
         Name:
@@ -12,36 +12,40 @@
         <input matInput formControlName="age" placeholder="Age:" autofocus>
       </mat-form-field>
       <p class="text-danger"
-                 *ngIf="age.errors !== null && (age.touched || age.dirty)">
-        Age must be <span *ngIf="age.errors.mustBeMore; else mustBeLess">more than 18</span>!
-        <ng-template #mustBeLess>less than 65</ng-template>
+         *ngIf="age.errors !== null && (age.touched || age.dirty)">
+        Age must be <span *ngIf="age.errors.min; else max">more than 18</span>!
+        <ng-template #max>less than 65</ng-template>
       </p>
     </div>
     <div class="form-group">
       <mat-form-field>
         Birthday:
-        <input matInput formControlName="birthday" [matDatepicker]="picker" placeholder="Birthday:">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
+        <input matInput formControlName="birthday" placeholder="Birthday:">
       </mat-form-field>
+      <p class="text-danger"
+         *ngIf="birthday.errors !== null && (birthday.touched || birthday.dirty)">
+        {{birthday.errors.errorMessage}}.
+      </p>
     </div>
     <div class="form-group">
       <mat-form-field>
         Date of next notification:
-        <input matInput [matDatepicker]="pickerNextNotify" formControlName="nextNotify"
-               placeholder="Date of next notification:">
-        <mat-datepicker-toggle matSuffix [for]="pickerNextNotify"></mat-datepicker-toggle>
-        <mat-datepicker #pickerNextNotify></mat-datepicker>
+        <input matInput formControlName="nextNotify" placeholder="Date of next notification:">
       </mat-form-field>
+      <p class="text-danger"
+         *ngIf="nextNotify.errors !== null && (nextNotify.touched || nextNotify.dirty)">
+        {{nextNotify.errors.errorMessage}}
+      </p>
     </div>
     <div class="form-group">
       <mat-form-field>
         Date of first login:
-        <input matInput [matDatepicker]="pickerFirstLogin" formControlName="firstLogin"
-               placeholder="Date of first login:">
-        <mat-datepicker-toggle matSuffix [for]="pickerFirstLogin"></mat-datepicker-toggle>
-        <mat-datepicker #pickerFirstLogin></mat-datepicker>
+        <input matInput formControlName="firstLogin" placeholder="Date of first login:">
       </mat-form-field>
+      <p class="text-danger"
+         *ngIf="firstLogin.errors !== null && (firstLogin.touched || firstLogin.dirty)">
+        {{firstLogin.errors.errorMessage}}
+      </p>
     </div>
     <div class="form-group">
       <mat-form-field class="full-width">
@@ -60,4 +64,10 @@
       <button mat-button color="warn" type="button" (click)="showErrors();">Show errors in console</button>
     </div>
   </form>
+
+  <div *ngIf="submitted" class="mt-4 mb-4">
+    <app-user-info [userForm]="userForm"></app-user-info>
+  </div>
+
 </div>
+

@@ -6,28 +6,27 @@ import {UserEditorComponent} from './user-editor/user-editor.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
-  MatButtonModule,
-  MatCheckboxModule,
-  MatDatepickerModule,
+  MatButtonModule, MatCardModule, MatDividerModule,
   MatFormFieldModule,
-  MatInputModule,
-  MatNativeDateModule
+  MatInputModule, MatListModule
 } from '@angular/material';
+import { UserInfoComponent } from './user-info/user-info.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserEditorComponent
+    UserEditorComponent,
+    UserInfoComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     MatButtonModule,
-    MatCheckboxModule,
-    MatDatepickerModule,
+    MatCardModule,
+    MatDividerModule,
     MatFormFieldModule,
+    MatListModule,
     MatInputModule,
-    MatNativeDateModule,
     ReactiveFormsModule
   ],
   providers: [],
