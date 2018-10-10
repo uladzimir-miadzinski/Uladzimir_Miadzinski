@@ -4,7 +4,7 @@ export function onlyLatinValidator(): AsyncValidatorFn {
   return (control: AbstractControl): Promise<ValidationErrors | null> => {
     const value = control.value;
     return new Promise<ValidationErrors | null>(resolve => {
-      const delayTime = 1000;
+      const delayTime = 3000;
       setTimeout(() => {
 
         [...value].forEach((char: string) => {
