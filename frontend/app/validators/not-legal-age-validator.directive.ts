@@ -1,18 +1,18 @@
 import {AbstractControl, ValidatorFn} from '@angular/forms';
+import {ValidationError} from './validation-error';
 
 export function notLegalAgeValidator(): ValidatorFn {
-  return (control: AbstractControl): { [key: string]: any } | null => {
+  return (control: AbstractControl): ValidationError | null => {
     const minAge = 18;
     const maxAge = 65;
-    const age = (control.value !== '') ? Number.parseInt(control.value, 10) : 0;
-    const error = (age < minAge) ? {
-      'min': minAge,
-      'currentValue': age
-    } : (age > maxAge) ? {
-      'max': maxAge,
-      'currentValue': age
-    } : '';
-    return error !== '' ? error : null;
+    const {value: age} = control;
+    const error = (age < minAge) ? 'min' : (age > maxAge) ? 'max' : '';
+
+    return (error !== '') ? {
+      allowed: `${minAge} <= Age <= ${maxAge}`,
+      current: age,
+      error: error
+    } : null;
   };
 }
 

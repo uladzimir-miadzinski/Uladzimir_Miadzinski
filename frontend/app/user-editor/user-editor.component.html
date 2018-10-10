@@ -8,17 +8,18 @@
       </mat-form-field>
       <p class="text-danger"
          *ngIf="name.errors !== null && (name.touched || name.dirty)">
-        {{name.errors.errorMessage}}
+        <span *ngIf="name.errors.required">Name is required.</span>
+        {{name.errors.message}}
       </p>
     </div>
     <div class="form-group">
       <mat-form-field>
         Age:
-        <input matInput formControlName="age" placeholder="Age:" autofocus>
+        <input matInput formControlName="age" placeholder="Age:">
       </mat-form-field>
       <p class="text-danger"
          *ngIf="age.errors !== null && (age.touched || age.dirty)">
-        Age must be <span *ngIf="age.errors.min; else max">more than 18</span>!
+        Age must be <span *ngIf="age.errors.error === 'min'; else max">more than 18</span>!
         <ng-template #max>less than 65</ng-template>
       </p>
     </div>
@@ -29,7 +30,7 @@
       </mat-form-field>
       <p class="text-danger"
          *ngIf="birthday.errors !== null && (birthday.touched || birthday.dirty)">
-        {{birthday.errors.errorMessage}}.
+        {{birthday.errors.message}}
       </p>
     </div>
     <div class="form-group">
@@ -39,7 +40,7 @@
       </mat-form-field>
       <p class="text-danger"
          *ngIf="nextNotify.errors !== null && (nextNotify.touched || nextNotify.dirty)">
-        {{nextNotify.errors.errorMessage}}
+        {{nextNotify.errors.message}}
       </p>
     </div>
     <div class="form-group">
@@ -49,13 +50,13 @@
       </mat-form-field>
       <p class="text-danger"
          *ngIf="firstLogin.errors !== null && (firstLogin.touched || firstLogin.dirty)">
-        {{firstLogin.errors.errorMessage}}
+        {{firstLogin.errors.message}}
       </p>
     </div>
     <div class="form-group">
       <mat-form-field class="full-width">
         Info:
-        <input matInput formControlName="info" placeholder="Info:" autofocus>
+        <input matInput formControlName="info" placeholder="Info:">
       </mat-form-field>
     </div>
 

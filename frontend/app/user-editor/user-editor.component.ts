@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {notLegalAgeValidator} from '../validators/not-legal-age-validator.directive';
 import {dateValidator} from '../validators/date-validator.directive';
 import {camelCaseValidator} from '../validators/camel-case-validator.directive';
-import {twoWordsValidator} from '../validators/two-words-validator.directive';
+import {maxTwoWordsValidator} from '../validators/max-two-words-validator.directive';
 import {onlyLatinValidator} from '../validators/only-latin-validator.directive';
 
 @Component({
@@ -11,7 +11,7 @@ import {onlyLatinValidator} from '../validators/only-latin-validator.directive';
   templateUrl: './user-editor.component.html',
   styleUrls: ['./user-editor.component.scss']
 })
-export class UserEditorComponent implements OnInit {
+export class UserEditorComponent implements OnInit, AfterViewInit {
 
   submitted = false;
   userForm!: FormGroup;
@@ -23,6 +23,9 @@ export class UserEditorComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
+  }
+
+  ngAfterViewInit() {
     this.onChanges();
   }
 
@@ -35,7 +38,8 @@ export class UserEditorComponent implements OnInit {
   createForm() {
     this.userForm = this.fb.group({
       name: ['', {
-        asyncValidators: [twoWordsValidator(), camelCaseValidator(), onlyLatinValidator()],
+        validators: [Validators.required],
+        asyncValidators: [maxTwoWordsValidator(), camelCaseValidator(), onlyLatinValidator()],
         updateOn: 'blur'
       }],
       age: ['', notLegalAgeValidator()],
@@ -51,12 +55,9 @@ export class UserEditorComponent implements OnInit {
   }
 
   showErrors() {
-    console.warn(this.form.name.errors);
-    console.warn(this.form.age.errors);
-    console.warn(this.form.birthday.errors);
-    console.warn(this.form.firstLogin.errors);
-    console.warn(this.form.nextNotify.errors);
-    console.warn(this.form.info.errors);
+    Object.keys(this.form).forEach(key => {
+      console.warn(this.form[key].errors);
+    });
   }
 
   get form() {
