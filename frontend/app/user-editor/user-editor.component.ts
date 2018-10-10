@@ -42,10 +42,7 @@ export class UserEditorComponent implements OnInit, AfterViewInit {
         updateOn: 'blur'
       }],
       age: ['', notLegalAgeValidator()],
-      info: ['', {
-        asyncValidators: [onlyLatinValidator()],
-        updateOn: 'blur'
-      }],
+      info: [''],
       birthday: ['', dateValidator()],
       firstLogin: ['', dateValidator()],
       nextNotify: ['', dateValidator()]
