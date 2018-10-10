@@ -8,7 +8,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   MatButtonModule, MatCardModule, MatDividerModule,
   MatFormFieldModule,
-  MatInputModule, MatListModule
+  MatInputModule, MatListModule, MatProgressBarModule
 } from '@angular/material';
 import { UserInfoComponent } from './user-info/user-info.component';
 
@@ -27,6 +27,7 @@ import { UserInfoComponent } from './user-info/user-info.component';
     MatFormFieldModule,
     MatListModule,
     MatInputModule,
+    MatProgressBarModule,
     ReactiveFormsModule
   ],
   providers: [],
