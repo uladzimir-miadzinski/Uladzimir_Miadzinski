@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {notLegalAgeValidator} from '../validators/not-legal-age-validator.directive';
 import {dateValidator} from '../validators/date-validator.directive';
 import {camelCaseValidator} from '../validators/camel-case-validator.directive';
@@ -38,12 +38,14 @@ export class UserEditorComponent implements OnInit, AfterViewInit {
   createForm() {
     this.userForm = this.fb.group({
       name: ['', {
-        validators: [Validators.required],
         asyncValidators: [maxTwoWordsValidator(), camelCaseValidator(), onlyLatinValidator()],
         updateOn: 'blur'
       }],
       age: ['', notLegalAgeValidator()],
-      info: [''],
+      info: ['', {
+        asyncValidators: [onlyLatinValidator()],
+        updateOn: 'blur'
+      }],
       birthday: ['', dateValidator()],
       firstLogin: ['', dateValidator()],
       nextNotify: ['', dateValidator()]
@@ -82,5 +84,9 @@ export class UserEditorComponent implements OnInit, AfterViewInit {
 
   get nextNotify() {
     return this.form.nextNotify;
+  }
+
+  get info() {
+    return this.form.info;
   }
 }

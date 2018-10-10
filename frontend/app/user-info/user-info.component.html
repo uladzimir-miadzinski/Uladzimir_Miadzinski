@@ -1,9 +1,12 @@
-<mat-card>Submitted form:
-  <mat-list>
-    <mat-list-item *ngFor="let control of formControls">
-          {{control}}:
-          {{form[control].value}}
-      <mat-divider [inset]="true"></mat-divider>
-    </mat-list-item>
-  </mat-list>
+<mat-card>
+  <mat-card-title>Submitted form:</mat-card-title>
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item *ngFor="let control of formControls">
+        {{control}}:
+        {{form[control].value}}
+        <mat-divider [inset]="true"></mat-divider>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
 </mat-card>
