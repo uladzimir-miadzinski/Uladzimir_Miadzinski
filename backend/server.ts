@@ -1,9 +1,13 @@
 import * as express from 'express';
 import * as compression from 'compression';
-import {createServer} from 'spdy';
-import {json, urlencoded} from 'body-parser';
-import {readFile} from 'fs';
-import {promisify} from 'util';
+import * as jwt from 'jsonwebtoken';
+import * as md5 from 'md5';
+// import * as expressJwt from 'express-jwt';
+import { createServer } from 'spdy';
+import { json, urlencoded } from 'body-parser';
+import { readFile } from 'fs';
+import { promisify } from 'util';
+import * as cors from 'cors';
 
 export enum STATUS {
   OK = 200,
@@ -32,11 +36,11 @@ const urlencodedOptions = {
 app.use(compression());
 app.use(json());
 app.use(urlencoded(urlencodedOptions));
-
-console.log(__dirname);
+app.use(cors());
 
 const key: Promise<string> = readFileAsync(`${__dirname}/server.key`);
 const cert: Promise<string> = readFileAsync(`${__dirname}/server.crt`);
+// const pubKey: Promise<string> = readFileAsync(`${__dirname}/server.pub`);
 
 Promise.all([key, cert])
   .then(contents => {
@@ -47,7 +51,7 @@ Promise.all([key, cert])
     };
   })
   .then(serverOptions => {
-    createServer(serverOptions, app).listen(PORT, (err: string) => {
+    return createServer(serverOptions, app).listen(PORT, (err: string) => {
       if (err) {
         throw new Error(err);
       }
@@ -63,7 +67,6 @@ app.get('/users', (req: express.Request, res: express.Response) => {
 
 app.get('/users/:id', (req: express.Request, res: express.Response) => {
   const user = findUserById(req.params.id);
-
   if (user) {
     res.status(STATUS.OK);
     res.json(user);
@@ -72,8 +75,38 @@ app.get('/users/:id', (req: express.Request, res: express.Response) => {
   }
 });
 
+app.post('/login', (req: express.Request, res: express.Response) => {
+  const { name, password } = req.body;
+  const user: User | false = validateUserNamePassword(name, password);
+  if (user) {
+    key.then((RSA_PRIVATE_KEY: string) => {
+      const expiresIn = 60;
+      const token = jwt.sign({}, RSA_PRIVATE_KEY, {
+        algorithm: 'RS256',
+        expiresIn,
+        subject: user.id.toString()
+      });
+      res.status(200).json({
+        token
+      });
+    }).catch(err => {
+      res.send(err);
+    });
+  } else {
+    res.sendStatus(401);
+  }
+});
+
+app.get('/auth-check', (req: express.Request, res: express.Response) => {
+  console.log(req);
+  res.send(req).status(200);
+ /* return
+    .then(auth => res.status(auth ? 200 : 401))
+    .catch(() => res.status(500));*/
+});
+
 app.post(['/users', '/users/add'], (req: express.Request, res: express.Response) => {
-  const {name, password, birthday, firstLogin, nextNotify, info, deleted = false} = req.body;
+  const { name, password, birthday, firstLogin, nextNotify, info, deleted = false } = req.body;
   const id: number = users.length + 1;
 
   const newUser: User = {
@@ -105,8 +138,25 @@ app.delete('/users/:id', (req: express.Request, res: express.Response) => {
   }
 });
 
+/*function isAuthorized() {
+  return pubKey.then(RSA_PUBLIC_KEY => {
+    return expressJwt({
+      secret: RSA_PUBLIC_KEY
+    });
+  });
+}*/
+
+function validateUserNamePassword(name: string, password: string): User | false {
+  return findUserByNamePassword(name, password) || false;
+}
+
 function convertToInt(id: number | string): number {
   return typeof id === 'string' ? Number.parseInt(id, 10) : id;
+}
+
+function findUserByNamePassword(name: string, password: string) {
+  console.log(md5(password));
+  return users.find((user: User) => user.name === name && user.password === md5(password));
 }
 
 function findIndexByUserId(id: number | string): number {
@@ -128,7 +178,7 @@ function deleteUserById(id: number): User | boolean {
 }
 
 function updateUser(params: User): User | boolean {
-  const {id, name, password, birthday, firstLogin, nextNotify, info, deleted} = params;
+  const { id, name, password, birthday, firstLogin, nextNotify, info, deleted } = params;
   const index = findIndexByUserId(id);
   if (index >= 0) {
     users[index].name = name;
