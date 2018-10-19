@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatButtonModule, MatCardModule, MatDividerModule,
   MatFormFieldModule,
-  MatInputModule, MatListModule, MatProgressBarModule
+  MatInputModule, MatListModule, MatProgressBarModule, MatTabsModule
 } from '@angular/material';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { LoginComponent } from './login/login.component';
@@ -47,6 +47,7 @@ import { LogoutComponent } from './logout/logout.component';
     MatListModule,
     MatInputModule,
     MatProgressBarModule,
+    MatTabsModule,
     ReactiveFormsModule
   ],
   providers: [

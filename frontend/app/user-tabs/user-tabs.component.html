@@ -1,4 +1,12 @@
-<p>
-  user-tabs works!
-</p>
+<ng-container *ngIf="(asyncTabs | async) === null">
+  <app-loading></app-loading>
+</ng-container>
+
+<mat-tab-group>
+  <mat-tab *ngFor="let tab of asyncTabs | async">
+    <ng-template mat-tab-label>{{tab.label}}</ng-template>
+    {{tab.content}}
+  </mat-tab>
+</mat-tab-group>
+
 <app-logout></app-logout>
