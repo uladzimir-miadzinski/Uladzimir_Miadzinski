@@ -14,11 +14,12 @@ import { UserInfoComponent } from './user-info/user-info.component';
 import { LoginComponent } from './login/login.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { UserTabsComponent } from './user-tabs/user-tabs.component';
-import { HttpInterceptorProviders } from './http-interceptors';
-import {JwtModule} from '@auth0/angular-jwt';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { HttpClientModule } from '@angular/common/http';
+import { LogoutComponent } from './logout/logout.component';
+import { LoginCheckComponent } from './login-check/login-check.component';
+import { HttpInterceptorProviders } from './http-interceptors';
 
 @NgModule({
   declarations: [
@@ -28,19 +29,14 @@ import { HttpClientModule } from '@angular/common/http';
     UserInfoComponent,
     LoginComponent,
     ForgotPasswordComponent,
-    UserTabsComponent
+    UserTabsComponent,
+    LogoutComponent,
+    LoginCheckComponent
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: AuthService.getToken,
-        whitelistedDomains: ['localhost:3000'],
-        blacklistedRoutes: ['localhost:3000/login']
-      }
-    }),
     HttpClientModule,
     MatButtonModule,
     MatCardModule,

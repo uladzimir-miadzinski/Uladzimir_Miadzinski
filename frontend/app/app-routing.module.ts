@@ -6,9 +6,11 @@ import { UserInfoComponent } from './user-info/user-info.component';
 import { UserEditorComponent } from './user-editor/user-editor.component';
 import { AuthGuard } from './guards/auth.guard';
 import { UserTabsComponent } from './user-tabs/user-tabs.component';
+import { LogoutComponent } from './logout/logout.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
+  { path: 'logout', component: LogoutComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'user-info', component: UserInfoComponent, canActivate: [AuthGuard] },
   { path: 'user-editor', component: UserEditorComponent, canActivate: [AuthGuard] },

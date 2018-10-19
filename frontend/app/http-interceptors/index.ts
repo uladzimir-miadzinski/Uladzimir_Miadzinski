@@ -1,10 +1,10 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from './auth-interceptor';
+import { CookieInterceptor } from './cookie-interceptor';
 
 export const HttpInterceptorProviders = [
   {
     provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptor,
+    useClass: CookieInterceptor,
     multi: true
   },
 ];

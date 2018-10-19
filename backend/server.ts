@@ -2,17 +2,25 @@ import * as express from 'express';
 import * as compression from 'compression';
 import * as jwt from 'jsonwebtoken';
 import * as md5 from 'md5';
-// import * as expressJwt from 'express-jwt';
 import { createServer } from 'spdy';
 import { json, urlencoded } from 'body-parser';
 import { readFile } from 'fs';
 import { promisify } from 'util';
 import * as cors from 'cors';
+import * as moment from 'moment';
+// @ts-ignore
+import * as cookieParser from 'cookie-parser';
 
 export enum STATUS {
   OK = 200,
   CREATED = 201,
-  NOT_FOUND = 404
+  UNAUTHORIZED = 401,
+  NOT_FOUND = 404,
+}
+
+export interface Jwt {
+  exp: number;
+  sub: string;
 }
 
 export interface User {
@@ -23,7 +31,7 @@ export interface User {
   firstLogin: Date;
   nextNotify: Date;
   info: string;
-  deleted: boolean;
+  deleted: number;
 }
 
 const app = express();
@@ -32,15 +40,19 @@ const PORT = 3000;
 const urlencodedOptions = {
   extended: true
 };
+const corsOptions = {
+  origin: 'https://localhost:4200',
+  credentials: true
+};
 
 app.use(compression());
 app.use(json());
 app.use(urlencoded(urlencodedOptions));
-app.use(cors());
+app.use(cors(corsOptions));
+app.use(cookieParser());
 
 const key: Promise<string> = readFileAsync(`${__dirname}/server.key`);
 const cert: Promise<string> = readFileAsync(`${__dirname}/server.crt`);
-// const pubKey: Promise<string> = readFileAsync(`${__dirname}/server.pub`);
 
 Promise.all([key, cert])
   .then(contents => {
@@ -62,7 +74,7 @@ Promise.all([key, cert])
 
 app.get('/users', (req: express.Request, res: express.Response) => {
   res.status(STATUS.OK);
-  res.json(users.filter((user: User) => !user.deleted));
+  res.json(users.filter((user: User) => user.deleted === 0));
 });
 
 app.get('/users/:id', (req: express.Request, res: express.Response) => {
@@ -75,42 +87,58 @@ app.get('/users/:id', (req: express.Request, res: express.Response) => {
   }
 });
 
-app.post('/login', (req: express.Request, res: express.Response) => {
+app.post('/login', login);
+app.post('/logout', logout);
+app.get('/login-check', loginCheck);
+
+function login(req: express.Request, res: express.Response) {
   const { name, password } = req.body;
   const user: User | false = validateUserNamePassword(name, password);
   if (user) {
     key.then((RSA_PRIVATE_KEY: string) => {
-      const expiresIn = 60;
+      const expiresIn = '60m';
       const token = jwt.sign({}, RSA_PRIVATE_KEY, {
         algorithm: 'RS256',
         expiresIn,
         subject: user.id.toString()
       });
-      res.status(200).json({
-        token
-      });
+      res.status(STATUS.OK).cookie('jwt', token, {httpOnly: true}).send();
     }).catch(err => {
       res.send(err);
     });
   } else {
-    res.sendStatus(401);
+    res.status(STATUS.UNAUTHORIZED).send();
   }
-});
+}
 
-app.get('/auth-check', (req: express.Request, res: express.Response) => {
-  console.log(req);
-  res.send(req).status(200);
- /* return
-    .then(auth => res.status(auth ? 200 : 401))
-    .catch(() => res.status(500));*/
-});
+function logout(req: express.Request, res: express.Response) {
+  res.clearCookie('jwt').send();
+}
+
+function loginCheck(req: express.Request, res: express.Response) {
+  if (typeof req.cookies.jwt !== 'undefined') {
+    const status = getAuthorizeStatusCode(jwt.decode(req.cookies.jwt) as Jwt);
+    res.status(status).send();
+  } else {
+    res.status(STATUS.UNAUTHORIZED).send();
+  }
+}
+
+function getAuthorizeStatusCode(jwtoken: Jwt) {
+  return isJwtExpired(jwtoken) || !findUserById(jwtoken.sub) ? STATUS.UNAUTHORIZED : STATUS.OK;
+}
+
+function isJwtExpired(jwtoken: Jwt) {
+  return moment.unix(jwtoken.exp).isBefore(moment());
+}
+
 
 app.post(['/users', '/users/add'], (req: express.Request, res: express.Response) => {
-  const { name, password, birthday, firstLogin, nextNotify, info, deleted = false } = req.body;
+  const { name, password, birthday, firstLogin, nextNotify, info, deleted = 0 } = req.body;
   const id: number = users.length + 1;
 
   const newUser: User = {
-    id, name, password, birthday, firstLogin, nextNotify, info, deleted: !!deleted
+    id, name, password, birthday, firstLogin, nextNotify, info, deleted
   };
   users.push(newUser);
 
@@ -138,14 +166,6 @@ app.delete('/users/:id', (req: express.Request, res: express.Response) => {
   }
 });
 
-/*function isAuthorized() {
-  return pubKey.then(RSA_PUBLIC_KEY => {
-    return expressJwt({
-      secret: RSA_PUBLIC_KEY
-    });
-  });
-}*/
-
 function validateUserNamePassword(name: string, password: string): User | false {
   return findUserByNamePassword(name, password) || false;
 }
@@ -155,22 +175,21 @@ function convertToInt(id: number | string): number {
 }
 
 function findUserByNamePassword(name: string, password: string) {
-  console.log(md5(password));
-  return users.find((user: User) => user.name === name && user.password === md5(password));
+  return users.find((user: User) => user.name === name && user.password === md5(password) && user.deleted === 0);
 }
 
 function findIndexByUserId(id: number | string): number {
   return users.findIndex((user: User) => user.id === convertToInt(id));
 }
 
-function findUserById(id: number | string, deleted = false): User | boolean {
-  return users.find((user: User) => user.id === convertToInt(id) && !deleted) || false;
+function findUserById(id: number | string, deleted: number = 0): User | boolean {
+  return users.find((user: User) => user.id === convertToInt(id) && deleted === 0) || false;
 }
 
 function deleteUserById(id: number): User | boolean {
   const index = findIndexByUserId(id);
   if (index >= 0) {
-    users[index].deleted = true;
+    users[index].deleted = 1;
     return users[index];
   } else {
     return false;

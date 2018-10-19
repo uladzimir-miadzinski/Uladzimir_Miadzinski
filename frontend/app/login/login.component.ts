@@ -26,15 +26,10 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     const form = this.loginForm.value;
-
-    console.log(form.name);
     if (form.name && form.password) {
-  
-      console.log(form);
       this.authService.login(form.name, form.password)
         .subscribe(
           () => {
-            console.log('User is logged in');
             this.router.navigateByUrl('/');
           }
         );
