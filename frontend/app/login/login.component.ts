@@ -2,7 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import {  } from 'rxjs/operators';
+import { camelCaseValidator } from '../validators/camel-case-validator.directive';
+import { usernameExistsValidator } from '../validators/username-exists-validator.directive';
+
+export enum STATUS {
+  UNAUTHORIZED = 401,
+}
 
 @Component({
   selector: 'app-login',
@@ -10,6 +15,7 @@ import {  } from 'rxjs/operators';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+
   loginForm!: FormGroup;
 
   constructor(private fb: FormBuilder,
@@ -19,8 +25,14 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = this.fb.group({
-      name: ['', Validators.required],
-      password: ['', Validators.required]
+      name: ['', {
+        validators: [Validators.required],
+        asyncValidators: [usernameExistsValidator(this.authService), camelCaseValidator()],
+        updateOn: 'blur'
+      }],
+      password: ['', {
+        validators: [Validators.required]
+      }]
     });
   }
 
@@ -31,9 +43,30 @@ export class LoginComponent implements OnInit {
         .subscribe(
           () => {
             this.router.navigateByUrl('/');
+          },
+          (error) => {
+            if (error.status === STATUS.UNAUTHORIZED) {
+              alert('Login incorrect');
+            }
           }
         );
     }
+  }
+
+  navigateForgotPassword() {
+    this.router.navigateByUrl('/forgot-password');
+  }
+
+  get form() {
+    return this.loginForm.controls;
+  }
+
+  get name() {
+    return this.form.name;
+  }
+
+  get password() {
+    return this.form.password;
   }
 
 }

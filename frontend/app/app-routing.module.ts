@@ -6,15 +6,15 @@ import { UserInfoComponent } from './user-info/user-info.component';
 import { UserEditorComponent } from './user-editor/user-editor.component';
 import { AuthGuard } from './guards/auth.guard';
 import { UserTabsComponent } from './user-tabs/user-tabs.component';
-import { LogoutComponent } from './logout/logout.component';
+import { LoginGuard } from './guards/login.guard';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'logout', component: LogoutComponent },
+  { path: 'login', component: LoginComponent, canActivate: [LoginGuard]},
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'user-info', component: UserInfoComponent, canActivate: [AuthGuard] },
   { path: 'user-editor', component: UserEditorComponent, canActivate: [AuthGuard] },
   { path: 'user-tabs', component: UserTabsComponent, canActivate: [AuthGuard] },
+  { path: '',   redirectTo: '/user-tabs', pathMatch: 'full' },
 ];
 
 @NgModule({

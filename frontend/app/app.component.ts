@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { LoginGuard } from './guards/login.guard';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +9,13 @@ import { Router } from '@angular/router';
 export class AppComponent implements OnInit {
   title = 'App';
 
-  constructor(private router: Router) {
+  constructor(
+    private loginGuard: LoginGuard
+  ) {
   }
 
   ngOnInit(): void {
-    this.router.navigate(['/user-tabs']);
+    this.loginGuard.navigateDefaultPage();
   }
+
 }

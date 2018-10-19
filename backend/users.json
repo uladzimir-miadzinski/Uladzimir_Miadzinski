@@ -4,7 +4,7 @@
     "firstLogin": "2018-01-05T11:00:00.000Z",
     "nextNotify": "2018-02-20T13:35:00.000Z",
     "id": 1,
-    "name": "medinsky",
+    "name": "Medinsky",
     "password": "c4ca4238a0b923820dcc509a6f75849b",
     "info": "express-dev",
     "deleted": 0
@@ -14,7 +14,7 @@
     "firstLogin": "2018-02-01T12:00:00.000Z",
     "nextNotify": "2018-03-31T14:00:00.000Z",
     "id": 2,
-    "name": "lugovski",
+    "name": "Lugovski",
     "password": "c81e728d9d4c2f636f067f89cc14862c",
     "info": "angular-dev",
     "deleted": 1
@@ -24,7 +24,7 @@
     "firstLogin": "2018-02-25T13:10:00.000Z",
     "nextNotify": "2018-02-27T15:30:00.000Z",
     "id": 3,
-    "name": "vasjuk",
+    "name": "Vasjuk",
     "password": "eccbc87e4b5ce2fe28308fd9f2a7baf3",
     "info": "dev-ops",
     "deleted": 0
@@ -34,7 +34,7 @@
     "firstLogin": "2018-07-31T14:00:00.000Z",
     "nextNotify": "2018-08-20T10:45:00.000Z",
     "id": 4,
-    "name": "zaicev",
+    "name": "Zaicev",
     "password": "a87ff679a2f3e71d9181a67b7542122c",
     "info": "leader",
     "deleted": 1
@@ -44,7 +44,7 @@
     "firstLogin": "2018-03-07T15:00:00.000Z",
     "nextNotify": "2018-03-27T07:00:00.000Z",
     "id": 5,
-    "name": "makarevich",
+    "name": "Makarevich",
     "password": "e4da3b7fbbce2345d7772b0674a318d5",
     "info": "system administrator",
     "deleted": 1
@@ -54,7 +54,7 @@
     "firstLogin": "1991-12-11T00:00:00.000Z",
     "nextNotify": "1991-13-11T00:00:00.000Z",
     "id": 6,
-    "name": "somebody456",
+    "name": "Somebody456",
     "password": "ewiu2173128ujeqweuqiy182347189123",
     "info": "trytoforcedateerror",
     "deleted": 0

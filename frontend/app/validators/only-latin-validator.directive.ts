@@ -7,7 +7,6 @@ export function onlyLatinValidator(): AsyncValidatorFn {
     return new Promise<ValidationError | null>(resolve => {
       const delayTime = 3000;
       setTimeout(() => {
-
         [...value].forEach((char: string) => {
           const charCode = char.charCodeAt(0);
           if ((charCode < 65 || (charCode > 90 && charCode < 97) || charCode > 125) && charCode !== 32) {

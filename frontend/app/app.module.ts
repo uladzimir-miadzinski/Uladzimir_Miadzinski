@@ -17,9 +17,10 @@ import { UserTabsComponent } from './user-tabs/user-tabs.component';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { HttpClientModule } from '@angular/common/http';
-import { LogoutComponent } from './logout/logout.component';
 import { LoginCheckComponent } from './login-check/login-check.component';
 import { HttpInterceptorProviders } from './http-interceptors';
+import { LoadingComponent } from './loading/loading.component';
+import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -30,8 +31,9 @@ import { HttpInterceptorProviders } from './http-interceptors';
     LoginComponent,
     ForgotPasswordComponent,
     UserTabsComponent,
-    LogoutComponent,
-    LoginCheckComponent
+    LoginCheckComponent,
+    LoadingComponent,
+    LogoutComponent
   ],
   imports: [
     AppRoutingModule,

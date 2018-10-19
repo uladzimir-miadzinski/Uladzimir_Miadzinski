@@ -1,10 +1,10 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {notLegalAgeValidator} from '../validators/not-legal-age-validator.directive';
-import {dateValidator} from '../validators/date-validator.directive';
-import {camelCaseValidator} from '../validators/camel-case-validator.directive';
-import {maxTwoWordsValidator} from '../validators/max-two-words-validator.directive';
-import {onlyLatinValidator} from '../validators/only-latin-validator.directive';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { notLegalAgeValidator } from '../validators/not-legal-age-validator.directive';
+import { dateValidator } from '../validators/date-validator.directive';
+import { camelCaseValidator } from '../validators/camel-case-validator.directive';
+import { maxTwoWordsValidator } from '../validators/max-two-words-validator.directive';
+import { onlyLatinValidator } from '../validators/only-latin-validator.directive';
 
 @Component({
   selector: 'app-user-editor',

@@ -72,24 +72,36 @@ Promise.all([key, cert])
   })
   .catch(err => console.error(err));
 
-app.get('/users', (req: express.Request, res: express.Response) => {
-  res.status(STATUS.OK);
-  res.json(users.filter((user: User) => user.deleted === 0));
-});
-
-app.get('/users/:id', (req: express.Request, res: express.Response) => {
-  const user = findUserById(req.params.id);
-  if (user) {
-    res.status(STATUS.OK);
-    res.json(user);
-  } else {
-    res.sendStatus(STATUS.NOT_FOUND);
-  }
-});
-
+app.get('/users', getActiveUsers);
+app.get('/users/:id', getUserById);
+app.get('/login-check', loginCheck);
 app.post('/login', login);
 app.post('/logout', logout);
-app.get('/login-check', loginCheck);
+app.get('/user-exists', checkIfUserExists);
+
+function checkIfUserExists(req: express.Request, res: express.Response) {
+  res.status(STATUS.OK).send(fetchActiveUsers(req.query).length > 0);
+}
+
+function fetchActiveUsers(query: User) {
+  return users.filter((user: User) => {
+    const filterByName = (typeof query.name !== 'undefined') ? user.name === query.name : true;
+    return user.deleted === 0 && filterByName;
+  });
+}
+
+function getActiveUsers(req: express.Request, res: express.Response) {
+  res.status(STATUS.OK).json(fetchActiveUsers(req.query));
+}
+
+function getUserById(req: express.Request, res: express.Response) {
+  const user = findUserById(req.params.id);
+  if (user) {
+    res.status(STATUS.OK).send(user);
+  } else {
+    res.status(STATUS.NOT_FOUND).send();
+  }
+}
 
 function login(req: express.Request, res: express.Response) {
   const { name, password } = req.body;
@@ -125,7 +137,7 @@ function loginCheck(req: express.Request, res: express.Response) {
 }
 
 function getAuthorizeStatusCode(jwtoken: Jwt) {
-  return isJwtExpired(jwtoken) || !findUserById(jwtoken.sub) ? STATUS.UNAUTHORIZED : STATUS.OK;
+  return isJwtExpired(jwtoken) || !findActiveUserById(jwtoken.sub) ? STATUS.UNAUTHORIZED : STATUS.OK;
 }
 
 function isJwtExpired(jwtoken: Jwt) {
@@ -182,8 +194,12 @@ function findIndexByUserId(id: number | string): number {
   return users.findIndex((user: User) => user.id === convertToInt(id));
 }
 
-function findUserById(id: number | string, deleted: number = 0): User | boolean {
-  return users.find((user: User) => user.id === convertToInt(id) && deleted === 0) || false;
+function findUserById(id: number | string): User | boolean {
+  return users.find((user: User) => user.id === convertToInt(id)) || false;
+}
+
+function findActiveUserById(id: number | string) {
+  return users.find((user: User) => user.id === convertToInt(id) && user.deleted === 0) || false;
 }
 
 function deleteUserById(id: number): User | boolean {
