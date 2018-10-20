@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 export interface User {
   id: number;
+  age: number;
   birthday?: string;
   firstLogin?: string;
   nextNotify?: string;
@@ -11,6 +12,7 @@ export interface User {
   password?: string;
   name: string;
   deleted: number;
+  [key: string]: number | string | undefined;
 }
 
 @Injectable({

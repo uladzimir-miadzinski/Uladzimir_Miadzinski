@@ -27,8 +27,7 @@
       </mat-form-field>
       <p class="text-danger"
          *ngIf="age.errors !== null && (age.touched || age.dirty)">
-        Age must be <span *ngIf="age.errors.error === 'min'; else max">more than 18</span>!
-        <ng-template #max>less than 65</ng-template>
+        <span *ngIf="age.errors.error">{{age.errors.error}}</span>
       </p>
     </div>
     <div class="form-group">
@@ -56,6 +55,15 @@
       <p class="text-danger"
          *ngIf="firstLogin.errors !== null && (firstLogin.touched || firstLogin.dirty)">
         {{firstLogin.errors.message}}
+      </p>
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        <input matInput formControlName="password" type="password" placeholder="New password" autocomplete="current-password">
+      </mat-form-field>
+      <p class="text-danger"
+         *ngIf="password.errors !== null && password.errors.required && (password.dirty || password.touched);">
+        New password is required.
       </p>
     </div>
 

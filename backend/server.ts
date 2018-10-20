@@ -27,6 +27,7 @@ export interface Jwt {
 export interface User {
   id: number;
   name: string;
+  age: number;
   password: string;
   birthday: Date;
   firstLogin: Date;
@@ -83,11 +84,11 @@ app.put('/reassign-password', reassignPassword);
 app.get('/user-logged-in', getUserLoggedIn);
 
 app.post(['/users', '/users/add'], (req: express.Request, res: express.Response) => {
-  const { name, password, birthday, firstLogin, nextNotify, info, deleted = 0 } = req.body;
+  const { name, age, password, birthday, firstLogin, nextNotify, info, deleted = 0 } = req.body;
   const id: number = users.length + 1;
 
   const newUser: User = {
-    id, name, password, birthday, firstLogin, nextNotify, info, deleted
+    id, name, age, password, birthday, firstLogin, nextNotify, info, deleted
   };
   users.push(newUser);
 

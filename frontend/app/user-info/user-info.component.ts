@@ -19,18 +19,6 @@ export class UserInfoComponent implements OnInit {
   ngOnInit() {
     console.log('init user info component');
     this.loadUserInfo();
-    /*
-      .pipe(
-        map(
-          user => {
-            console.log(user);
-            this.user = user;
-          }), catchError((err => {
-          console.error(err);
-          this.user = null;
-          return of(null);
-        }))
-      );*/
   }
 
   loadUserInfo() {
