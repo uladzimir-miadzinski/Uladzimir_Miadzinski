@@ -10,7 +10,7 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./forgot-password.component.scss']
 })
 export class ForgotPasswordComponent implements OnInit {
-  remindForm!: FormGroup;
+  reassignForm!: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -19,24 +19,37 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.remindForm = this.fb.group({
+    this.reassignForm = this.fb.group({
       name: ['', {
         validators: [Validators.required],
         asyncValidators: [usernameExistsValidator(this.authService), camelCaseValidator()],
         updateOn: 'blur'
+      }],
+      password: ['', {
+        validators: [Validators.required]
       }]
     });
   }
 
   onSubmit() {
-    alert('your password is ...');
+    this.authService.assignNewPassword(this.name.value, this.password.value).subscribe(
+      () => {
+        alert('New password was set!');
+      }, () => {
+        alert('Error setting new password :(');
+      }
+    );
   }
 
   get form() {
-    return this.remindForm.controls;
+    return this.reassignForm.controls;
   }
 
   get name() {
     return this.form.name;
+  }
+
+  get password() {
+    return this.form.password;
   }
 }

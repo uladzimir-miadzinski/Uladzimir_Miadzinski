@@ -14,6 +14,7 @@ import * as cookieParser from 'cookie-parser';
 export enum STATUS {
   OK = 200,
   CREATED = 201,
+  BAD_REQUEST = 400,
   UNAUTHORIZED = 401,
   NOT_FOUND = 404,
 }
@@ -78,6 +79,61 @@ app.get('/login-check', loginCheck);
 app.post('/login', login);
 app.post('/logout', logout);
 app.get('/user-exists', checkIfUserExists);
+app.put('/reassign-password', reassignPassword);
+
+app.post(['/users', '/users/add'], (req: express.Request, res: express.Response) => {
+  const { name, password, birthday, firstLogin, nextNotify, info, deleted = 0 } = req.body;
+  const id: number = users.length + 1;
+
+  const newUser: User = {
+    id, name, password, birthday, firstLogin, nextNotify, info, deleted
+  };
+  users.push(newUser);
+
+  res.status(STATUS.CREATED);
+  res.json(newUser);
+});
+
+app.put('/users/:id', (req: express.Request, res: express.Response) => {
+  const updatedUser: User | boolean = updateUser(Object.assign({}, req.params, req.body));
+  if (updatedUser) {
+    res.status(STATUS.OK);
+    res.json(updatedUser);
+  } else {
+    res.sendStatus(STATUS.NOT_FOUND);
+  }
+});
+
+app.delete('/users/:id', (req: express.Request, res: express.Response) => {
+  const deletedUser: User | boolean = deleteUserById(req.params.id);
+  if (deletedUser) {
+    res.status(STATUS.OK);
+    res.json(deletedUser);
+  } else {
+    res.sendStatus(STATUS.NOT_FOUND);
+  }
+});
+
+function reassignPassword(req: express.Request, res: express.Response) {
+  const { name, password } = req.body;
+  console.log(req.body);
+  console.log(name);
+  console.log(password);
+  const user = findUserByName(name);
+  console.log(user);
+  if (typeof user !== 'undefined') {
+    const updatedUser: User | boolean = assignPassword(user, password);
+    res.status(updatedUser ? STATUS.OK : STATUS.BAD_REQUEST).send(updatedUser);
+  } else {
+    res.status(STATUS.NOT_FOUND).send();
+  }
+}
+
+function assignPassword(user: User, password: string): User | boolean {
+  const userParams = { ...user };
+  userParams.password = md5(password);
+  return updateUser(userParams);
+}
 
 function checkIfUserExists(req: express.Request, res: express.Response) {
   res.status(STATUS.OK).send(fetchActiveUsers(req.query).length > 0);
@@ -114,7 +170,7 @@ function login(req: express.Request, res: express.Response) {
         expiresIn,
         subject: user.id.toString()
       });
-      res.status(STATUS.OK).cookie('jwt', token, {httpOnly: true, secure: true}).send();
+      res.status(STATUS.OK).cookie('jwt', token, { httpOnly: true, secure: true }).send();
     }).catch(err => {
       res.send(err);
     });
@@ -144,40 +200,6 @@ function isJwtExpired(jwtoken: Jwt) {
   return moment.unix(jwtoken.exp).isBefore(moment());
 }
 
-
-app.post(['/users', '/users/add'], (req: express.Request, res: express.Response) => {
-  const { name, password, birthday, firstLogin, nextNotify, info, deleted = 0 } = req.body;
-  const id: number = users.length + 1;
-
-  const newUser: User = {
-    id, name, password, birthday, firstLogin, nextNotify, info, deleted
-  };
-  users.push(newUser);
-
-  res.status(STATUS.CREATED);
-  res.json(newUser);
-});
-
-app.put('/users/:id', (req: express.Request, res: express.Response) => {
-  const updatedUser: User | boolean = updateUser(Object.assign({}, req.params, req.body));
-  if (updatedUser) {
-    res.status(STATUS.OK);
-    res.json(updatedUser);
-  } else {
-    res.sendStatus(STATUS.NOT_FOUND);
-  }
-});
-
-app.delete('/users/:id', (req: express.Request, res: express.Response) => {
-  const deletedUser: User | boolean = deleteUserById(req.params.id);
-  if (deletedUser) {
-    res.status(STATUS.OK);
-    res.json(deletedUser);
-  } else {
-    res.sendStatus(STATUS.NOT_FOUND);
-  }
-});
-
 function validateUserNamePassword(name: string, password: string): User | false {
   return findUserByNamePassword(name, password) || false;
 }
@@ -188,6 +210,10 @@ function convertToInt(id: number | string): number {
 
 function findUserByNamePassword(name: string, password: string) {
   return users.find((user: User) => user.name === name && user.password === md5(password) && user.deleted === 0);
+}
+
+function findUserByName(name: string) {
+  return users.find((user: User) => user.name === name && user.deleted === 0);
 }
 
 function findIndexByUserId(id: number | string): number {

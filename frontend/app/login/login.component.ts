@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { camelCaseValidator } from '../validators/camel-case-validator.directive';
 import { usernameExistsValidator } from '../validators/username-exists-validator.directive';
+import { maxTwoWordsValidator } from '../validators/max-two-words-validator.directive';
 
 export enum STATUS {
   UNAUTHORIZED = 401,
@@ -27,7 +28,7 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.fb.group({
       name: ['', {
         validators: [Validators.required],
-        asyncValidators: [usernameExistsValidator(this.authService), camelCaseValidator()],
+        asyncValidators: [usernameExistsValidator(this.authService), camelCaseValidator(), maxTwoWordsValidator()],
         updateOn: 'blur'
       }],
       password: ['', {

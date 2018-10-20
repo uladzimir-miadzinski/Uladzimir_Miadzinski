@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { AuthService } from '../services/auth.service';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -12,19 +13,34 @@ export class LoginGuard implements CanActivate {
               private authService: AuthService) {
   }
 
+  /*return new Promise((resolve) => {
+    return this.authService.isLoggedIn().toPromise()
+      .then(() => {
+        this.navigateDefaultPage();
+        resolve(false);
+      })
+      .catch(() => {
+        resolve(true);
+      });
+  });*/
+
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    return new Promise((resolve) => {
-      return this.authService.isLoggedIn().toPromise()
-        .then(() => {
-          this.navigateDefaultPage();
-          resolve(false);
-        })
-        .catch(() => {
-          resolve(true);
-        });
-    });
+    return this.authService.isLoggedIn()
+      .pipe(
+        map(this.redirectDefaultPage),
+        catchError(() => this.allowRoute())
+      );
+  }
+
+  allowRoute() {
+    return of(true);
+  }
+
+  redirectDefaultPage() {
+    this.navigateDefaultPage();
+    return true;
   }
 
   navigateDefaultPage() {

@@ -16,11 +16,11 @@ export class AuthGuard implements CanActivate {
     return this.authService.isLoggedIn()
       .pipe(
         map(this.allowRoute),
-        catchError(() => this.handleError())
+        catchError(() => this.throwOut())
       );
   }
 
-  handleError() {
+  throwOut() {
     this.navigateLogin();
     return of(false);
   }

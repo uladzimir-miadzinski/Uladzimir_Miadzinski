@@ -1,43 +1,55 @@
-<div class="container text-center pt-4">
-  <div class="col-lg-4 offset-lg-4 pt-4">
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <ng-template #loading>
-        <app-loading></app-loading>
-      </ng-template>
-      <div class="form-group">
-        <mat-form-field class="full-width">
-          <input matInput formControlName="name" placeholder="Username" autofocus autocomplete="username">
-        </mat-form-field>
-        <p class="text-danger"
-           *ngIf="name.errors !== null && name.errors.required && (name.dirty || name.touched);">
-          Username is required.
-        </p>
-        <div *ngIf="!name.pending; else loading;">
-          <p class="text-danger"
-             *ngIf="name.errors !== null; else loginFound;">
-            {{name.errors.message}}
-          </p>
-          <ng-template #loginFound>
-            <p class="text-success">
-              Username correct!
-            </p>
-          </ng-template>
-        </div>
-      </div>
-      <div class="form-group">
-        <mat-form-field class="full-width">
-          <input matInput formControlName="password" type="password" class="form-control" placeholder="Password" autocomplete="current-password">
-        </mat-form-field>
-        <p class="text-danger"
-           *ngIf="password.errors !== null && password.errors.required && (password.dirty || password.touched);">
-          Password is required.
-        </p>
-      </div>
+<ng-template #loading>
+  <app-loading></app-loading>
+</ng-template>
 
-      <div class="button-row">
-        <button mat-flat-button [disabled]="!loginForm.valid" color="primary">Login</button>
-        <button mat-flat-button  routerLink="/forgot-password" type="button" color="accent">Forgot password?</button>
-      </div>
+<div class="container text-center pt-4">
+  <div class="col-lg-6 offset-lg-3 mt-3">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <mat-card>
+
+        <mat-card-header>
+          <mat-card-title>Login area</mat-card-title>
+          <mat-card-subtitle>You need to provide your username and password to login my awesome application</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="form-group">
+            <mat-form-field class="full-width">
+              <input matInput formControlName="name" placeholder="Username" autofocus autocomplete="username">
+            </mat-form-field>
+            <p class="text-danger"
+               *ngIf="name.errors !== null && name.errors.required && (name.dirty || name.touched);">
+              Username is required.
+            </p>
+            <div *ngIf="!name.pending; else loading;">
+              <p class="text-danger"
+                 *ngIf="name.errors !== null; else loginFound;">
+                {{name.errors.message}}
+              </p>
+              <ng-template #loginFound>
+                <p class="text-success">
+                  Username correct!
+                </p>
+              </ng-template>
+            </div>
+          </div>
+          <div class="form-group">
+            <mat-form-field class="full-width">
+              <input matInput formControlName="password" type="password" placeholder="Password" autocomplete="current-password">
+            </mat-form-field>
+            <p class="text-danger"
+               *ngIf="password.errors !== null && password.errors.required && (password.dirty || password.touched);">
+              Password is required.
+            </p>
+          </div>
+        </mat-card-content>
+
+        <mat-card-actions class="mb-2 button-row">
+          <button mat-flat-button [disabled]="!loginForm.valid" color="primary">Login</button>
+          <button mat-flat-button  routerLink="/forgot-password" type="button" color="accent">Forgot password?</button>
+        </mat-card-actions>
+
+      </mat-card>
     </form>
   </div>
 </div>

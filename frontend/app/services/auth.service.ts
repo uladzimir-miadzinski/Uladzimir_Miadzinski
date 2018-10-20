@@ -14,6 +14,7 @@ export interface User {
 export class AuthService implements OnInit, OnChanges {
   @Input()
   userLoggedIn!: boolean;
+  apiUrl = 'https://localhost:3000';
 
   constructor(
     private http: HttpClient
@@ -28,25 +29,32 @@ export class AuthService implements OnInit, OnChanges {
   }
 
   isLoggedIn(): Observable<object> {
-    return this.http.get('https://localhost:3000/login-check');
+    return this.http.get(`${this.apiUrl}/login-check`);
   }
 
   login(name: string, password: string) {
-    return this.http.post('https://localhost:3000/login', {
+    return this.http.post(`${this.apiUrl}/login`, {
       name,
       password
     });
   }
 
   logout() {
-    return this.http.post('https://localhost:3000/logout', {});
+    return this.http.post(`${this.apiUrl}/logout`, {});
+  }
+
+  assignNewPassword(name: string, password: string) {
+    return this.http.put<User>(`${this.apiUrl}/reassign-password`, {
+      name,
+      password
+    });
   }
 
   getUserByUsername(username: string) {
     const params = new URLSearchParams();
     params.append('name', username);
 
-    return this.http.get<User[]>(`https://localhost:3000/user-exists?${params.toString()}`);
+    return this.http.get<User[]>(`${this.apiUrl}/user-exists?${params.toString()}`);
   }
 
   updateAuthStatus() {
