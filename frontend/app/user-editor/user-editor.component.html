@@ -1,72 +1,73 @@
-<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-  <div class="form-group">
-    <mat-form-field class="full-width">
-      <input matInput formControlName="name" placeholder="Name:" autofocus>
-    </mat-form-field>
-    <p class="text-danger"
-       *ngIf="name.errors !== null && (name.touched || name.dirty); else loading">
-      {{name.errors.message}}
-    </p>
-    <ng-template #loading>
-      <app-loading *ngIf="name.pending || info.pending"></app-loading>
-    </ng-template>
-  </div>
-  <div class="form-group">
-    <mat-form-field>
-      <input matInput formControlName="age" placeholder="Age:">
-    </mat-form-field>
-    <p class="text-danger"
-       *ngIf="age.errors !== null && (age.touched || age.dirty)">
-      Age must be <span *ngIf="age.errors.error === 'min'; else max">more than 18</span>!
-      <ng-template #max>less than 65</ng-template>
-    </p>
-  </div>
-  <div class="form-group">
-    <mat-form-field>
-      <input matInput formControlName="birthday" placeholder="Birthday:">
-    </mat-form-field>
-    <p class="text-danger"
-       *ngIf="birthday.errors !== null && (birthday.touched || birthday.dirty)">
-      {{birthday.errors.message}}
-    </p>
-  </div>
-  <div class="form-group">
-    <mat-form-field>
-      <input matInput formControlName="nextNotify" placeholder="Date of next notification:">
-    </mat-form-field>
-    <p class="text-danger"
-       *ngIf="nextNotify.errors !== null && (nextNotify.touched || nextNotify.dirty)">
-      {{nextNotify.errors.message}}
-    </p>
-  </div>
-  <div class="form-group">
-    <mat-form-field>
-      <input matInput formControlName="firstLogin" placeholder="Date of first login:">
-    </mat-form-field>
-    <p class="text-danger"
-       *ngIf="firstLogin.errors !== null && (firstLogin.touched || firstLogin.dirty)">
-      {{firstLogin.errors.message}}
-    </p>
-  </div>
-  <div class="form-group">
-    <mat-form-field class="full-width">
-      <input matInput formControlName="info" placeholder="Info:">
-    </mat-form-field>
-    <p class="text-danger"
-       *ngIf="info.errors !== null && (info.touched || info.dirty)">
-      {{info.errors.message}}
-    </p>
-  </div>
+<div class="col-lg-8 offset-lg-2 mt-3 text-center">
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <mat-form-field class="full-width">
+        <input matInput formControlName="name" placeholder="Name:" autofocus>
+      </mat-form-field>
+      <p class="text-danger"
+         *ngIf="name.errors !== null && (name.touched || name.dirty); else loading">
+        {{name.errors.message}}
+      </p>
+      <ng-template #loading>
+        <app-loading *ngIf="name.pending || info.pending"></app-loading>
+      </ng-template>
+    </div>
+    <div class="form-group">
+      <mat-form-field class="full-width">
+        <input matInput formControlName="info" placeholder="Info:">
+      </mat-form-field>
+      <p class="text-danger"
+         *ngIf="info.errors !== null && (info.touched || info.dirty)">
+        {{info.errors.message}}
+      </p>
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        <input matInput formControlName="age" placeholder="Age:">
+      </mat-form-field>
+      <p class="text-danger"
+         *ngIf="age.errors !== null && (age.touched || age.dirty)">
+        Age must be <span *ngIf="age.errors.error === 'min'; else max">more than 18</span>!
+        <ng-template #max>less than 65</ng-template>
+      </p>
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        <input matInput formControlName="birthday" placeholder="Birthday:">
+      </mat-form-field>
+      <p class="text-danger"
+         *ngIf="birthday.errors !== null && (birthday.touched || birthday.dirty)">
+        {{birthday.errors.message}}
+      </p>
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        <input matInput formControlName="nextNotify" placeholder="Date of next notification:">
+      </mat-form-field>
+      <p class="text-danger"
+         *ngIf="nextNotify.errors !== null && (nextNotify.touched || nextNotify.dirty)">
+        {{nextNotify.errors.message}}
+      </p>
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        <input matInput formControlName="firstLogin" placeholder="Date of first login:">
+      </mat-form-field>
+      <p class="text-danger"
+         *ngIf="firstLogin.errors !== null && (firstLogin.touched || firstLogin.dirty)">
+        {{firstLogin.errors.message}}
+      </p>
+    </div>
 
-  <div *ngFor="let err of userForm.errors">
-    <span>{{err}}</span><br>
-  </div>
+    <div *ngFor="let err of userForm.errors">
+      <span>{{err}}</span><br>
+    </div>
 
-  <div class="form-group text-center">
-    <button mat-button color="primary" type="submit" [disabled]="!userForm.valid">Send</button>
-    <button mat-button color="accent" type="reset">Reset</button>
-    <button mat-button color="warn" type="button" (click)="showErrors();">Show errors in console</button>
-  </div>
+    <div class="form-group text-center button-row mt-4">
+      <button mat-flat-button color="primary" type="submit" [disabled]="!userForm.valid">Send</button>
+      <button mat-flat-button color="accent" type="reset">Reset</button>
+      <button mat-flat-button color="warn" type="button" (click)="showErrors();">Show errors in console</button>
+    </div>
 
-</form>
-
+  </form>
+</div>

@@ -6,9 +6,16 @@ import { UserEditorComponent } from './user-editor/user-editor.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  MatButtonModule, MatCardModule, MatDialogModule, MatDividerModule,
+  MatButtonModule,
+  MatCardModule,
+  MatDialogModule,
+  MatDividerModule,
   MatFormFieldModule,
-  MatInputModule, MatListModule, MatProgressBarModule, MatTabsModule
+  MatInputModule,
+  MatListModule,
+  MatProgressBarModule,
+  MatTableModule,
+  MatTabsModule
 } from '@angular/material';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { LoginComponent } from './login/login.component';
@@ -49,6 +56,7 @@ import { DialogLogoutComponent } from './dialog-logout/dialog-logout.component';
     MatListModule,
     MatInputModule,
     MatProgressBarModule,
+    MatTableModule,
     MatTabsModule,
     ReactiveFormsModule
   ],

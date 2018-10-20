@@ -30,6 +30,5 @@ export class AppRoutingModule {
 }
 
 export const AppRoutingComponents = [
-  LoginComponent,
-  ForgotPasswordComponent
+  LoginComponent
 ];

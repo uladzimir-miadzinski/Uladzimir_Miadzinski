@@ -4,6 +4,11 @@ import { Observable } from 'rxjs';
 
 export interface User {
   id: number;
+  birthday?: string;
+  firstLogin?: string;
+  nextNotify?: string;
+  info?: string;
+  password?: string;
   name: string;
   deleted: number;
 }
@@ -48,6 +53,11 @@ export class AuthService implements OnInit, OnChanges {
       name,
       password
     });
+  }
+
+  getCurrentUser() {
+    console.log('get current user');
+    return this.http.get<User>(`${this.apiUrl}/user-logged-in`);
   }
 
   getUserByUsername(username: string) {

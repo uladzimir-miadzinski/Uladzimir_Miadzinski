@@ -80,6 +80,7 @@ app.post('/login', login);
 app.post('/logout', logout);
 app.get('/user-exists', checkIfUserExists);
 app.put('/reassign-password', reassignPassword);
+app.get('/user-logged-in', getUserLoggedIn);
 
 app.post(['/users', '/users/add'], (req: express.Request, res: express.Response) => {
   const { name, password, birthday, firstLogin, nextNotify, info, deleted = 0 } = req.body;
@@ -114,10 +115,25 @@ app.delete('/users/:id', (req: express.Request, res: express.Response) => {
   }
 });
 
+function getUserLoggedIn(req: express.Request, res: express.Response) {
+  const { jwtoken } = req.cookies;
+  const user = getUserFromJwt(jwtoken);
+  res.status(user !== null ? STATUS.OK : STATUS.UNAUTHORIZED).send(user);
+}
+
+function getUserFromJwt(jwtoken: string): User | null {
+  if (jwtoken !== 'undefined') {
+    const parsedJwt = parseJwt(jwtoken);
+    return parsedJwt !== null ? findUserById(parsedJwt.sub) : null;
+  } else {
+    return null;
+  }
+}
+
 function reassignPassword(req: express.Request, res: express.Response) {
   const { name, password } = req.body;
   const user = findUserByName(name);
-  if (typeof user !== 'undefined') {
+  if (user !== null) {
     const updatedUser: User | boolean = assignPassword(user, password);
     res.status(updatedUser ? STATUS.OK : STATUS.BAD_REQUEST).send(updatedUser);
   } else {
@@ -146,7 +162,7 @@ function getActiveUsers(req: express.Request, res: express.Response) {
 
 function getUserById(req: express.Request, res: express.Response) {
   const user = findUserById(req.params.id);
-  if (user) {
+  if (user !== null) {
     res.status(STATUS.OK).send(user);
   } else {
     res.status(STATUS.NOT_FOUND).send();
@@ -164,7 +180,7 @@ function login(req: express.Request, res: express.Response) {
         expiresIn,
         subject: user.id.toString()
       });
-      res.status(STATUS.OK).cookie('jwt', token, { httpOnly: true, secure: true }).send();
+      res.status(STATUS.OK).cookie('jwtoken', token, { httpOnly: true, secure: true }).send();
     }).catch(err => {
       res.send(err);
     });
@@ -174,23 +190,28 @@ function login(req: express.Request, res: express.Response) {
 }
 
 function logout(req: express.Request, res: express.Response) {
-  res.clearCookie('jwt').send();
+  res.clearCookie('jwtoken').send();
 }
 
 function loginCheck(req: express.Request, res: express.Response) {
-  if (typeof req.cookies.jwt !== 'undefined') {
-    const status = getAuthorizeStatusCode(jwt.decode(req.cookies.jwt) as Jwt);
+  const { jwtoken } = req.cookies;
+  if (typeof jwtoken !== 'undefined') {
+    const status = getAuthorizeStatusCode(parseJwt(jwtoken));
     res.status(status).send();
   } else {
     res.status(STATUS.UNAUTHORIZED).send();
   }
 }
 
-function getAuthorizeStatusCode(jwtoken: Jwt) {
-  return isJwtExpired(jwtoken) || !findActiveUserById(jwtoken.sub) ? STATUS.UNAUTHORIZED : STATUS.OK;
+function parseJwt(jwtoken: string): Jwt | null {
+  return jwt.decode(jwtoken) as Jwt;
 }
 
-function isJwtExpired(jwtoken: Jwt) {
+function getAuthorizeStatusCode(jwtoken: Jwt | null) {
+  return jwtoken === null || jwtIsExpired(jwtoken) || findActiveUserById(jwtoken.sub) === null ? STATUS.UNAUTHORIZED : STATUS.OK;
+}
+
+function jwtIsExpired(jwtoken: Jwt) {
   return moment.unix(jwtoken.exp).isBefore(moment());
 }
 
@@ -206,20 +227,20 @@ function findUserByNamePassword(name: string, password: string) {
   return users.find((user: User) => user.name === name && user.password === md5(password) && user.deleted === 0);
 }
 
-function findUserByName(name: string) {
-  return users.find((user: User) => user.name === name && user.deleted === 0);
+function findUserByName(name: string): User | null {
+  return users.find((user: User) => user.name === name && user.deleted === 0) || null;
 }
 
 function findIndexByUserId(id: number | string): number {
   return users.findIndex((user: User) => user.id === convertToInt(id));
 }
 
-function findUserById(id: number | string): User | boolean {
-  return users.find((user: User) => user.id === convertToInt(id)) || false;
+function findUserById(id: number | string): User | null {
+  return users.find((user: User) => user.id === convertToInt(id)) || null;
 }
 
-function findActiveUserById(id: number | string) {
-  return users.find((user: User) => user.id === convertToInt(id) && user.deleted === 0) || false;
+function findActiveUserById(id: number | string): User | null {
+  return users.find((user: User) => user.id === convertToInt(id) && user.deleted === 0) || null;
 }
 
 function deleteUserById(id: number): User | boolean {
