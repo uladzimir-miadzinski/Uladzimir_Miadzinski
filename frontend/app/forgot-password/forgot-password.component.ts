@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { usernameExistsValidator } from '../validators/username-exists-validator.directive';
 import { camelCaseValidator } from '../validators/camel-case-validator.directive';
 import { AuthService } from '../services/auth.service';
+import { AuthGuard } from '../guards/auth.guard';
 
 @Component({
   selector: 'app-forgot-password',
@@ -14,7 +15,8 @@ export class ForgotPasswordComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private authGuard: AuthGuard
   ) {
   }
 
@@ -35,6 +37,7 @@ export class ForgotPasswordComponent implements OnInit {
     this.authService.assignNewPassword(this.name.value, this.password.value).subscribe(
       () => {
         alert('New password was set!');
+        this.authGuard.navigateLogin();
       }, () => {
         alert('Error setting new password :(');
       }

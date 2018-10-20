@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginGuard } from './guards/login.guard';
+import { AuthGuard } from './guards/auth.guard';
 
 @Component({
   selector: 'app-root',
@@ -7,10 +8,10 @@ import { LoginGuard } from './guards/login.guard';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'App';
 
   constructor(
-    private loginGuard: LoginGuard
+    private loginGuard: LoginGuard,
+    public authGuard: AuthGuard
   ) {
   }
 

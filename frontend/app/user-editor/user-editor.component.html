@@ -1,13 +1,15 @@
 <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-  <mat-progress-bar mode="indeterminate" class="top-pressed" *ngIf="name.pending || info.pending" color="warn"></mat-progress-bar>
   <div class="form-group">
     <mat-form-field class="full-width">
       <input matInput formControlName="name" placeholder="Name:" autofocus>
     </mat-form-field>
     <p class="text-danger"
-       *ngIf="name.errors !== null && (name.touched || name.dirty)">
+       *ngIf="name.errors !== null && (name.touched || name.dirty); else loading">
       {{name.errors.message}}
     </p>
+    <ng-template #loading>
+      <app-loading *ngIf="name.pending || info.pending"></app-loading>
+    </ng-template>
   </div>
   <div class="form-group">
     <mat-form-field>
@@ -67,8 +69,4 @@
   </div>
 
 </form>
-
-<div *ngIf="submitted" class="">
-  <app-user-info [userForm]="userForm"></app-user-info>
-</div>
 

@@ -9,8 +9,6 @@ export function maxTwoWordsValidator(): AsyncValidatorFn {
       setTimeout(() => {
 
         const words = value.split(' ');
-        
-        console.log(words);
 
         resolve(words.length > 2 ? {
           allowed: `1-2 words with space between`,

@@ -6,7 +6,7 @@ import { UserEditorComponent } from './user-editor/user-editor.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  MatButtonModule, MatCardModule, MatDividerModule,
+  MatButtonModule, MatCardModule, MatDialogModule, MatDividerModule,
   MatFormFieldModule,
   MatInputModule, MatListModule, MatProgressBarModule, MatTabsModule
 } from '@angular/material';
@@ -19,7 +19,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpInterceptorProviders } from './http-interceptors';
 import { LoadingComponent } from './loading/loading.component';
-import { LogoutComponent } from './logout/logout.component';
+import { DialogLogoutComponent } from './dialog-logout/dialog-logout.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +31,10 @@ import { LogoutComponent } from './logout/logout.component';
     ForgotPasswordComponent,
     UserTabsComponent,
     LoadingComponent,
-    LogoutComponent
+    DialogLogoutComponent
+  ],
+  entryComponents: [
+    DialogLogoutComponent
   ],
   imports: [
     AppRoutingModule,
@@ -40,6 +43,7 @@ import { LogoutComponent } from './logout/logout.component';
     HttpClientModule,
     MatButtonModule,
     MatCardModule,
+    MatDialogModule,
     MatDividerModule,
     MatFormFieldModule,
     MatListModule,

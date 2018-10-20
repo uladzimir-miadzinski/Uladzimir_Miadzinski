@@ -116,11 +116,7 @@ app.delete('/users/:id', (req: express.Request, res: express.Response) => {
 
 function reassignPassword(req: express.Request, res: express.Response) {
   const { name, password } = req.body;
-  console.log(req.body);
-  console.log(name);
-  console.log(password);
   const user = findUserByName(name);
-  console.log(user);
   if (typeof user !== 'undefined') {
     const updatedUser: User | boolean = assignPassword(user, password);
     res.status(updatedUser ? STATUS.OK : STATUS.BAD_REQUEST).send(updatedUser);
@@ -130,9 +126,7 @@ function reassignPassword(req: express.Request, res: express.Response) {
 }
 
 function assignPassword(user: User, password: string): User | boolean {
-  const userParams = { ...user };
-  userParams.password = md5(password);
-  return updateUser(userParams);
+  return updateUser({ ...user, password: md5(password) });
 }
 
 function checkIfUserExists(req: express.Request, res: express.Response) {
