@@ -82,21 +82,11 @@ app.post('/logout', logout);
 app.get('/user-exists', checkIfUserExists);
 app.put('/reassign-password', reassignPassword);
 app.get('/user-logged-in', getUserLoggedIn);
+app.post(['/users', '/users/add'], addNewUser);
+app.delete('/users/:id', deleteUser);
+app.put('/users/:id', updateUserInfo);
 
-app.post(['/users', '/users/add'], (req: express.Request, res: express.Response) => {
-  const { name, age, password, birthday, firstLogin, nextNotify, info, deleted = 0 } = req.body;
-  const id: number = users.length + 1;
-
-  const newUser: User = {
-    id, name, age, password, birthday, firstLogin, nextNotify, info, deleted
-  };
-  users.push(newUser);
-
-  res.status(STATUS.CREATED);
-  res.json(newUser);
-});
-
-app.put('/users/:id', (req: express.Request, res: express.Response) => {
+function updateUserInfo(req: express.Request, res: express.Response) {
   const updatedUser: User | boolean = updateUser(Object.assign({}, req.params, req.body));
   if (updatedUser) {
     res.status(STATUS.OK);
@@ -104,9 +94,9 @@ app.put('/users/:id', (req: express.Request, res: express.Response) => {
   } else {
     res.sendStatus(STATUS.NOT_FOUND);
   }
-});
+}
 
-app.delete('/users/:id', (req: express.Request, res: express.Response) => {
+function deleteUser(req: express.Request, res: express.Response) {
   const deletedUser: User | boolean = deleteUserById(req.params.id);
   if (deletedUser) {
     res.status(STATUS.OK);
@@ -114,7 +104,22 @@ app.delete('/users/:id', (req: express.Request, res: express.Response) => {
   } else {
     res.sendStatus(STATUS.NOT_FOUND);
   }
-});
+}
+
+function addNewUser(req: express.Request, res: express.Response) {
+  res.status(STATUS.CREATED).json(createUser(req.body));
+}
+
+function createUser(params: User) {
+  const { name, age, password, birthday, firstLogin, nextNotify, info, deleted = 0 } = params;
+  const id: number = users.length + 1;
+
+  const newUser: User = {
+    id, name, age, password, birthday, firstLogin, nextNotify, info, deleted
+  };
+  users.push(newUser);
+  return newUser;
+}
 
 function getUserLoggedIn(req: express.Request, res: express.Response) {
   const { jwtoken } = req.cookies;
