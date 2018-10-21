@@ -23,7 +23,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { UserTabsComponent } from './user-tabs/user-tabs.component';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { HttpInterceptorProviders } from './http-interceptors';
 import { LoadingComponent } from './loading/loading.component';
 import { DialogLogoutComponent } from './dialogs/dialog-logout/dialog-logout.component';
@@ -31,6 +31,13 @@ import { UserService } from './services/user.service';
 import { DialogUserSavedComponent } from './dialogs/dialog-user-saved/dialog-user-saved.component';
 import { DialogLoginErrComponent } from './dialogs/dialog-login-err/dialog-login-err.component';
 import { DialogPasswordAssignedComponent } from './dialogs/dialog-password-assigned/dialog-password-assigned.component';
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(httpClient: HttpClient) {
+  return new TranslateHttpLoader(httpClient);
+}
 
 @NgModule({
   declarations: [
@@ -68,7 +75,14 @@ import { DialogPasswordAssignedComponent } from './dialogs/dialog-password-assig
     MatProgressBarModule,
     MatTableModule,
     MatTabsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [
     HttpInterceptorProviders,
