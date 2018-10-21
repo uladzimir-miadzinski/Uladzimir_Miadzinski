@@ -28,7 +28,14 @@
     "required": "is required",
     "correct": "correct",
     "found": "found",
-    "usernameNotFound": "Username not found!"
+    "usernameNotFound": "Username not found!",
+    "mustBeCamelCase": "Value must be in Camel Case format!",
+    "maxTwoWords": "Control value must contain one or two words!",
+    "onlyLatin": "Value must contain only latin chars without number or special symbols!",
+    "ageTooSmall": "Age must be more than 18",
+    "ageTooLarge": "Age must be less than 65",
+    "onlyInteger": "Only integer numbers are allowed!",
+    "invalidDateFormat": "Invalid date format! Please use the required format. Allowed date formats are: YYYY/MM/DD, DD-MMM-YY, DD MMMM YYYY."
   },
   "dialogs": {
     "login-err": {
@@ -51,7 +58,9 @@
     }
   },
   "buttons": {
-    "cancel": "Отмена"
+    "cancel": "Cancel",
+    "save": "Save",
+    "reset": "Reset"
   },
   "nav": {
     "logout": "Logout",
@@ -67,6 +76,7 @@
     "info": "Additional information",
     "name": "Name",
     "nextNotify": "Next notification date",
-    "password": "Password"
+    "password": "Password",
+    "newPassword": "New password (normal string or md5 hash)"
   }
 }

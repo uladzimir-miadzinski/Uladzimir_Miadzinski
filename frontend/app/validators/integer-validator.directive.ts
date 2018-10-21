@@ -20,7 +20,7 @@ export function integerValidator(): ValidatorFn {
     return isInteger(value) ? null : {
       allowed: `integer`,
       current: value,
-      error: 'Only integer numbers are allowed!'
+      error: 'validators.onlyInteger'
     };
   };
 }

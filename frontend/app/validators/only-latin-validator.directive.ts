@@ -16,7 +16,7 @@ export function onlyLatinValidator(): AsyncValidatorFn {
               resolve({
                 allowed: 'Latin and "&nbsp;" (space) char',
                 current: value,
-                message: 'Value must contain only latin chars wo number and special symbols!'
+                message: 'validators.onlyLatin'
               });
             }
           });

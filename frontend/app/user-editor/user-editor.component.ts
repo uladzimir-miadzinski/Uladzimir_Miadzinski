@@ -90,7 +90,7 @@ export class UserEditorComponent implements OnInit, AfterViewInit, OnChanges {
       }],
       age: ['', [integerValidator(), notLegalAgeValidator()]],
       info: [''],
-      password: [''],
+      password: ['', [Validators.required]],
       birthday: ['', dateValidator()],
       firstLogin: ['', dateValidator()],
       nextNotify: ['', dateValidator()]

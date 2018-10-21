@@ -21,7 +21,7 @@ export function maxTwoWordsValidator(): AsyncValidatorFn {
           resolve(words.length > 2 ? {
             allowed: `1-2 words with space between`,
             current: value,
-            message: 'Control value must contain one or two words!'
+            message: 'validators.maxTwoWords'
           } : null);
         } else {
           resolve(null);

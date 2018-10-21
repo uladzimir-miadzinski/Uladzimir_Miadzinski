@@ -12,12 +12,12 @@ export function notLegalAgeValidator(): ValidatorFn {
     const maxAge = 65;
 
     const ageNumber = Number.parseInt(control.value, 10);
-    const error = (ageNumber < minAge) ? `Age must be more than ${minAge}` : (ageNumber > maxAge) ? `Age must be less than ${maxAge}` : '';
+    const error = (ageNumber < minAge) ? `ageTooSmall` : (ageNumber > maxAge) ? `ageTooLarge` : '';
 
     return (error !== '') ? {
       allowed: `${minAge} <= Age <= ${maxAge}`,
       current: age,
-      error: error
+      error: `validators.${error}`
     } : null;
   };
 }

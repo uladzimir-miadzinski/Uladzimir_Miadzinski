@@ -23,7 +23,7 @@ export function camelCaseValidator(): AsyncValidatorFn {
               resolve({
                 allowed: 'Camel Case',
                 current: value,
-                message: 'Value must be in Camel Case format!'
+                message: 'validators.mustBeCamelCase'
               });
             }
           });

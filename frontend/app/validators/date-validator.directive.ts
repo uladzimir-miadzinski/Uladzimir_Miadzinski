@@ -13,7 +13,7 @@ export function dateValidator(): ValidatorFn {
     return (date === '') ? null : moment(date, allowedFormats, true).isValid() ? null : {
       allowed: allowedFormats,
       current: date,
-      message: `Invalid date format! Please use the required format. Allowed date formats are: ${allowedFormats.join(', ')}.`
+      message: `validators.invalidDateFormat`
     };
   };
 }
