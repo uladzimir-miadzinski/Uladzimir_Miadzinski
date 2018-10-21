@@ -8,45 +8,51 @@
       <mat-card>
 
         <mat-card-header>
-          <mat-card-title>Login area</mat-card-title>
-          <mat-card-subtitle>You need to provide your username and password to login my awesome application</mat-card-subtitle>
+          <mat-card-title>{{ 'login.title' | translate }}</mat-card-title>
+          <mat-card-subtitle>{{ 'login.subtitle' | translate }}</mat-card-subtitle>
         </mat-card-header>
 
         <mat-card-content>
           <div class="form-group">
             <mat-form-field class="full-width">
-              <input matInput formControlName="name" placeholder="Username" autofocus autocomplete="username">
+              <input matInput formControlName="name" placeholder="{{ 'login.form.username' | translate }}" autofocus
+                     autocomplete="username">
             </mat-form-field>
             <p class="text-danger"
                *ngIf="name.errors !== null && name.errors.required && (name.dirty || name.touched);">
-              Username is required.
+              {{ 'login.form.username' | translate }} {{ 'validators.required' | translate }}.
             </p>
             <div *ngIf="!name.pending; else loading;">
               <p class="text-danger"
                  *ngIf="name.errors !== null; else loginFound;">
-                {{name.errors.message}}
+                {{name.errors.message | translate}}
               </p>
               <ng-template #loginFound>
                 <p class="text-success">
-                  Username correct!
+                  {{ 'login.form.username' | translate }} {{ 'validators.found' | translate }}!
                 </p>
               </ng-template>
             </div>
           </div>
           <div class="form-group">
             <mat-form-field class="full-width">
-              <input matInput formControlName="password" type="password" placeholder="Password" autocomplete="current-password">
+              <input matInput formControlName="password" type="password"
+                     placeholder="{{ 'login.form.password' | translate }}" autocomplete="current-password">
             </mat-form-field>
             <p class="text-danger"
                *ngIf="password.errors !== null && password.errors.required && (password.dirty || password.touched);">
-              Password is required.
+              {{ 'login.form.password' | translate }} {{ 'validators.required' | translate }}.
             </p>
           </div>
         </mat-card-content>
 
         <mat-card-actions class="mb-2 button-row">
-          <button mat-flat-button [disabled]="!loginForm.valid" color="primary">Login</button>
-          <button mat-flat-button  routerLink="/forgot-password" type="button" color="accent">Forgot password?</button>
+          <button mat-flat-button [disabled]="!loginForm.valid" color="primary">{{ 'login.form.actions.login' |
+            translate }}
+          </button>
+          <button mat-flat-button routerLink="/forgot-password" type="button" color="accent">{{
+            'login.form.actions.forgotPassword' | translate }}
+          </button>
         </mat-card-actions>
 
       </mat-card>

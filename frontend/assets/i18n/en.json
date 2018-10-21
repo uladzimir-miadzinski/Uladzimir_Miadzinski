@@ -1,6 +1,31 @@
 {
-  "HOME": {
-    "TITLE": "Hello Angular with ngx-translate!",
-    "SELECT": "Change language"
+  "login": {
+    "title": "Login area",
+    "subtitle": "You need to provide your username and password to login my awesome application",
+    "form": {
+      "username": "Username",
+      "password": "Password",
+      "actions": {
+        "login": "Login",
+        "forgotPassword": "Forgot password?"
+      }
+    }
+  },
+  "forgotPassword": {
+    "title": "Forgot password?",
+    "subtitle": "We can't remind your old password, but we can help you to assign for a new password",
+    "form": {
+      "newPassword": "New Password",
+      "actions": {
+        "assign": "Assign new password",
+        "backToLogin": "Back to Login"
+      }
+    }
+  },
+  "validators": {
+    "required": "is required",
+    "correct": "correct",
+    "found": "found",
+    "usernameNotFound": "Username not found!"
   }
 }

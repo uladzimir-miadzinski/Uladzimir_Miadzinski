@@ -12,7 +12,7 @@ export function usernameExistsValidator(authService: AuthService): AsyncValidato
       map(userExists => {
         return userExists ? null : {
           current: value,
-          message: 'Username was not found!'
+          message: 'validators.usernameNotFound'
         };
       })
     );

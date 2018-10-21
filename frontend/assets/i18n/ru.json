@@ -1,6 +1,31 @@
 {
-  "HOME": {
-    "TITLE": "Bonjour Angular avec ngx-translate !",
-    "SELECT": "Changer la langue"
+  "login": {
+    "title": "Войти",
+    "subtitle": "Вы должны указать свое имя пользователя и пароль для входа в приложение",
+    "form": {
+      "username": "Имя пользователя",
+      "password": "Пароль",
+      "actions": {
+        "login": "Войти",
+        "forgotPassword": "Забыли пароль?"
+      }
+    }
+  },
+  "forgotPassword": {
+    "title": "Забыли пароль?",
+    "subtitle": "Мы не можем напомнить Ваш старый пароль, но мы можем помочь назначить новый пароль",
+    "form": {
+      "newPassword": "Новый пароль",
+      "actions": {
+        "assign": "Назначить новый пароль",
+        "backToLogin": "На страницу входа"
+      }
+    }
+  },
+  "validators": {
+    "required": "необходимо заполнить",
+    "correct": "верно",
+    "found": "найдено",
+    "usernameNotFound": "Имя пользователя не найдено!"
   }
 }
