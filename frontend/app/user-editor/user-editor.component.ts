@@ -20,7 +20,6 @@ export class UserEditorComponent implements OnInit, AfterViewInit, OnChanges {
   user!: User | null;
 
   userForm!: FormGroup;
-  submitted = false;
 
   constructor(
     private fb: FormBuilder
@@ -73,7 +72,7 @@ export class UserEditorComponent implements OnInit, AfterViewInit, OnChanges {
 
   onChanges(): void {
     this.userForm.valueChanges.subscribe(() => {
-      this.submitted = false;
+
     });
   }
 
@@ -103,7 +102,6 @@ export class UserEditorComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   onSubmit() {
-    this.submitted = true;
   }
 
   showErrors() {

@@ -36,7 +36,6 @@ export class UserTabsComponent implements OnInit {
     this.authService.getCurrentUser()
       .subscribe((user: User) => {
         this.user = user;
-        // this.userKeys = Object.keys(this.user).sort();
         console.log(this.user);
       }, err => {
         console.error(err);

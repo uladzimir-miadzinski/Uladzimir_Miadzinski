@@ -7,16 +7,21 @@ export function onlyLatinValidator(): AsyncValidatorFn {
     return new Promise<ValidationError | null>(resolve => {
       const delayTime = 3000;
       setTimeout(() => {
-        [...value].forEach((char: string) => {
-          const charCode = char.charCodeAt(0);
-          if ((charCode < 65 || (charCode > 90 && charCode < 97) || charCode > 125) && charCode !== 32) {
-            resolve({
-              allowed: 'Latin and "&nbsp;" (space) char',
-              current: value,
-              message: 'Value must contain only latin chars wo number and special symbols!'
-            });
-          }
-        });
+        
+        if (value !== null) {
+          
+          [...value].forEach((char: string) => {
+            const charCode = char.charCodeAt(0);
+            if ((charCode < 65 || (charCode > 90 && charCode < 97) || charCode > 125) && charCode !== 32) {
+              resolve({
+                allowed: 'Latin and "&nbsp;" (space) char',
+                current: value,
+                message: 'Value must contain only latin chars wo number and special symbols!'
+              });
+            }
+          });
+          
+        }
 
         resolve(null);
 

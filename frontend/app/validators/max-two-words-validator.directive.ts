@@ -11,14 +11,17 @@ export function maxTwoWordsValidator(): AsyncValidatorFn {
     return new Promise<ValidationError | null>(resolve => {
       const delayTime = 3000;
       setTimeout(() => {
+        if (value !== null) {
+          const words = value.trim().split(' ').filter(notEmptyStr);
 
-        const words = value.trim().split(' ').filter(notEmptyStr);
-
-        resolve(words.length > 2 ? {
-          allowed: `1-2 words with space between`,
-          current: value,
-          message: 'Control value must contain one or two words!'
-        } : null);
+          resolve(words.length > 2 ? {
+            allowed: `1-2 words with space between`,
+            current: value,
+            message: 'Control value must contain one or two words!'
+          } : null);
+        } else {
+          resolve(null);
+        }
 
       }, delayTime);
     });

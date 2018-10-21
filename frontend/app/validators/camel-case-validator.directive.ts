@@ -12,20 +12,22 @@ export function camelCaseValidator(): AsyncValidatorFn {
       const delayTime = 3000;
       setTimeout(() => {
 
-        const words: string[] = value.split(' ');
-        const camelcaseWords: string[] = words.map((word: string) => {
-          return firstUpper(word);
-        });
+        if (value !== null) {
+          const words: string[] = value.split(' ');
+          const camelcaseWords: string[] = words.map((word: string) => {
+            return firstUpper(word);
+          });
 
-        words.forEach((word: string, index: number) => {
-          if (word !== camelcaseWords[index]) {
-            resolve({
-              allowed: 'Camel Case',
-              current: value,
-              message: 'Value must be in Camel Case format!'
-            });
-          }
-        });
+          words.forEach((word: string, index: number) => {
+            if (word !== camelcaseWords[index]) {
+              resolve({
+                allowed: 'Camel Case',
+                current: value,
+                message: 'Value must be in Camel Case format!'
+              });
+            }
+          });
+        }
 
         resolve(null);
 
