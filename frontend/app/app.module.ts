@@ -27,6 +27,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpInterceptorProviders } from './http-interceptors';
 import { LoadingComponent } from './loading/loading.component';
 import { DialogLogoutComponent } from './dialog-logout/dialog-logout.component';
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { DialogLogoutComponent } from './dialog-logout/dialog-logout.component';
   providers: [
     HttpInterceptorProviders,
     AuthService,
+    UserService,
     AuthGuard
   ],
   bootstrap: [AppComponent]

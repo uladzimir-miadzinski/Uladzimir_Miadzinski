@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface User {
-  id: number;
+  id?: number;
   age: number;
   birthday?: string;
   firstLogin?: string;
@@ -11,7 +11,7 @@ export interface User {
   info?: string;
   password?: string;
   name: string;
-  deleted: number;
+  deleted?: number;
   [key: string]: number | string | undefined;
 }
 
@@ -49,8 +49,7 @@ export class AuthService {
   }
 
   getCurrentUser() {
-    console.log('get current user');
-    return this.http.get<User>(`${this.apiUrl}/user-logged-in`);
+    return this.http.get<User>(`${this.apiUrl}/current-user`);
   }
 
   getUserByUsername(username: string) {

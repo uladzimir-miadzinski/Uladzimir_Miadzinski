@@ -1,9 +1,9 @@
 <mat-tab-group [(selectedIndex)]="selectedTab" mat-stretch-tabs (selectedTabChange)="onTabChange($event)">
   <mat-tab label="CURRENT USER INFO" class="container">
-    <app-user-info [user]="user"></app-user-info>
+    <app-user-info [user]="userService.user"></app-user-info>
   </mat-tab>
   <mat-tab label="UPDATE CURRENT USER INFO" class="container">
-    <app-user-editor [user]="user"></app-user-editor>
+    <app-user-editor [user]="userService.user"></app-user-editor>
   </mat-tab>
   <mat-tab label="LOGOUT" class="text-danger"></mat-tab>
 </mat-tab-group>

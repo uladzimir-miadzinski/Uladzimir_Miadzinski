@@ -5,6 +5,10 @@ export function notEmptyStr(str: string) {
   return str !== '';
 }
 
+export function filterSpaces(str: string) {
+  return str.trim().split(' ').filter(notEmptyStr);
+}
+
 export function maxTwoWordsValidator(): AsyncValidatorFn {
   return (control: AbstractControl): Promise<ValidationError | null> => {
     const {value} = control;
@@ -12,7 +16,7 @@ export function maxTwoWordsValidator(): AsyncValidatorFn {
       const delayTime = 3000;
       setTimeout(() => {
         if (value !== null) {
-          const words = value.trim().split(' ').filter(notEmptyStr);
+          const words = filterSpaces(value);
 
           resolve(words.length > 2 ? {
             allowed: `1-2 words with space between`,

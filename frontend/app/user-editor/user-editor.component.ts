@@ -1,13 +1,14 @@
 import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { notLegalAgeValidator } from '../validators/not-legal-age-validator.directive';
 import { dateValidator } from '../validators/date-validator.directive';
 import { camelCaseValidator } from '../validators/camel-case-validator.directive';
-import { maxTwoWordsValidator } from '../validators/max-two-words-validator.directive';
+import { filterSpaces, maxTwoWordsValidator } from '../validators/max-two-words-validator.directive';
 import { onlyLatinValidator } from '../validators/only-latin-validator.directive';
 import { User } from '../services/auth.service';
 import * as moment from 'moment';
 import { integerValidator } from '../validators/integer-validator.directive';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-user-editor',
@@ -22,7 +23,8 @@ export class UserEditorComponent implements OnInit, AfterViewInit, OnChanges {
   userForm!: FormGroup;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private userService: UserService
   ) {
   }
 
@@ -79,6 +81,7 @@ export class UserEditorComponent implements OnInit, AfterViewInit, OnChanges {
   createForm() {
     this.userForm = this.fb.group({
       name: ['', {
+        validators: [Validators.required],
         asyncValidators: [maxTwoWordsValidator(), camelCaseValidator(), onlyLatinValidator()],
         updateOn: 'blur'
       }],
@@ -102,6 +105,22 @@ export class UserEditorComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   onSubmit() {
+    console.log(this.userForm.controls);
+    const params: User = {
+      name: filterSpaces(this.name.value).join(' ') as string,
+      age: this.age.value as number,
+      info: this.info.value as string,
+      birthday: this.birthday.value as string,
+      firstLogin: this.firstLogin.value as string,
+      nextNotify: this.nextNotify.value as string,
+      password: this.password.value as string,
+    };
+
+    this.userService.updateCurrentUser(params).subscribe(
+      (updatedUser) => {
+        this.userService.loadUserInfo();
+      }
+    );
   }
 
   showErrors() {

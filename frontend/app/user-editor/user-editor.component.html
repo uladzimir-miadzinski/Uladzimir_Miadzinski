@@ -6,7 +6,10 @@
       </mat-form-field>
       <p class="text-danger"
          *ngIf="name.errors !== null && (name.touched || name.dirty); else loading">
-        {{name.errors.message}}
+        <span *ngIf="name.errors.required; else asyncErrors">Name is required.</span>
+        <ng-template #asyncErrors>
+          {{name.errors.message}}
+        </ng-template>
       </p>
       <ng-template #loading>
         <app-loading *ngIf="name.pending || info.pending"></app-loading>
@@ -59,7 +62,7 @@
     </div>
     <div class="form-group">
       <mat-form-field class="full-width">
-        <input matInput formControlName="password" type="password" placeholder="New password" autocomplete="current-password">
+        <input matInput formControlName="password" type="password" placeholder="New password (normal string or md5 hash)" autocomplete="current-password">
       </mat-form-field>
       <p class="text-danger"
          *ngIf="password.errors !== null && password.errors.required && (password.dirty || password.touched);">
@@ -74,7 +77,7 @@
     <div class="form-group text-center button-row mt-4">
       <button mat-flat-button color="primary" type="submit" [disabled]="!userForm.valid">Send</button>
       <button mat-flat-button color="accent" type="reset">Reset</button>
-      <button mat-flat-button color="warn" type="button" (click)="showErrors();">Show errors in console</button>
+      <!--<button mat-flat-button color="warn" type="button" (click)="showErrors();">Show errors in console</button>-->
     </div>
 
   </form>

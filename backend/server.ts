@@ -10,6 +10,8 @@ import * as cors from 'cors';
 import * as moment from 'moment';
 // @ts-ignore
 import * as cookieParser from 'cookie-parser';
+// @ts-ignore
+import * as isMd5 from 'is-md5';
 
 export enum STATUS {
   OK = 200,
@@ -81,12 +83,31 @@ app.post('/login', login);
 app.post('/logout', logout);
 app.get('/user-exists', checkIfUserExists);
 app.put('/reassign-password', reassignPassword);
-app.get('/user-logged-in', getUserLoggedIn);
 app.post(['/users', '/users/add'], addNewUser);
 app.delete('/users/:id', deleteUser);
-app.put('/users/:id', updateUserInfo);
+app.put('/users/:id', updateUserById);
+app.get('/current-user', getCurrentUser);
+app.put('/current-user', updateCurrentUser);
 
-function updateUserInfo(req: express.Request, res: express.Response) {
+function updateCurrentUser(req: express.Request, res: express.Response) {
+  const { jwtoken } = req.cookies;
+  const user = getUserFromJwt(jwtoken);
+
+  if (user !== null) {
+    const updatedUser: User | boolean = updateUser(Object.assign({}, { id: user.id }, req.body));
+
+    if (updatedUser) {
+      res.status(STATUS.OK);
+      res.json(updatedUser);
+    } else {
+      res.sendStatus(STATUS.NOT_FOUND);
+    }
+  } else {
+    res.status(STATUS.UNAUTHORIZED).send();
+  }
+}
+
+function updateUserById(req: express.Request, res: express.Response) {
   const updatedUser: User | boolean = updateUser(Object.assign({}, req.params, req.body));
   if (updatedUser) {
     res.status(STATUS.OK);
@@ -121,7 +142,7 @@ function createUser(params: User) {
   return newUser;
 }
 
-function getUserLoggedIn(req: express.Request, res: express.Response) {
+function getCurrentUser(req: express.Request, res: express.Response) {
   const { jwtoken } = req.cookies;
   const user = getUserFromJwt(jwtoken);
   res.status(user !== null ? STATUS.OK : STATUS.UNAUTHORIZED).send(user);
@@ -260,11 +281,11 @@ function deleteUserById(id: number): User | boolean {
 }
 
 function updateUser(params: User): User | boolean {
-  const { id, name, password, birthday, firstLogin, nextNotify, info, deleted } = params;
+  const { id, name, password, birthday, firstLogin, nextNotify, info, deleted = 0 } = params;
   const index = findIndexByUserId(id);
   if (index >= 0) {
     users[index].name = name;
-    users[index].password = password;
+    users[index].password = isMd5(password) ? password : md5(password);
     users[index].birthday = birthday;
     users[index].firstLogin = firstLogin;
     users[index].nextNotify = nextNotify;
