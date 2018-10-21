@@ -23,7 +23,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (typeof changes.user.currentValue !== 'undefined') {
-      this.userKeys = Object.keys(changes.user.currentValue).sort();
+      this.userKeys = Object.keys(changes.user.currentValue);
     }
   }
 

@@ -4,7 +4,7 @@ import { usernameExistsValidator } from '../validators/username-exists-validator
 import { camelCaseValidator } from '../validators/camel-case-validator.directive';
 import { AuthService } from '../services/auth.service';
 import { MatDialog } from '@angular/material';
-import { DialogPasswordAssignedComponent } from '../dialogs/dialog-password-assigned/dialog-password-assigned.component';
+import { DialogPasswordAssignComponent } from '../dialogs/dialog-password-assign/dialog-password-assign.component';
 import { AuthGuard } from '../guards/auth.guard';
 
 @Component({
@@ -39,7 +39,7 @@ export class ForgotPasswordComponent implements OnInit {
   onSubmit() {
     this.authService.assignNewPassword(this.name.value, this.password.value).subscribe(
       () => {
-        const dialogRef = this.dialog.open(DialogPasswordAssignedComponent, {
+        const dialogRef = this.dialog.open(DialogPasswordAssignComponent, {
           data: {
             success: true
           }
@@ -49,7 +49,7 @@ export class ForgotPasswordComponent implements OnInit {
           this.authGuard.navigateLogin();
         });
       }, (err) => {
-        this.dialog.open(DialogPasswordAssignedComponent, {
+        this.dialog.open(DialogPasswordAssignComponent, {
           data: {
             success: false,
             error: err

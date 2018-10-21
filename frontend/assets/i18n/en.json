@@ -23,9 +23,50 @@
     }
   },
   "validators": {
+    "error": "error",
+    "success": "success",
     "required": "is required",
     "correct": "correct",
     "found": "found",
     "usernameNotFound": "Username not found!"
+  },
+  "dialogs": {
+    "login-err": {
+      "content": "Invalid username or password, please try again."
+    },
+    "logout": {
+      "title": "Logout",
+      "content": "Do you really want to logout the application?",
+      "buttons": {
+        "logout": "Yes, logout"
+      }
+    },
+    "password-assign": {
+      "successContent": "New password was assigned successfully!",
+      "errorContent": "New password was not assigned!"
+    },
+    "user-saved": {
+      "successContent": "User was saved successfully!",
+      "errorContent": "User was not saved!"
+    }
+  },
+  "buttons": {
+    "cancel": "Отмена"
+  },
+  "nav": {
+    "logout": "Logout",
+    "updateInfo": "Update current user info",
+    "viewInfo": "Current user info"
+  },
+  "user": {
+    "age": "Age",
+    "birthday": "Birthday",
+    "deleted": "Deleted",
+    "firstLogin": "First login date",
+    "id": "Identifier",
+    "info": "Additional information",
+    "name": "Name",
+    "nextNotify": "Next notification date",
+    "password": "Password"
   }
 }

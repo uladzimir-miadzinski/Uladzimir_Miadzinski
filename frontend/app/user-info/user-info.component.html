@@ -2,7 +2,7 @@
   <table class="table table-responsive-lg table-hover">
     <tbody>
       <tr *ngFor="let key of userKeys">
-        <td class="w-25 text-center">{{key | uppercase}}</td>
+        <td class="w-25 text-center">{{ 'user.' + key | translate | uppercase}}</td>
         <td class="w-75"><span class="text-info">{{user[key]}}</span></td>
       </tr>
     </tbody>

@@ -30,7 +30,7 @@ import { DialogLogoutComponent } from './dialogs/dialog-logout/dialog-logout.com
 import { UserService } from './services/user.service';
 import { DialogUserSavedComponent } from './dialogs/dialog-user-saved/dialog-user-saved.component';
 import { DialogLoginErrComponent } from './dialogs/dialog-login-err/dialog-login-err.component';
-import { DialogPasswordAssignedComponent } from './dialogs/dialog-password-assigned/dialog-password-assigned.component';
+import { DialogPasswordAssignComponent } from './dialogs/dialog-password-assign/dialog-password-assign.component';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
@@ -52,13 +52,13 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     DialogLogoutComponent,
     DialogUserSavedComponent,
     DialogLoginErrComponent,
-    DialogPasswordAssignedComponent
+    DialogPasswordAssignComponent
   ],
   entryComponents: [
     DialogLoginErrComponent,
     DialogLogoutComponent,
     DialogUserSavedComponent,
-    DialogPasswordAssignedComponent
+    DialogPasswordAssignComponent
   ],
   imports: [
     AppRoutingModule,

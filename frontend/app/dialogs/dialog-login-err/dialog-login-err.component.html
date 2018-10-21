@@ -1,8 +1,8 @@
 <h2 mat-dialog-title>
-  <span class="text-danger">Error</span>
+  <span class="text-danger">{{ 'validators.error' | translate | titlecase}}</span>
 </h2>
 <mat-dialog-content class="mat-typography">
-  Invalid username or password, please try again.
+  {{ 'dialogs.login-err.content' | translate }}
 </mat-dialog-content>
 <mat-dialog-actions align="end" class="mt-4">
   <button mat-button mat-dialog-close (click)="onOk()">OK</button>

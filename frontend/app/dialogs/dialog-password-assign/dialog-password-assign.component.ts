@@ -3,15 +3,15 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { DialogData } from '../dialog-user-saved/dialog-user-saved.component';
 
 @Component({
-  selector: 'app-dialog-password-assigned',
-  templateUrl: './dialog-password-assigned.component.html',
-  styleUrls: ['./dialog-password-assigned.component.scss']
+  selector: 'app-dialog-password-assign',
+  templateUrl: './dialog-password-assign.component.html',
+  styleUrls: ['./dialog-password-assign.component.scss']
 })
-export class DialogPasswordAssignedComponent implements OnInit {
+export class DialogPasswordAssignComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    public dialogRef: MatDialogRef<DialogPasswordAssignedComponent>
+    public dialogRef: MatDialogRef<DialogPasswordAssignComponent>
   ) { }
 
   ngOnInit() {

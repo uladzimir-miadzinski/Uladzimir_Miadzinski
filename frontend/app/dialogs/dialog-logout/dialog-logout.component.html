@@ -1,8 +1,8 @@
-<h2 mat-dialog-title>Logout?</h2>
+<h2 mat-dialog-title>{{ 'dialogs.logout.title' | translate }}</h2>
 <mat-dialog-content class="mat-typography">
-  <p>Please confirm your desire to logout the application.</p>
+  <p>{{ 'dialogs.logout.content' | translate }}</p>
 </mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close (click)="onCancel()">Cancel</button>
-  <button mat-button mat-dialog-close cdkFocusInitial color="warn" (click)="onSubmit()">Yes, LOGOUT</button>
+<mat-dialog-actions align="end" class="mt-4">
+  <button mat-button mat-dialog-close (click)="onCancel()">{{ 'buttons.cancel' | translate }}</button>
+  <button mat-button mat-dialog-close cdkFocusInitial color="warn" (click)="onSubmit()">{{ 'dialogs.logout.buttons.logout' | translate }}</button>
 </mat-dialog-actions>

@@ -93,7 +93,7 @@ app.put('/current-user', updateCurrentUser);
 function loadingDelay(req: express.Request, res: express.Response, next: express.NextFunction) {
   setTimeout(function() {
     next();
-  }, 3000);
+  }, 0);
 }
 
 function updateCurrentUser(req: express.Request, res: express.Response) {

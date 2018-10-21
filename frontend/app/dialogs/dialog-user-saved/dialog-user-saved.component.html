@@ -1,12 +1,17 @@
 <h2 mat-dialog-title>
-  Notification
+  <p *ngIf="data.success; else errorHeader">
+    <span class="text-success">{{'validators.success' | translate | titlecase}}</span>
+  </p>
+  <ng-template #errorHeader>
+    <span class="text-danger">{{'validators.error' | translate | titlecase}}</span>
+  </ng-template>
 </h2>
 <mat-dialog-content class="mat-typography">
   <p *ngIf="data.success; else error">
-    <span class="text-success">User saved successfully!</span>
+    {{'dialogs.user-saved.successContent' | translate}}
   </p>
   <ng-template #error>
-    <span class="text-danger">User not saved! :(</span>
+    {{'dialogs.user-saved.errorContent' | translate}}
     <p>{{data.error | json}}</p>
   </ng-template>
 </mat-dialog-content>
