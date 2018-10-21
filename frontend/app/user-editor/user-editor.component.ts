@@ -9,6 +9,8 @@ import { User } from '../services/auth.service';
 import * as moment from 'moment';
 import { integerValidator } from '../validators/integer-validator.directive';
 import { UserService } from '../services/user.service';
+import { MatDialog } from '@angular/material';
+import { DialogUserSavedComponent } from '../dialogs/dialog-user-saved/dialog-user-saved.component';
 
 @Component({
   selector: 'app-user-editor',
@@ -24,7 +26,8 @@ export class UserEditorComponent implements OnInit, AfterViewInit, OnChanges {
 
   constructor(
     private fb: FormBuilder,
-    private userService: UserService
+    private userService: UserService,
+    private dialog: MatDialog
   ) {
   }
 
@@ -116,7 +119,19 @@ export class UserEditorComponent implements OnInit, AfterViewInit, OnChanges {
     };
 
     this.userService.updateCurrentUser(params).subscribe(() => {
+      this.dialog.open(DialogUserSavedComponent, {
+        data: {
+          success: true
+        }
+      });
       this.userService.loadUserInfo();
+    }, (err) => {
+      this.dialog.open(DialogUserSavedComponent, {
+        data: {
+          success: false,
+          error: err
+        }
+      });
     });
   }
 

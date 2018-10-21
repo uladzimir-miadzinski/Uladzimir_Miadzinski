@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { usernameExistsValidator } from '../validators/username-exists-validator.directive';
 import { camelCaseValidator } from '../validators/camel-case-validator.directive';
 import { AuthService } from '../services/auth.service';
+import { MatDialog } from '@angular/material';
+import { DialogPasswordAssignedComponent } from '../dialogs/dialog-password-assigned/dialog-password-assigned.component';
 import { AuthGuard } from '../guards/auth.guard';
 
 @Component({
@@ -16,6 +18,7 @@ export class ForgotPasswordComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
+    private dialog: MatDialog,
     private authGuard: AuthGuard
   ) {
   }
@@ -36,10 +39,22 @@ export class ForgotPasswordComponent implements OnInit {
   onSubmit() {
     this.authService.assignNewPassword(this.name.value, this.password.value).subscribe(
       () => {
-        alert('New password was set!');
-        this.authGuard.navigateLogin();
-      }, () => {
-        alert('Error setting new password :(');
+        const dialogRef = this.dialog.open(DialogPasswordAssignedComponent, {
+          data: {
+            success: true
+          }
+        });
+
+        dialogRef.afterClosed().subscribe(() => {
+          this.authGuard.navigateLogin();
+        });
+      }, (err) => {
+        this.dialog.open(DialogPasswordAssignedComponent, {
+          data: {
+            success: false,
+            error: err
+          }
+        });
       }
     );
   }

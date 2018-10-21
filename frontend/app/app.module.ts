@@ -26,8 +26,11 @@ import { AuthGuard } from './guards/auth.guard';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpInterceptorProviders } from './http-interceptors';
 import { LoadingComponent } from './loading/loading.component';
-import { DialogLogoutComponent } from './dialog-logout/dialog-logout.component';
+import { DialogLogoutComponent } from './dialogs/dialog-logout/dialog-logout.component';
 import { UserService } from './services/user.service';
+import { DialogUserSavedComponent } from './dialogs/dialog-user-saved/dialog-user-saved.component';
+import { DialogLoginErrComponent } from './dialogs/dialog-login-err/dialog-login-err.component';
+import { DialogPasswordAssignedComponent } from './dialogs/dialog-password-assigned/dialog-password-assigned.component';
 
 @NgModule({
   declarations: [
@@ -39,10 +42,16 @@ import { UserService } from './services/user.service';
     ForgotPasswordComponent,
     UserTabsComponent,
     LoadingComponent,
-    DialogLogoutComponent
+    DialogLogoutComponent,
+    DialogUserSavedComponent,
+    DialogLoginErrComponent,
+    DialogPasswordAssignedComponent
   ],
   entryComponents: [
-    DialogLogoutComponent
+    DialogLoginErrComponent,
+    DialogLogoutComponent,
+    DialogUserSavedComponent,
+    DialogPasswordAssignedComponent
   ],
   imports: [
     AppRoutingModule,

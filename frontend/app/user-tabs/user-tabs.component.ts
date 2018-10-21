@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material';
 import { MatDialog } from '@angular/material';
-import { DialogLogoutComponent } from '../dialog-logout/dialog-logout.component';
+import { DialogLogoutComponent } from '../dialogs/dialog-logout/dialog-logout.component';
 import { AuthService } from '../services/auth.service';
 import { AuthGuard } from '../guards/auth.guard';
 import { UserService } from '../services/user.service';

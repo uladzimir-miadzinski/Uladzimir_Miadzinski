@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>
+  Notification
+</h2>
+<mat-dialog-content class="mat-typography">
+  <p *ngIf="data.success; else error">
+    <span class="text-success">User saved successfully!</span>
+  </p>
+  <ng-template #error>
+    <span class="text-danger">User not saved! :(</span>
+    <p>{{data.error | json}}</p>
+  </ng-template>
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="mt-4">
+  <button mat-button mat-dialog-close (click)="onOk()">OK</button>
+</mat-dialog-actions>

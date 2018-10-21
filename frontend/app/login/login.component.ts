@@ -6,6 +6,8 @@ import { camelCaseValidator } from '../validators/camel-case-validator.directive
 import { usernameExistsValidator } from '../validators/username-exists-validator.directive';
 import { maxTwoWordsValidator } from '../validators/max-two-words-validator.directive';
 import { LoginGuard } from '../guards/login.guard';
+import { DialogLoginErrComponent } from '../dialogs/dialog-login-err/dialog-login-err.component';
+import { MatDialog } from '@angular/material';
 
 export enum STATUS {
   UNAUTHORIZED = 401,
@@ -23,7 +25,8 @@ export class LoginComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private authService: AuthService,
               private loginGuard: LoginGuard,
-              private router: Router) {
+              private router: Router,
+              private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -54,7 +57,7 @@ export class LoginComponent implements OnInit {
           },
           (error) => {
             if (error.status === STATUS.UNAUTHORIZED) {
-              alert('Login incorrect');
+              this.dialog.open(DialogLoginErrComponent);
             }
           }
         );
