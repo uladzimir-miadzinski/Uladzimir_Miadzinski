@@ -1,20 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthGuard } from './guards/auth.guard';
+import { AfterViewChecked, Component } from '@angular/core';
+import { LoadingService } from './services/loading.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements AfterViewChecked {
 
   constructor(
-    public authGuard: AuthGuard
+    public loadingService: LoadingService,
+    private cdRef: ChangeDetectorRef
   ) {
   }
 
-  ngOnInit(): void {
-
+  ngAfterViewChecked(): void {
+    this.cdRef.detectChanges();
   }
+
 
 }

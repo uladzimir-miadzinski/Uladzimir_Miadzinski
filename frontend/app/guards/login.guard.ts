@@ -13,17 +13,6 @@ export class LoginGuard implements CanActivate {
               private authService: AuthService) {
   }
 
-  /*return new Promise((resolve) => {
-    return this.authService.isLoggedIn().toPromise()
-      .then(() => {
-        this.navigateDefaultPage();
-        resolve(false);
-      })
-      .catch(() => {
-        resolve(true);
-      });
-  });*/
-
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {

@@ -7,22 +7,19 @@ import { HttpClient } from '@angular/common/http';
 })
 export class UserService {
   apiUrl = 'https://localhost:3000';
-  public user!: User;
+  public user!: User | null;
 
   constructor(
     private http: HttpClient,
-    private authService: AuthService,
+    private authService: AuthService
   ) {
     this.loadUserInfo();
   }
 
   loadUserInfo() {
     this.authService.getCurrentUser()
-      .subscribe((user: User) => {
+      .subscribe((user: User | null) => {
         this.user = user;
-        console.log(this.user);
-      }, err => {
-        console.error(err);
       });
   }
 

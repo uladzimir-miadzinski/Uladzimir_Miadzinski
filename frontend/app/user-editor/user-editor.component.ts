@@ -105,7 +105,6 @@ export class UserEditorComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   onSubmit() {
-    console.log(this.userForm.controls);
     const params: User = {
       name: filterSpaces(this.name.value).join(' ') as string,
       age: this.age.value as number,
@@ -116,11 +115,9 @@ export class UserEditorComponent implements OnInit, AfterViewInit, OnChanges {
       password: this.password.value as string,
     };
 
-    this.userService.updateCurrentUser(params).subscribe(
-      (updatedUser) => {
-        this.userService.loadUserInfo();
-      }
-    );
+    this.userService.updateCurrentUser(params).subscribe(() => {
+      this.userService.loadUserInfo();
+    });
   }
 
   showErrors() {

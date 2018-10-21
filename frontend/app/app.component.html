@@ -1,2 +1,2 @@
-<app-loading *ngIf="(authGuard.loader$ | async)"></app-loading>
+<app-loading *ngIf="(loadingService.loader$ | async)"></app-loading>
 <router-outlet></router-outlet>
