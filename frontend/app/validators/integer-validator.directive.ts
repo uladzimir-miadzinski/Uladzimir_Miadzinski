@@ -1,9 +1,13 @@
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 import { ValidationError } from './validation-error';
 
-export function isInteger(str: string | number) {
-  const n = Math.floor(Number(str));
-  return n !== Infinity && String(n) === str && n >= 0;
+export function isInteger(num: string | number) {
+  if (typeof num === 'number') {
+    return Number.isInteger(num) && num > 0;
+  } else {
+    const n = Math.floor(Number(num));
+    return n !== Infinity && String(n) === num && n >= 0;
+  }
 }
 
 export function integerValidator(): ValidatorFn {
