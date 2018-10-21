@@ -2,30 +2,61 @@ Nodejs API [https://localhost:3000/users](https://localhost:3000/users)
 
 Angular Frontend [https://localhost:4200](https://localhost:4200)
 ##
+Keywords: `http2`, `https`, `angular6`, `express`
+##
+How to run project?
 
-Task: 
+First install dependencies (you should have `yarn` installed): 
+- `yarn install`
 
-  get `/users` - should return list of users
+Type in terminal or cmd: 
+- `yarn build`
+- `yarn start`
 
-  get `/users/:id` - should return specific user by id
+or 
+- `yarn build:backend`
+- `yarn start:backend`
+- `yarn build:frontend`
+- `yarn start:frontend`
 
-  post `/users` or `/users/add` - should add in memory user
+##
+Possible errors:
+- ERR_CERT_AUTHORITY_INVALID: 
+  - you should apply both certificates on `:3000` and `:4200` (just go to this routes and get certs)
+  - if certs does not shows to you, rebuild backend (`yarn build:backend`)
+##
+Availible routes:
 
-  put `/users/:id` - should update in memory specific user by id
+* GET 
+  - `/users` - get list of active (deleted: 0) users
+  - `/users/:id` - get user by id
+  - `/login-check` - check if user logged in
+  - `/user-exists` - check if user exists (by query params, but now supported only by name param)
+  - `/current-user` - get current user identity
+  
+* POST
+  - `/logout` - logout current user
+  - `/login` - login user
+  - `/users` - should add in memory user
+  
+* PUT 
+  - `/reassign-password` - reassign new password for user
+  - `/users/:id` - should update in memory specific user by id
+  - `/current-user` - should update in memory specific user by id
+  
+* DELETE 
+  - `/users/:id` - should remove from memory specific user by id
+  
+##
 
-  delete `/users/:id` - should remove from memory specific user by id
-
+Conditions: 
 - content type has to be application/json
-
 - all users must be located in users.json file as array, and we will never modify it programmatically with fields like:
-
-    id, name, password, date of birth, date of first login, date of next notification, information.
-
+  - id, name, password, date of birth, date of first login, date of next notification, information.
 - all dates have to be in ISO strings
+- use `https` for requests, example: `https://localhost:3000/users`
 
-
-Use `https` for requests, example: `https://localhost:3000/users`
-
+##
 for any questions - skype: `medinky_skype`
 
 # Medinsky
