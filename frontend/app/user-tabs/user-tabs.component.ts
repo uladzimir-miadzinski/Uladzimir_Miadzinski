@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material';
 import { MatDialog } from '@angular/material';
 import { DialogLogoutComponent } from '../dialog-logout/dialog-logout.component';
-import { AuthService } from '../services/auth.service';
+import { AuthService, User } from '../services/auth.service';
 import { AuthGuard } from '../guards/auth.guard';
 
 
@@ -18,6 +18,7 @@ export enum Tab {
   styleUrls: ['./user-tabs.component.scss']
 })
 export class UserTabsComponent implements OnInit {
+  user!: User;
   selectedTab = 0;
 
   constructor(
@@ -28,6 +29,18 @@ export class UserTabsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadUserInfo();
+  }
+
+  loadUserInfo() {
+    this.authService.getCurrentUser()
+      .subscribe((user: User) => {
+        this.user = user;
+        // this.userKeys = Object.keys(this.user).sort();
+        console.log(this.user);
+      }, err => {
+        console.error(err);
+      });
   }
 
   onTabChange(event: MatTabChangeEvent) {

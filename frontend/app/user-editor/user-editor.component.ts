@@ -1,11 +1,11 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { notLegalAgeValidator } from '../validators/not-legal-age-validator.directive';
 import { dateValidator } from '../validators/date-validator.directive';
 import { camelCaseValidator } from '../validators/camel-case-validator.directive';
 import { maxTwoWordsValidator } from '../validators/max-two-words-validator.directive';
 import { onlyLatinValidator } from '../validators/only-latin-validator.directive';
-import { AuthService, User } from '../services/auth.service';
+import { User } from '../services/auth.service';
 import * as moment from 'moment';
 import { integerValidator } from '../validators/integer-validator.directive';
 
@@ -14,11 +14,16 @@ import { integerValidator } from '../validators/integer-validator.directive';
   templateUrl: './user-editor.component.html',
   styleUrls: ['./user-editor.component.scss']
 })
-export class UserEditorComponent implements OnInit, AfterViewInit {
+export class UserEditorComponent implements OnInit, AfterViewInit, OnChanges {
+
+  @Input()
+  user!: User | null;
+
+  userForm!: FormGroup;
+  submitted = false;
 
   constructor(
-    private fb: FormBuilder,
-    private authService: AuthService
+    private fb: FormBuilder
   ) {
   }
 
@@ -53,9 +58,6 @@ export class UserEditorComponent implements OnInit, AfterViewInit {
   get password() {
     return this.form.password;
   }
-  user!: User;
-  submitted = false;
-  userForm!: FormGroup;
 
   static formatDate(date: string | undefined) {
     return typeof date === 'undefined' ? '' : moment(date).format('YYYY/MM/DD');
@@ -63,13 +65,6 @@ export class UserEditorComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.createForm();
-    this.authService.getCurrentUser().subscribe((user: User) => {
-      this.user = user;
-      console.log(this.user);
-      this.updateForm(user);
-    }, err => {
-      console.error(err);
-    });
   }
 
   ngAfterViewInit() {
@@ -97,7 +92,7 @@ export class UserEditorComponent implements OnInit, AfterViewInit {
     });
   }
 
-  updateForm(user: User) {
+  updateFormValues(user: User) {
     this.form.name.setValue(user.name);
     this.form.age.setValue(user.age);
     this.form.info.setValue(user.info);
@@ -115,5 +110,11 @@ export class UserEditorComponent implements OnInit, AfterViewInit {
     Object.keys(this.form).forEach(key => {
       console.warn(this.form[key].errors);
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (typeof this.user !== 'undefined' && this.user !== null) {
+      this.updateFormValues(this.user);
+    }
   }
 }

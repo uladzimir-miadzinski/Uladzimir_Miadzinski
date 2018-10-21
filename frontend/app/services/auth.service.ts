@@ -1,4 +1,4 @@
-import { Injectable, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -18,21 +18,12 @@ export interface User {
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService implements OnInit, OnChanges {
-  @Input()
-  userLoggedIn!: boolean;
+export class AuthService {
   apiUrl = 'https://localhost:3000';
 
   constructor(
     private http: HttpClient
   ) {
-  }
-
-  ngOnInit(): void {
-    this.updateAuthStatus();
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
   }
 
   isLoggedIn(): Observable<object> {
@@ -67,14 +58,5 @@ export class AuthService implements OnInit, OnChanges {
     params.append('name', username);
 
     return this.http.get<User[]>(`${this.apiUrl}/user-exists?${params.toString()}`);
-  }
-
-  updateAuthStatus() {
-    this.isLoggedIn().subscribe(() => {
-      this.userLoggedIn = true;
-      console.log(true);
-    }, () => {
-      this.userLoggedIn = false;
-    });
   }
 }
