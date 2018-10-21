@@ -54,6 +54,7 @@ app.use(json());
 app.use(urlencoded(urlencodedOptions));
 app.use(cors(corsOptions));
 app.use(cookieParser());
+app.use(loadingDelay);
 
 const key: Promise<string> = readFileAsync(`${__dirname}/server.key`);
 const cert: Promise<string> = readFileAsync(`${__dirname}/server.crt`);
@@ -88,6 +89,12 @@ app.delete('/users/:id', deleteUser);
 app.put('/users/:id', updateUserById);
 app.get('/current-user', getCurrentUser);
 app.put('/current-user', updateCurrentUser);
+
+function loadingDelay(req: express.Request, res: express.Response, next: express.NextFunction) {
+  setTimeout(function() {
+    next();
+  }, 4000);
+}
 
 function updateCurrentUser(req: express.Request, res: express.Response) {
   const { jwtoken } = req.cookies;
@@ -281,10 +288,11 @@ function deleteUserById(id: number): User | boolean {
 }
 
 function updateUser(params: User): User | boolean {
-  const { id, name, password, birthday, firstLogin, nextNotify, info, deleted = 0 } = params;
+  const { id, name, age, password, birthday, firstLogin, nextNotify, info, deleted = 0 } = params;
   const index = findIndexByUserId(id);
   if (index >= 0) {
     users[index].name = name;
+    users[index].age = age;
     users[index].password = isMd5(password) ? password : md5(password);
     users[index].birthday = birthday;
     users[index].firstLogin = firstLogin;
