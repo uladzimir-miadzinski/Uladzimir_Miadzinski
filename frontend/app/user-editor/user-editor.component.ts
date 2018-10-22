@@ -29,6 +29,7 @@ export class UserEditorComponent implements OnInit, AfterViewInit, OnChanges {
     private userService: UserService,
     private dialog: MatDialog
   ) {
+    this.createForm();
   }
 
   get form() {
@@ -68,7 +69,6 @@ export class UserEditorComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnInit() {
-    this.createForm();
   }
 
   ngAfterViewInit() {
@@ -76,9 +76,6 @@ export class UserEditorComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   onChanges(): void {
-    this.userForm.valueChanges.subscribe(() => {
-
-    });
   }
 
   createForm() {

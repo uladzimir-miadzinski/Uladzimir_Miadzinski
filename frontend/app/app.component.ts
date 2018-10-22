@@ -9,6 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, AfterViewChecked {
+  selectedLang = 'en';
 
   constructor(
     public loadingService: LoadingService,
@@ -18,6 +19,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
   }
 
   ngAfterViewChecked(): void {
+    this.translate.use(this.selectedLang);
     this.cdRef.detectChanges();
   }
 
@@ -29,5 +31,8 @@ export class AppComponent implements OnInit, AfterViewChecked {
     this.translate.use(browserLang.match(/en|ru/) ? browserLang : 'en');
   }
 
+  onLangChange() {
+    this.translate.use(this.selectedLang);
+  }
 
 }

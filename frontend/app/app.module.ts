@@ -13,7 +13,7 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatListModule,
-  MatProgressBarModule,
+  MatProgressBarModule, MatSelectModule,
   MatTableModule,
   MatTabsModule
 } from '@angular/material';
@@ -73,6 +73,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     MatListModule,
     MatInputModule,
     MatProgressBarModule,
+    MatSelectModule,
     MatTableModule,
     MatTabsModule,
     ReactiveFormsModule,
