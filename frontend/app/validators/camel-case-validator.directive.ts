@@ -1,5 +1,5 @@
-import {AbstractControl, AsyncValidatorFn} from '@angular/forms';
-import {ValidationError} from './validation-error';
+import { AbstractControl, AsyncValidatorFn } from '@angular/forms';
+import { ValidationError } from './validation-error';
 
 export function firstUpper(str: string) {
   return str.length > 0 ? str[0].toUpperCase() + str.slice(1).toLowerCase() : '';
@@ -14,19 +14,19 @@ export function camelCaseValidator(): AsyncValidatorFn {
 
         if (value !== null) {
           const words: string[] = value.split(' ');
-          const camelcaseWords: string[] = words.map((word: string) => {
-            return firstUpper(word);
+          const camelcaseWords: string[] = words.map(firstUpper);
+
+          const found = words.find((word: string, index: number) => {
+            return word !== camelcaseWords[index];
           });
 
-          words.forEach((word: string, index: number) => {
-            if (word !== camelcaseWords[index]) {
-              resolve({
-                allowed: 'Camel Case',
-                current: value,
-                message: 'validators.mustBeCamelCase'
-              });
-            }
-          });
+          if (typeof found !== 'undefined') {
+            resolve({
+              allowed: 'Camel Case',
+              current: value,
+              message: 'validators.mustBeCamelCase'
+            });
+          }
         }
 
         resolve(null);
