@@ -1,0 +1,14 @@
+.user-choosen {
+  border: 1px solid lightpink;
+}
+
+.ellipsis-oneliner {
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.row {
+  display: flex;
+}

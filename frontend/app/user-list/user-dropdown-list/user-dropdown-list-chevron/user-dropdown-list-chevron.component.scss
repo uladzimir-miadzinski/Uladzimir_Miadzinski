@@ -1,0 +1,13 @@
+.chevron::after {
+  content: '\25bd';
+  font-size: 25px;
+  color: lightslategray;
+}
+
+.chevron-container {
+  text-align: center;
+  background-color: white;
+  border: 1px solid lightpink;
+  border-left: 0;
+  cursor: pointer;
+}
