@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { User } from '../../../../services/auth.service';
 
 @Component({
   selector: 'app-search-results-item',
@@ -6,8 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./search-results-item.component.scss']
 })
 export class SearchResultsItemComponent implements OnInit {
+  @Input() user?: User;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

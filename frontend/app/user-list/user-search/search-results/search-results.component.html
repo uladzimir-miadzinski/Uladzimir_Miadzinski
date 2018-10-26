@@ -1,1 +1,3 @@
-<app-search-results-item></app-search-results-item>
+<div class="search-results-container container panel-shadow">
+  <app-search-results-item *ngFor="let user of users" [user]="user"></app-search-results-item>
+</div>
