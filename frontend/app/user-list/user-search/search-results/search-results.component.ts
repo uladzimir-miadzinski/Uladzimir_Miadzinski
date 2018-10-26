@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { User } from '../../../services/auth.service';
-import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-search-results',
@@ -8,17 +7,13 @@ import { UserService } from '../../../services/user.service';
   styleUrls: ['./search-results.component.scss']
 })
 export class SearchResultsComponent implements OnInit {
-  public users?: User[];
+  @Input() users?: User[];
 
   constructor(
-    private userService: UserService
   ) {
   }
 
   ngOnInit() {
-    this.userService.getUsers().subscribe((users: User[]) => {
-      this.users = users;
-    });
   }
 
 }
