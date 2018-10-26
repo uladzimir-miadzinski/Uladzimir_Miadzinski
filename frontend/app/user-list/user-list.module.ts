@@ -6,10 +6,20 @@ import { UserDropdownListComponent } from './user-dropdown-list/user-dropdown-li
 import { UserDropdownItemComponent } from './user-dropdown-list/user-dropdown-item/user-dropdown-item.component';
 import { UserDropdownListChevronComponent } from './user-dropdown-list/user-dropdown-list-chevron/user-dropdown-list-chevron.component';
 import { UserService } from '../services/user.service';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { HttpLoaderFactory } from '../http-loader.factory';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
   ],
   declarations: [
     UserListComponent,

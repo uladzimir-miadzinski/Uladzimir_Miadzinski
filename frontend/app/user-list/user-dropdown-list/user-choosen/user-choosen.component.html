@@ -1,22 +1,24 @@
-<div class="d-flex flex-row flex-grow-1 user-choosen p-2">
-  <div class="">
-    <div class="">
-      <div class="ellipsis-oneliner w-75">
-        Name: Lorem qwlke qkej qwklejq lkqwjlwkq ejqwklej qwlkej wqkljewkl qjemlkwqelkwqme lqkweqwkl qewklj qwklejq wlkejwqlks
-      </div>
+<div *ngIf="selectedUser !== undefined && selectedUser !== null; else pleaseSelectUser"
+     class="d-flex flex-row flex-grow-1 user-choosen hover cursor-pointer p-2">
+  <div class="first-col">
+    <div class="ellipsis-oneliner w-75">
+      {{'user.name' | translate}}: <span class="text-primary">{{selectedUser.name}}</span>
     </div>
-    <div class="">
-      <div>
-        Age: 18
-      </div>
+    <div>
+      {{'user.age' | translate}}: <span class="text-primary">{{selectedUser.age}}</span>
     </div>
-    <div class="">
-      <div class="ellipsis-oneliner w-75" title="">
-        Info: something from db, it can be a long long long long long long long story
-      </div>
+    <div class="ellipsis-oneliner w-75" title="">
+      {{'user.info' | translate}}: <span class="text-primary">{{selectedUser.info}}</span>
     </div>
   </div>
-  <div class="align-self-center ml-4 mr-2">
-    <span>birthday</span>
+  <div class="align-self-center ml-4">
+    {{'user.birthday' | translate}}: <span class="text-primary">{{selectedUser.birthday | date}}</span>
   </div>
 </div>
+<ng-template #pleaseSelectUser>
+  <div class="d-flex flex-row flex-grow-1 user-choosen hover cursor-pointer p-2 align-items-center justify-content-center">
+    <h3 class="lead">
+      {{'text.selectUser' | translate}}
+    </h3>
+  </div>
+</ng-template>

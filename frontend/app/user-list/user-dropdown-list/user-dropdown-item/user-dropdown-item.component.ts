@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { User } from '../../../services/auth.service';
 
 @Component({
@@ -8,12 +8,22 @@ import { User } from '../../../services/auth.service';
 })
 export class UserDropdownItemComponent implements OnInit {
   @Input()
-  public user?: User;
+  public user!: User;
+  @Input()
+  public selectedUser!: User;
 
-  constructor() { }
+  @Output()
+  public selectedUserChange: EventEmitter<User> = new EventEmitter<User>();
+
+  constructor() {
+  }
 
   ngOnInit() {
 
+  }
+
+  selectUser() {
+    this.selectedUserChange.emit(this.user);
   }
 
 }

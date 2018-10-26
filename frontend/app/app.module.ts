@@ -32,13 +32,10 @@ import { DialogUserSavedComponent } from './dialogs/dialog-user-saved/dialog-use
 import { DialogLoginErrComponent } from './dialogs/dialog-login-err/dialog-login-err.component';
 import { DialogPasswordAssignComponent } from './dialogs/dialog-password-assign/dialog-password-assign.component';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { UserListModule } from './user-list/user-list.module';
+import { HttpLoaderFactory } from './http-loader.factory';
 
-// AoT requires an exported function for factories
-export function HttpLoaderFactory(httpClient: HttpClient) {
-  return new TranslateHttpLoader(httpClient);
-}
+
 
 @NgModule({
   declarations: [

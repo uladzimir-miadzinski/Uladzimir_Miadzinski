@@ -1,13 +1,20 @@
 .chevron::after {
   content: '\25bd';
   font-size: 25px;
-  color: lightslategray;
+  color: #cc314e;
 }
 
 .chevron-container {
   text-align: center;
   background-color: white;
-  border: 1px solid lightpink;
-  border-left: 0;
+  border: 0;
   cursor: pointer;
+}
+
+.chevron-container:hover {
+  background-color: rgba(0,0,0,.12);
+}
+
+.chevron-active {
+  background-color: rgba(0,0,0,.09);
 }

@@ -1,13 +1,13 @@
-<p>
-  user-dropdown-list works!
-</p>
-<div class="d-flex flex-column w-100">
+<div class="d-flex flex-column w-100 panel-shadow disable-user-select">
   <div class="d-flex flex-row">
-    <app-user-choosen class="d-flex align-self-stretch flex-grow-1"></app-user-choosen>
-    <app-user-dropdown-list-chevron class="d-flex align-self-stretch"></app-user-dropdown-list-chevron>
+    <app-user-choosen [selectedUser]="selectedUser" class="d-flex align-self-stretch flex-grow-1"></app-user-choosen>
+    <app-user-dropdown-list-chevron [(dropdownHidden)]="dropdownHidden" class="d-flex align-self-stretch"></app-user-dropdown-list-chevron>
   </div>
 
-  <div *ngFor="let user of users">
-    <app-user-dropdown-item [user]="user"></app-user-dropdown-item>
-  </div>
+  <app-user-dropdown-item *ngFor="let user of users"
+                          class="{{dropdownHidden ? 'hide' : 'show'}}"
+                          [selectedUser]="selectedUser"
+                          (selectedUserChange)="onSelectedUserChange($event)"
+                          [user]="user"></app-user-dropdown-item>
+
 </div>

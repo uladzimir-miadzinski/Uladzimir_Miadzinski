@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { User } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 
@@ -7,14 +7,16 @@ import { UserService } from '../../services/user.service';
   templateUrl: './user-dropdown-list.component.html',
   styleUrls: ['./user-dropdown-list.component.scss']
 })
-export class UserDropdownListComponent implements OnInit {
+export class UserDropdownListComponent implements OnInit, OnChanges {
 
   public users!: User[];
   public selectedUser?: User;
+  public dropdownHidden = true;
 
   constructor(
     private userService: UserService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.userService.getUsers().subscribe(users => {
@@ -22,4 +24,11 @@ export class UserDropdownListComponent implements OnInit {
     });
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+  }
+
+  onSelectedUserChange(user: User) {
+    this.selectedUser = user;
+    this.dropdownHidden = true;
+  }
 }
