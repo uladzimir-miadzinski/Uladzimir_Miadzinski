@@ -1,8 +1,8 @@
 <mat-tab-group [(selectedIndex)]="selectedTab" mat-stretch-tabs (selectedTabChange)="onTabChange($event)">
-  <mat-tab label="{{'nav.viewInfo' | translate | uppercase}}" class="container">
+  <mat-tab label="{{'nav.viewInfo' | translate | uppercase}}">
     <app-user-info [user]="userService.user"></app-user-info>
   </mat-tab>
-  <mat-tab label="{{'nav.updateInfo' | translate | uppercase}}" class="container">
+  <mat-tab label="{{'nav.updateInfo' | translate | uppercase}}">
     <app-user-editor [user]="userService.user"></app-user-editor>
   </mat-tab>
   <mat-tab label="{{'nav.logout' | translate | uppercase}}" class="text-danger"></mat-tab>

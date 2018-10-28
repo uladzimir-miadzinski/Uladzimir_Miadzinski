@@ -37,7 +37,7 @@ import { HttpLoaderFactory } from './http-loader.factory';
 
 import { StoreModule } from '@ngrx/store';
 import { reducers } from './store/users/reducers';
-import { StoreDevtools, StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [

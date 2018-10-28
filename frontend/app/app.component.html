@@ -1,9 +1,13 @@
 <app-loading *ngIf="(loadingService.loader$ | async)"></app-loading>
 <router-outlet></router-outlet>
-<div class="container text-center mt-4">
-  <mat-form-field>
-    <mat-select  [(value)]="selectedLang" (valueChange)="onLangChange()" #langSelect placeholder="Language">
-      <mat-option *ngFor="let lang of translate.getLangs()" [value]="lang">{{ lang }}</mat-option>
-    </mat-select>
-  </mat-form-field>
+<div class="container text-center pt-4">
+  <div class="row justify-content-center">
+    <div class="col-2">
+      <mat-form-field>
+        <mat-select  [(value)]="selectedLang" (valueChange)="onLangChange()" #langSelect placeholder="Language">
+          <mat-option *ngFor="let lang of translate.getLangs()" [value]="lang">{{ lang }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
 </div>

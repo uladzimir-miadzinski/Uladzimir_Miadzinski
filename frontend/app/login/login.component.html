@@ -3,59 +3,61 @@
 </ng-template>
 
 <div class="container text-center pt-4">
-  <div class="col-lg-6 offset-lg-3 mt-3">
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
-      <mat-card>
+  <div class="row justify-content-center">
+    <div class="col-lg-6 mt-3">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+        <mat-card>
 
-        <mat-card-header>
-          <mat-card-title>{{ 'login.title' | translate }}</mat-card-title>
-          <mat-card-subtitle>{{ 'login.subtitle' | translate }}</mat-card-subtitle>
-        </mat-card-header>
+          <mat-card-header>
+            <mat-card-title>{{ 'login.title' | translate }}</mat-card-title>
+            <mat-card-subtitle>{{ 'login.subtitle' | translate }}</mat-card-subtitle>
+          </mat-card-header>
 
-        <mat-card-content>
-          <div class="form-group">
-            <mat-form-field class="full-width">
-              <input matInput formControlName="name" placeholder="{{ 'login.form.username' | translate }}" autofocus
-                     autocomplete="username">
-            </mat-form-field>
-            <p class="text-danger"
-               *ngIf="name.errors !== null && name.errors.required && (name.dirty || name.touched);">
-              {{ 'login.form.username' | translate }} {{ 'validators.required' | translate }}.
-            </p>
-            <div *ngIf="!name.pending; else loading;">
+          <mat-card-content>
+            <div class="form-group">
+              <mat-form-field class="full-width">
+                <input matInput formControlName="name" placeholder="{{ 'login.form.username' | translate }}" autofocus
+                       autocomplete="username">
+              </mat-form-field>
               <p class="text-danger"
-                 *ngIf="name.errors !== null; else loginFound;">
-                {{name.errors.message | translate}}
+                 *ngIf="name.errors !== null && name.errors.required && (name.dirty || name.touched);">
+                {{ 'login.form.username' | translate }} {{ 'validators.required' | translate }}.
               </p>
-              <ng-template #loginFound>
-                <p class="text-success">
-                  {{ 'login.form.username' | translate }} {{ 'validators.found' | translate }}!
+              <div *ngIf="!name.pending; else loading;">
+                <p class="text-danger"
+                   *ngIf="name.errors !== null; else loginFound;">
+                  {{name.errors.message | translate}}
                 </p>
-              </ng-template>
+                <ng-template #loginFound>
+                  <p class="text-success">
+                    {{ 'login.form.username' | translate }} {{ 'validators.found' | translate }}!
+                  </p>
+                </ng-template>
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <mat-form-field class="full-width">
-              <input matInput formControlName="password" type="password"
-                     placeholder="{{ 'login.form.password' | translate }}" autocomplete="current-password">
-            </mat-form-field>
-            <p class="text-danger"
-               *ngIf="password.errors !== null && password.errors.required && (password.dirty || password.touched);">
-              {{ 'login.form.password' | translate }} {{ 'validators.required' | translate }}.
-            </p>
-          </div>
-        </mat-card-content>
+            <div class="form-group">
+              <mat-form-field class="full-width">
+                <input matInput formControlName="password" type="password"
+                       placeholder="{{ 'login.form.password' | translate }}" autocomplete="current-password">
+              </mat-form-field>
+              <p class="text-danger"
+                 *ngIf="password.errors !== null && password.errors.required && (password.dirty || password.touched);">
+                {{ 'login.form.password' | translate }} {{ 'validators.required' | translate }}.
+              </p>
+            </div>
+          </mat-card-content>
 
-        <mat-card-actions class="mb-2 button-row">
-          <button mat-flat-button [disabled]="!loginForm.valid" color="primary">{{ 'login.form.actions.login' |
-            translate }}
-          </button>
-          <button mat-flat-button routerLink="/forgot-password" type="button" color="accent">{{
-            'login.form.actions.forgotPassword' | translate }}
-          </button>
-        </mat-card-actions>
+          <mat-card-actions class="mb-2 button-row">
+            <button mat-flat-button [disabled]="!loginForm.valid" color="primary">{{ 'login.form.actions.login' |
+              translate }}
+            </button>
+            <button mat-flat-button routerLink="/forgot-password" type="button" color="accent">{{
+              'login.form.actions.forgotPassword' | translate }}
+            </button>
+          </mat-card-actions>
 
-      </mat-card>
-    </form>
+        </mat-card>
+      </form>
+    </div>
   </div>
 </div>
