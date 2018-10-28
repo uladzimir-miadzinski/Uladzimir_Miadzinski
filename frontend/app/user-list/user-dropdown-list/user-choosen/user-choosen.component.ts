@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { User } from '../../../services/auth.service';
 
 @Component({
@@ -7,13 +7,21 @@ import { User } from '../../../services/auth.service';
   styleUrls: ['./user-choosen.component.scss']
 })
 export class UserChoosenComponent implements OnInit {
-  @Input()
-  public selectedUser?: User;
+  @Input() selectedUser?: User;
+  @Input() dropdownHidden!: boolean;
+
+  @Output() dropdownHiddenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor() {
   }
 
   ngOnInit() {
+  }
+
+  openList() {
+    this.dropdownHidden = !this.dropdownHidden;
+    this.dropdownHiddenChange.emit(this.dropdownHidden);
+    console.log(this.dropdownHidden);
   }
 
 }

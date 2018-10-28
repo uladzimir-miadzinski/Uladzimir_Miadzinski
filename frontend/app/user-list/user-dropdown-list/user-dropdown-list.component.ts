@@ -9,9 +9,9 @@ import { UserService } from '../../services/user.service';
 })
 export class UserDropdownListComponent implements OnInit, OnChanges {
 
-  public users!: User[];
-  public selectedUser?: User;
-  public dropdownHidden = true;
+  users!: User[];
+  selectedUser?: User;
+  dropdownHidden = true;
 
   constructor(
     private userService: UserService

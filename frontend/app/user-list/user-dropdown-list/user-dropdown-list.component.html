@@ -1,7 +1,11 @@
 <div class="d-flex flex-column w-100 panel-shadow disable-user-select">
   <div class="d-flex flex-row">
-    <app-user-choosen [selectedUser]="selectedUser" class="d-flex align-self-stretch flex-grow-1"></app-user-choosen>
-    <app-user-dropdown-list-chevron [(dropdownHidden)]="dropdownHidden" class="d-flex align-self-stretch"></app-user-dropdown-list-chevron>
+    <app-user-choosen [(dropdownHidden)]="dropdownHidden" [selectedUser]="selectedUser"
+                      class="d-flex align-self-stretch flex-grow-1">
+    </app-user-choosen>
+    <app-user-dropdown-list-chevron [(dropdownHidden)]="dropdownHidden"
+                                    class="d-flex align-self-stretch">
+    </app-user-dropdown-list-chevron>
   </div>
 
   <app-user-dropdown-item *ngFor="let user of users"

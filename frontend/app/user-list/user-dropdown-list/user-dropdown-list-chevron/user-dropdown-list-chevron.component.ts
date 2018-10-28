@@ -6,18 +6,16 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./user-dropdown-list-chevron.component.scss']
 })
 export class UserDropdownListChevronComponent implements OnInit {
-  @Input()
-  dropdownHidden!: boolean;
+  @Input() dropdownHidden!: boolean;
 
-  @Output()
-  dropdownHiddenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() dropdownHiddenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor() { }
 
   ngOnInit() {
   }
 
-  onClick() {
+  openList() {
     this.dropdownHidden = !this.dropdownHidden;
     this.dropdownHiddenChange.emit(this.dropdownHidden);
     console.log(this.dropdownHidden);

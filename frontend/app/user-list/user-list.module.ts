@@ -9,6 +9,11 @@ import { UserService } from '../services/user.service';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpLoaderFactory } from '../http-loader.factory';
+import { UserSearchComponent } from './user-search/user-search.component';
+import { SearchFieldComponent } from './user-search/search-field/search-field.component';
+import { SearchBtnComponent } from './user-search/search-btn/search-btn.component';
+import { SearchResultsComponent } from './user-search/search-results/search-results.component';
+import { SearchResultsItemComponent } from './user-search/search-results/search-results-item/search-results-item.component';
 
 @NgModule({
   imports: [
@@ -26,7 +31,12 @@ import { HttpLoaderFactory } from '../http-loader.factory';
     UserChoosenComponent,
     UserDropdownListComponent,
     UserDropdownItemComponent,
-    UserDropdownListChevronComponent
+    UserDropdownListChevronComponent,
+    UserSearchComponent,
+    SearchFieldComponent,
+    SearchBtnComponent,
+    SearchResultsComponent,
+    SearchResultsItemComponent
   ],
   providers: [
     UserService

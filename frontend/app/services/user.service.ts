@@ -31,4 +31,8 @@ export class UserService {
     return this.http.get<User[]>(`${this.apiUrl}/users`);
   }
 
+  getUsersByName(name: string) {
+    return this.http.get<User[]>(`${this.apiUrl}/users?name=${name}`);
+  }
+
 }

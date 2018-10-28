@@ -80,6 +80,7 @@
     "newPassword": "New password (normal string or md5 hash)"
   },
   "text": {
-    "selectUser": "Please, select user from list"
+    "selectUser": "Please, select user from list",
+    "searchQuestion": "Search by name"
   }
 }

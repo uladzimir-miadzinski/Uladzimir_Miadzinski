@@ -1,8 +1,8 @@
-.chevron span {
-  font-size: 25px;
+.search-btn span {
+  font-size: 32px;
 }
 
-.chevron-container {
+.search-btn-container {
   text-align: center;
   background-color: white;
   border: 0;
@@ -10,10 +10,10 @@
   min-width: 5rem;
 }
 
-.chevron-container:hover {
+.search-btn-container:hover {
   background-color: rgba(0,0,0,.12);
 }
 
-.chevron-active {
+.search-btn-active {
   background-color: rgba(0,0,0,.09);
 }

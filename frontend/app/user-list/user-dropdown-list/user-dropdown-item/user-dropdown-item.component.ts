@@ -7,13 +7,10 @@ import { User } from '../../../services/auth.service';
   styleUrls: ['./user-dropdown-item.component.scss']
 })
 export class UserDropdownItemComponent implements OnInit {
-  @Input()
-  public user!: User;
-  @Input()
-  public selectedUser!: User;
+  @Input() user!: User;
+  @Input() selectedUser!: User;
 
-  @Output()
-  public selectedUserChange: EventEmitter<User> = new EventEmitter<User>();
+  @Output() selectedUserChange: EventEmitter<User> = new EventEmitter<User>();
 
   constructor() {
   }
