@@ -1,12 +1,12 @@
 <div class="d-flex flex-row user-dropdown-item p-2 hover cursor-pointer" (click)="selectUser()">
-  <div class="first-col">
-    <div class="ellipsis-oneliner w-75">
+  <div class="first-col w-50">
+    <div class="ellipsis-oneliner">
       {{'user.name' | translate}}: <span class="text-primary">{{user.name}}</span>
     </div>
     <div>
       {{'user.age' | translate}}: <span class="text-primary">{{user.age}}</span>
     </div>
-    <div class="ellipsis-oneliner w-75" title="">
+    <div class="ellipsis-oneliner" title="">
       {{'user.info' | translate}}: <span class="text-primary">{{user.info}}</span>
     </div>
   </div>
