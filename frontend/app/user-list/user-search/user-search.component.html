@@ -1,7 +1,7 @@
 <div class="d-flex flex-column w-100">
   <div class="d-flex flex-row panel-shadow">
-    <app-search-field [(name)]="name" class="d-flex flex-grow-1"></app-search-field>
+    <app-search-field [(name)]="name" class="d-flex flex-grow-1" (keydown)="searchOnEnter($event)"></app-search-field>
     <app-search-btn class="d-flex align-self-stretch" (click)="search()"></app-search-btn>
   </div>
-  <app-search-results class="mt-3"></app-search-results>
+  <app-search-results [users]="users" class="mt-4"></app-search-results>
 </div>

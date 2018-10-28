@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { User } from '../../user-service.interface';
+import { SelectedUserService } from '../../selected-user.service';
 
 @Component({
   selector: 'app-user-choosen',
@@ -12,10 +13,13 @@ export class UserChoosenComponent implements OnInit {
 
   @Output() dropdownHiddenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor() {
+  constructor(
+    private selectedUserService: SelectedUserService
+  ) {
   }
 
   ngOnInit() {
+    this.selectedUserService.currentUser.subscribe((user: User | undefined) => this.selectedUser = user);
   }
 
   openList() {

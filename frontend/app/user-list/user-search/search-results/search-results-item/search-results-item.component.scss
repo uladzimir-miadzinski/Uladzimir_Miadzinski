@@ -1,7 +1,22 @@
 .search-results-item {
-  min-height: 10rem;
+  min-height: 5.5rem;
+  border: 0;
+  color: rgba(0,0,0,.87);
+  background-color: white;
 }
 
 .panel-shadow {
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12);
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.first-col {
+  min-width: 50%;
+}
+
+.hover:hover {
+  background-color: #F3F3F3;
 }

@@ -1,3 +1,27 @@
-<div class="d-flex flex-row search-results-item">
-  {{ user | json }}
+<div class="d-flex flex-row search-results-item cursor-pointer p-2 hover" (click)="changeSelectedUser()">
+  <div class="first-col">
+    <div>
+      {{'user.name' | translate}}: <span class="text-primary">{{user.name}}</span>
+    </div>
+    <div>
+      {{'user.age' | translate}}: <span class="text-primary">{{user.age}}</span>
+    </div>
+    <div>
+      {{'user.birthday' | translate}}: <span class="text-primary">{{user.birthday | date:'dd/MM/yyyy'}}</span>
+    </div>
+    <div>
+      {{'user.nextNotify' | translate}}: <span class="text-primary">{{user.nextNotify | date:'dd/MM/yyyy'}}</span>
+    </div>
+    <div>
+      {{'user.info' | translate}}: <span class="text-primary">{{user.info}}</span>
+    </div>
+  </div>
+  <div class="ml-4">
+    <div>
+      {{'user.age' | translate}}: <span class="text-primary">{{ user.age }}</span>
+    </div>
+    <div>
+      {{'user.firstLogin' | translate}}: <span class="text-primary">{{user.firstLogin | date:'dd/MM/yyyy'}}</span>
+    </div>
+  </div>
 </div>

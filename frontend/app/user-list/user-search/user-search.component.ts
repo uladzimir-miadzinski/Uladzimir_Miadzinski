@@ -19,6 +19,13 @@ export class UserSearchComponent implements OnInit {
   ngOnInit() {
   }
 
+  searchOnEnter(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      this.search();
+      event.preventDefault();
+    }
+  }
+
   search() {
     this.userService.getUsersByName(this.name).subscribe((users: User[]) => {
       this.users = users;
