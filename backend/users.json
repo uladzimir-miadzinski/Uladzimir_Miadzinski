@@ -18,7 +18,7 @@
     "name": "Lugovski",
     "password": "c81e728d9d4c2f636f067f89cc14862c",
     "info": "angular-dev",
-    "deleted": 1,
+    "deleted": 0,
     "age": 24
   },
   {
@@ -40,7 +40,7 @@
     "name": "Zaicev",
     "password": "a87ff679a2f3e71d9181a67b7542122c",
     "info": "leader",
-    "deleted": 1,
+    "deleted": 0,
     "age": 35
   },
   {
@@ -51,7 +51,7 @@
     "name": "Makarevich",
     "password": "e4da3b7fbbce2345d7772b0674a318d5",
     "info": "system administrator",
-    "deleted": 1,
+    "deleted": 0,
     "age": 30
   },
   {

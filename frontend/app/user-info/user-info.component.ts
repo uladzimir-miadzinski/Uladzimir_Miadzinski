@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { User } from '../services/auth.service';
+import { User } from '../user-list/user-service.interface';
 
 @Component({
   selector: 'app-user-info',

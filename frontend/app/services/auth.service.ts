@@ -2,19 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-
-export interface User {
-  id?: number;
-  age: number;
-  birthday?: string;
-  firstLogin?: string;
-  nextNotify?: string;
-  info?: string;
-  password?: string;
-  name: string;
-  deleted?: number;
-  [key: string]: number | string | undefined;
-}
+import { User } from '../user-list/user-service.interface';
 
 @Injectable({
   providedIn: 'root'

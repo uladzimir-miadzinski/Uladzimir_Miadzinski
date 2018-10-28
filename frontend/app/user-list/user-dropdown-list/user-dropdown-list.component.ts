@@ -1,6 +1,6 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { User } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
+import { User } from '../user-service.interface';
 
 @Component({
   selector: 'app-user-dropdown-list',

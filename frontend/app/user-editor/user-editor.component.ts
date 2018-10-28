@@ -5,12 +5,12 @@ import { dateValidator } from '../validators/date-validator.directive';
 import { camelCaseValidator } from '../validators/camel-case-validator.directive';
 import { filterSpaces, maxTwoWordsValidator } from '../validators/max-two-words-validator.directive';
 import { onlyLatinValidator } from '../validators/only-latin-validator.directive';
-import { User } from '../services/auth.service';
 import * as moment from 'moment';
 import { integerValidator } from '../validators/integer-validator.directive';
 import { UserService } from '../services/user.service';
 import { MatDialog } from '@angular/material';
 import { DialogUserSavedComponent } from '../dialogs/dialog-user-saved/dialog-user-saved.component';
+import { User } from '../user-list/user-service.interface';
 
 @Component({
   selector: 'app-user-editor',

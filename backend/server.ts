@@ -38,6 +38,11 @@ export interface User {
   deleted: number;
 }
 
+export interface UserQuery {
+  name: string;
+  exact: string;
+}
+
 const app = express();
 const users: User[] = require('./users.json');
 const PORT = 3000;
@@ -91,7 +96,7 @@ app.get('/current-user', getCurrentUser);
 app.put('/current-user', updateCurrentUser);
 
 function loadingDelay(req: express.Request, res: express.Response, next: express.NextFunction) {
-  setTimeout(function() {
+  setTimeout(function () {
     next();
   }, 3000);
 }
@@ -180,14 +185,39 @@ function assignPassword(user: User, password: string): User | boolean {
 }
 
 function checkIfUserExists(req: express.Request, res: express.Response) {
-  res.status(STATUS.OK).send(fetchActiveUsers(req.query).length > 0);
+  const { query } = req;
+  query.exact = '1';
+  res.status(STATUS.OK).send(fetchActiveUsers(query).length > 0);
 }
 
-function fetchActiveUsers(query: User) {
+function fetchActiveUsers(query: UserQuery) {
+  const { exact } = query;
+
+  return exact === '1' ? usersExactFiltering(query) : usersFiltering(query);
+}
+
+function usersExactFiltering(query: UserQuery) {
+  const { name } = query;
   return users.filter((user: User) => {
-    const filterByName = (typeof query.name !== 'undefined') ? user.name === query.name : true;
+    const filterByName = (typeof name !== 'undefined') ? user.name === name : true;
     return user.deleted === 0 && filterByName;
   });
+}
+
+function usersFiltering(query: UserQuery) {
+  const { name } = query;
+  return users.filter((user: User) => {
+    const filterByName = (typeof name !== 'undefined') ? findNameInUsername(name, user.name) : true;
+    return user.deleted === 0 && filterByName;
+  });
+}
+
+function findNameInUsername(name: string, username: string) {
+  const words = username.split(' ');
+  const nameFound = words.find((word: string) => {
+    return word.toLowerCase().startsWith(name.toLowerCase());
+  });
+  return nameFound || false;
 }
 
 function getActiveUsers(req: express.Request, res: express.Response) {

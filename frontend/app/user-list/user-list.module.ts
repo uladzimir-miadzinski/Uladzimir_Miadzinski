@@ -5,7 +5,6 @@ import { UserChoosenComponent } from './user-dropdown-list/user-choosen/user-cho
 import { UserDropdownListComponent } from './user-dropdown-list/user-dropdown-list.component';
 import { UserDropdownItemComponent } from './user-dropdown-list/user-dropdown-item/user-dropdown-item.component';
 import { UserDropdownListChevronComponent } from './user-dropdown-list/user-dropdown-list-chevron/user-dropdown-list-chevron.component';
-import { UserService } from '../services/user.service';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpLoaderFactory } from '../http-loader.factory';
@@ -37,9 +36,6 @@ import { SearchResultsItemComponent } from './user-search/search-results/search-
     SearchBtnComponent,
     SearchResultsComponent,
     SearchResultsItemComponent
-  ],
-  providers: [
-    UserService
   ]
 })
 export class UserListModule { }

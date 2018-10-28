@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { User } from '../../../services/auth.service';
+import { User } from '../../user-service.interface';
 
 @Component({
   selector: 'app-user-choosen',
