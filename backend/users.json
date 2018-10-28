@@ -6,9 +6,13 @@
     "id": 1,
     "name": "Medinsky",
     "password": "c4ca4238a0b923820dcc509a6f75849b",
-    "info": "express-dev",
+    "info": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
     "deleted": 0,
-    "age": 25
+    "age": 25,
+    "roles": [
+      "admin",
+      "user"
+    ]
   },
   {
     "birthday": "1992-10-11T00:00:00.000Z",
@@ -19,7 +23,10 @@
     "password": "c81e728d9d4c2f636f067f89cc14862c",
     "info": "angular-dev",
     "deleted": 0,
-    "age": 24
+    "age": 24,
+    "roles": [
+      "user"
+    ]
   },
   {
     "birthday": "1990-11-16T00:00:00.000Z",
@@ -30,7 +37,10 @@
     "password": "eccbc87e4b5ce2fe28308fd9f2a7baf3",
     "info": "dev-ops",
     "deleted": 0,
-    "age": 22
+    "age": 22,
+    "roles": [
+      "user"
+    ]
   },
   {
     "birthday": "1982-02-15T00:00:00.000Z",
@@ -41,7 +51,10 @@
     "password": "a87ff679a2f3e71d9181a67b7542122c",
     "info": "leader",
     "deleted": 0,
-    "age": 35
+    "age": 35,
+    "roles": [
+      "user"
+    ]
   },
   {
     "birthday": "1994-12-01T00:00:00.000Z",
@@ -52,7 +65,10 @@
     "password": "e4da3b7fbbce2345d7772b0674a318d5",
     "info": "system administrator",
     "deleted": 0,
-    "age": 30
+    "age": 30,
+    "roles": [
+      "user"
+    ]
   },
   {
     "birthday": "1991-11-11T00:00:00.000Z",
@@ -63,6 +79,9 @@
     "password": "ewiu2173128ujeqweuqiy182347189123",
     "info": "trytoforcedateerror",
     "deleted": 0,
-    "age": 29
+    "age": 29,
+    "roles": [
+      "user"
+    ]
   }
 ]

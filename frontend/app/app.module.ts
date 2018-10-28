@@ -31,11 +31,13 @@ import { UserService } from './services/user.service';
 import { DialogUserSavedComponent } from './dialogs/dialog-user-saved/dialog-user-saved.component';
 import { DialogLoginErrComponent } from './dialogs/dialog-login-err/dialog-login-err.component';
 import { DialogPasswordAssignComponent } from './dialogs/dialog-password-assign/dialog-password-assign.component';
-import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { UserListModule } from './user-list/user-list.module';
 import { HttpLoaderFactory } from './http-loader.factory';
 
-
+import { StoreModule } from '@ngrx/store';
+import { reducers } from './store/users/reducers';
+import { StoreDevtools, StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
@@ -75,6 +77,9 @@ import { HttpLoaderFactory } from './http-loader.factory';
     MatTableModule,
     MatTabsModule,
     ReactiveFormsModule,
+    StoreModule.forRoot({}),
+    StoreModule.forFeature('users', reducers),
+    StoreDevtoolsModule.instrument(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

@@ -35,6 +35,7 @@ export interface User {
   firstLogin: Date;
   nextNotify: Date;
   info: string;
+  roles: string[];
   deleted: number;
 }
 
@@ -144,11 +145,11 @@ function addNewUser(req: express.Request, res: express.Response) {
 }
 
 function createUser(params: User) {
-  const { name, age, password, birthday, firstLogin, nextNotify, info, deleted = 0 } = params;
+  const { name, age, password, birthday, firstLogin, nextNotify, info, deleted = 0, roles = [] } = params;
   const id: number = users.length + 1;
 
   const newUser: User = {
-    id, name, age, password, birthday, firstLogin, nextNotify, info, deleted
+    id, name, age, password, birthday, firstLogin, nextNotify, info, deleted, roles
   };
   users.push(newUser);
   return newUser;
