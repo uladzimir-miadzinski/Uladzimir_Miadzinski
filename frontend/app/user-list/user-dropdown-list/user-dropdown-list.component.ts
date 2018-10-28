@@ -1,6 +1,7 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { User } from '../user-service.interface';
+import { DropdownUserService } from '../dropdown-user.service';
 
 @Component({
   selector: 'app-user-dropdown-list',
@@ -14,7 +15,8 @@ export class UserDropdownListComponent implements OnInit, OnChanges {
   dropdownHidden = true;
 
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private dropdownUserService: DropdownUserService,
   ) {
   }
 
@@ -22,13 +24,10 @@ export class UserDropdownListComponent implements OnInit, OnChanges {
     this.userService.getUsers().subscribe(users => {
       this.users = users;
     });
+
+    this.dropdownUserService.currDropdownHidden.subscribe((isHidden: boolean) => this.dropdownHidden = isHidden);
   }
 
   ngOnChanges(changes: SimpleChanges) {
-  }
-
-  onSelectedUserChange(user: User) {
-    this.selectedUser = user;
-    this.dropdownHidden = true;
   }
 }

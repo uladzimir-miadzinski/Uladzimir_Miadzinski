@@ -1,6 +1,6 @@
 import { Component, Input, OnInit} from '@angular/core';
 import { User } from '../../../user-service.interface';
-import { SelectedUserService } from '../../../selected-user.service';
+import { DropdownUserService } from '../../../dropdown-user.service';
 
 @Component({
   selector: 'app-search-results-item',
@@ -11,7 +11,7 @@ export class SearchResultsItemComponent implements OnInit {
   @Input() user?: User;
 
   constructor(
-    private selectedUserService: SelectedUserService
+    private dropdownUserService: DropdownUserService
   ) {
   }
 
@@ -19,6 +19,7 @@ export class SearchResultsItemComponent implements OnInit {
   }
 
   changeSelectedUser() {
-    this.selectedUserService.changeUser(this.user);
+    this.dropdownUserService.changeUser(this.user);
+    this.dropdownUserService.toggleDropdown();
   }
 }

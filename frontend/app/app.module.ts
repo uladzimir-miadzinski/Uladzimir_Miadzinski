@@ -38,6 +38,7 @@ import { HttpLoaderFactory } from './http-loader.factory';
 import { StoreModule } from '@ngrx/store';
 import { reducers } from './store/users/reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { DropdownUserService } from './user-list/dropdown-user.service';
 
 @NgModule({
   declarations: [
@@ -93,6 +94,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     HttpInterceptorProviders,
     AuthService,
     UserService,
+    DropdownUserService,
     AuthGuard
   ],
   bootstrap: [AppComponent]

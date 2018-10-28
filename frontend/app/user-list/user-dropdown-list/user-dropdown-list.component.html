@@ -1,19 +1,13 @@
 <div class="select d-flex flex-column w-100 panel-shadow disable-user-select">
   <div class="choosen">
     <div class="d-flex flex-row">
-      <app-user-choosen [(dropdownHidden)]="dropdownHidden" [selectedUser]="selectedUser"
+      <app-user-choosen [selectedUser]="selectedUser"
                         class="d-flex align-self-stretch flex-grow-1">
       </app-user-choosen>
-      <app-user-dropdown-list-chevron [(dropdownHidden)]="dropdownHidden"
-                                      class="d-flex align-self-stretch">
-      </app-user-dropdown-list-chevron>
+      <app-user-dropdown-list-chevron class="d-flex align-self-stretch"></app-user-dropdown-list-chevron>
     </div>
   </div>
-  <div class="options panel-shadow">
-    <app-user-dropdown-item *ngFor="let user of users"
-                          class="{{dropdownHidden ? 'hide' : 'show'}}"
-                          [selectedUser]="selectedUser"
-                          (selectedUserChange)="onSelectedUserChange($event)"
-                          [user]="user"></app-user-dropdown-item>
+  <div class="options panel-shadow {{dropdownHidden ? 'hide' : 'show'}}">
+    <app-user-search></app-user-search>
   </div>
 </div>

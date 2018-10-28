@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { User } from '../user-service.interface';
 
@@ -11,12 +11,17 @@ export class UserSearchComponent implements OnInit {
   users?: User[];
   name = '';
 
+  @Input() dropdownHidden!: boolean;
+
+  @Output() dropdownHiddenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   constructor(
     private userService: UserService
   ) {
   }
 
   ngOnInit() {
+    this.search();
   }
 
   searchOnEnter(event: KeyboardEvent) {
