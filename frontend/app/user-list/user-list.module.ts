@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { UserListComponent } from './user-list/user-list.component';
 import { UserChoosenComponent } from './user-dropdown-list/user-choosen/user-choosen.component';
 import { UserDropdownListComponent } from './user-dropdown-list/user-dropdown-list.component';
-import { UserDropdownItemComponent } from './user-dropdown-list/user-dropdown-item/user-dropdown-item.component';
 import { UserDropdownListChevronComponent } from './user-dropdown-list/user-dropdown-list-chevron/user-dropdown-list-chevron.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
@@ -29,7 +28,6 @@ import { SearchResultsItemComponent } from './user-search/search-results/search-
     UserListComponent,
     UserChoosenComponent,
     UserDropdownListComponent,
-    UserDropdownItemComponent,
     UserDropdownListChevronComponent,
     UserSearchComponent,
     SearchFieldComponent,
