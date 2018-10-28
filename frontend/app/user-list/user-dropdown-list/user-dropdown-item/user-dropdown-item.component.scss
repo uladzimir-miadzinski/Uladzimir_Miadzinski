@@ -1,8 +1,8 @@
 .user-dropdown-item {
   border: 0;
-  background: rgba(0,0,0,.04);
   color: rgba(0,0,0,.87);
   box-shadow: 0 -1px 4px -1px rgba(0, 0, 0, .2);
+  background-color: white;
 }
 
 .ellipsis-oneliner {
@@ -13,7 +13,7 @@
 }
 
 .hover:hover {
-  background: rgba(0,0,0,.12);
+  background-color: #F3F3F3;
 }
 
 .cursor-pointer {
