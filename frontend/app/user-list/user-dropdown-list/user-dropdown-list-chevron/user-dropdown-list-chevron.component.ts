@@ -7,15 +7,18 @@ import { DropdownUserService } from '../../dropdown-user.service';
   styleUrls: ['./user-dropdown-list-chevron.component.scss']
 })
 export class UserDropdownListChevronComponent implements OnInit {
+  dropdownHidden = true;
 
   constructor(
     private dropdownUserService: DropdownUserService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
   }
 
   openList() {
     this.dropdownUserService.toggleDropdown();
+    this.dropdownUserService.currDropdownHidden.subscribe(isHidden => this.dropdownHidden = isHidden);
   }
 }

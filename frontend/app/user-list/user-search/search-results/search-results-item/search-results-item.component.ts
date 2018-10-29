@@ -8,7 +8,7 @@ import { DropdownUserService } from '../../../dropdown-user.service';
   styleUrls: ['./search-results-item.component.scss']
 })
 export class SearchResultsItemComponent implements OnInit {
-  @Input() user?: User;
+  @Input() user!: User;
 
   constructor(
     private dropdownUserService: DropdownUserService
