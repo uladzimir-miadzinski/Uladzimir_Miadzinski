@@ -10,6 +10,7 @@ import { allUsers } from './store/reducers';
 // import { map } from 'rxjs/operators';
 import { LoadUsers, PostUser } from './store/actions/user.actions';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 interface AppState {
   users: User[];
@@ -40,7 +41,6 @@ export class AppComponent implements OnInit, AfterViewChecked, OnChanges {
 
   dispatch() {
     console.log(this.store.dispatch(new LoadUsers()));
-    console.log(this.users$);
     // this.store.dispatch(new LoadUsers());
   }
 
@@ -55,6 +55,22 @@ export class AppComponent implements OnInit, AfterViewChecked, OnChanges {
       nextNotify: '2016/10/01',
       password: '123'
     })));
+  }
+
+  show() {
+    console.log(this.users$);
+    console.log(this.users$.subscribe(
+      (items) => {
+        console.log(items);
+        return items;
+      }
+    ));
+    console.log(this.users$.pipe(
+      map((users: User[]) => {
+        console.log(users);
+        return users;
+      })
+    ));
   }
 
   ngOnInit(): void {
