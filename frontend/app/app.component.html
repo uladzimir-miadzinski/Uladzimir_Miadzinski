@@ -4,10 +4,12 @@
   <div class="row justify-content-center">
     <div class="col-2">
       <mat-form-field>
-        <mat-select  [(value)]="selectedLang" (valueChange)="onLangChange()" #langSelect placeholder="Language">
+        <mat-select [(value)]="selectedLang" (valueChange)="onLangChange()" #langSelect placeholder="Language">
           <mat-option *ngFor="let lang of translate.getLangs()" [value]="lang">{{ lang }}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
   </div>
 </div>
+
+<button (click)="dispatch()">Load Users</button>

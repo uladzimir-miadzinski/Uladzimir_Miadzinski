@@ -36,9 +36,11 @@ import { UserListModule } from './user-list/user-list.module';
 import { HttpLoaderFactory } from './http-loader.factory';
 
 import { StoreModule } from '@ngrx/store';
-import { reducers } from './store/users/reducers';
+import { reducers } from './store/reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { DropdownUserService } from './user-list/dropdown-user.service';
+import { EffectsModule } from '@ngrx/effects';
+import { UserEffects } from './store/effects/user.effects';
 
 @NgModule({
   declarations: [
@@ -65,6 +67,9 @@ import { DropdownUserService } from './user-list/dropdown-user.service';
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
+    EffectsModule.forRoot([
+      UserEffects
+    ]),
     HttpClientModule,
     MatButtonModule,
     MatCardModule,

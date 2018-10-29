@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { User } from '../../../user-list/user-service.interface';
+import { User } from '../../user-list/user-service.interface';
 
 export const LOAD_USERS = '[Users] Load Users';
 export const LOAD_USERS_FAIL = '[Users] Load Users Fail';
@@ -19,4 +19,4 @@ export class LoadUsersSuccess implements Action {
   constructor(public payload: User[]) {}
 }
 
-export type UsersAction = LoadUsers | LoadUsersFail | LoadUsersSuccess;
+export type UsersActions = LoadUsers | LoadUsersFail | LoadUsersSuccess;
