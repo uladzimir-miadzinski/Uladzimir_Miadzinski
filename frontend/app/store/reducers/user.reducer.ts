@@ -1,4 +1,12 @@
-import { LOAD_USERS, LOAD_USERS_FAIL, LOAD_USERS_SUCCESS, UsersActions } from '../actions/user.actions';
+import {
+  LOAD_USERS,
+  LOAD_USERS_FAIL,
+  LOAD_USERS_SUCCESS,
+  POST_USER,
+  POST_USER_FAIL,
+  POST_USER_SUCCESS,
+  UsersActions
+} from '../actions/user.actions';
 import { User } from '../../user-list/user-service.interface';
 
 export interface UsersState {
@@ -36,6 +44,33 @@ export function userReducer(state: UsersState = initialState, action: UsersActio
         loaded: true,
         loading: false,
         data: action.payload
+      };
+    }
+
+    case POST_USER: {
+      return {
+        ...state,
+        loaded: false,
+        loading: true,
+        data: [action.payload]
+      };
+    }
+
+    case POST_USER_FAIL: {
+      return {
+        ...state,
+        loaded: false,
+        loading: false,
+      };
+    }
+
+
+    case POST_USER_SUCCESS: {
+      return {
+        ...state,
+        loaded: true,
+        loading: false,
+        data: [action.payload]
       };
     }
 

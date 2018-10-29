@@ -1,14 +1,15 @@
-import { AfterViewChecked, Component, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { LoadingService } from './services/loading.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { select, Store } from '@ngrx/store';
 import { User } from './user-list/user-service.interface';
 import { allUsers } from './store/reducers';
-//import { LoadUsers } from './store/actions/user.actions';
-//import { Observable } from 'rxjs';
-//import { map } from 'rxjs/operators';
-import { LoadUsers } from './store/actions/user.actions';
+// import { LoadUsers } from './store/actions/user.actions';
+// import { Observable } from 'rxjs';
+// import { map } from 'rxjs/operators';
+import { LoadUsers, PostUser } from './store/actions/user.actions';
+import { Observable } from 'rxjs';
 
 interface AppState {
   users: User[];
@@ -19,9 +20,9 @@ interface AppState {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, AfterViewChecked {
+export class AppComponent implements OnInit, AfterViewChecked, OnChanges {
   selectedLang = 'en';
-  users!: User[];
+  users$!: Observable<User[]>;
 
   constructor(
     public loadingService: LoadingService,
@@ -29,9 +30,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
     public translate: TranslateService,
     private store: Store<AppState>
   ) {
-    this.store.pipe(select(allUsers)).subscribe((users) => {
-      this.users = users;
-    });
+    this.users$ = this.store.pipe(select(allUsers));
   }
 
   ngAfterViewChecked(): void {
@@ -40,9 +39,22 @@ export class AppComponent implements OnInit, AfterViewChecked {
   }
 
   dispatch() {
-    console.log(this.users);
     console.log(this.store.dispatch(new LoadUsers()));
-    //this.store.dispatch(new LoadUsers());
+    console.log(this.users$);
+    // this.store.dispatch(new LoadUsers());
+  }
+
+  add() {
+    console.log(this.store.dispatch(new PostUser({
+      age: 18,
+      birthday: '2018/10/12',
+      deleted: 0,
+      firstLogin: '2017/12/12',
+      info: 'hjhj hjh j jh jh',
+      name: 'niii',
+      nextNotify: '2016/10/01',
+      password: '123'
+    })));
   }
 
   ngOnInit(): void {
@@ -56,6 +68,13 @@ export class AppComponent implements OnInit, AfterViewChecked {
 
   onLangChange() {
     this.translate.use(this.selectedLang);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
+    this.users$.subscribe((users) => {
+      console.log(users);
+    });
   }
 
 }
