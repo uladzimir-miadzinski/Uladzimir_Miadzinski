@@ -41,6 +41,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { DropdownUserService } from './user-list/dropdown-user.service';
 import { EffectsModule } from '@ngrx/effects';
 import { UserEffects } from './redux/effects/user/user.effects';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { UserEffects } from './redux/effects/user/user.effects';
     DialogLogoutComponent,
     DialogUserSavedComponent,
     DialogLoginErrComponent,
-    DialogPasswordAssignComponent
+    DialogPasswordAssignComponent,
+    AdminPanelComponent
   ],
   entryComponents: [
     DialogLoginErrComponent,

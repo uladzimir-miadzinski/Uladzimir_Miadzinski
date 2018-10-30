@@ -9,7 +9,8 @@ import { UserService } from '../services/user.service';
 export enum Tab {
   INFO = 0,
   INFO_UPDATE = 1,
-  LOGOUT = 2
+  ADMIN_PANEL = 2,
+  LOGOUT = 3
 }
 
 @Component({
