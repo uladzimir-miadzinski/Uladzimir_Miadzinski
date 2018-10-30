@@ -1,0 +1,26 @@
+<div (click)="openList()"
+     class="d-flex flex-row flex-grow-1 user-chosen hover cursor-pointer p-2">
+  <div *ngIf="selectedUser !== undefined && selectedUser !== null; else pleaseSelectUser" class="d-flex flex-grow-1">
+    <div class="first-col w-50">
+      <div class="ellipsis-oneliner">
+        {{'user.name' | translate}}: <span class="text-primary">{{selectedUser.name}}</span>
+      </div>
+      <div>
+        {{'user.age' | translate}}: <span class="text-primary">{{selectedUser.age}}</span>
+      </div>
+      <div class="ellipsis-oneliner" title="{{selectedUser.info}}">
+        {{'user.info' | translate}}: <span class="text-primary">{{selectedUser.info}}</span>
+      </div>
+    </div>
+    <div class="align-self-center ml-4">
+      {{'user.birthday' | translate}}: <span class="text-primary">{{selectedUser.birthday | date:'dd/MM/yyyy'}}</span>
+    </div>
+  </div>
+  <ng-template #pleaseSelectUser>
+    <div class="d-flex flex-grow-1 align-items-center justify-content-center">
+      <h3 class="lead">
+        {{'text.selectUser' | translate}}
+      </h3>
+    </div>
+  </ng-template>
+</div>

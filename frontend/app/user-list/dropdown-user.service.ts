@@ -5,17 +5,17 @@ import { User } from './user-service.interface';
 @Injectable()
 export class DropdownUserService {
 
-  private selectedUser = new BehaviorSubject<User | undefined>(undefined);
+  private currentUser = new BehaviorSubject<User | undefined>(undefined);
   private dropdownHidden = new BehaviorSubject<boolean>(true);
 
-  currUser = this.selectedUser.asObservable();
-  currDropdownHidden = this.dropdownHidden.asObservable();
+  getCurrentUser$ = this.currentUser.asObservable();
+  isDropdownHidden$ = this.dropdownHidden.asObservable();
 
   constructor() {
   }
 
   changeUser(user: User | undefined) {
-    this.selectedUser.next(user);
+    this.currentUser.next(user);
   }
 
   toggleDropdown() {

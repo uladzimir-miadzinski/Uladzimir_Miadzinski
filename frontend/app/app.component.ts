@@ -4,10 +4,10 @@ import { ChangeDetectorRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { select, Store } from '@ngrx/store';
 import { User } from './user-list/user-service.interface';
-import { allUsers } from './store/reducers';
-import { LoadUsers, PostUser } from './store/actions/user.actions';
+import { allUsers } from './redux/reducers';
+import { LoadUsers, PostUser } from './redux/actions/user/user.actions';
 import { Observable } from 'rxjs';
-import { UsersState } from './store/reducers/user.reducer';
+import { UsersState } from './redux/reducers/user/user.reducer';
 
 @Component({
   selector: 'app-root',

@@ -36,11 +36,11 @@ import { UserListModule } from './user-list/user-list.module';
 import { HttpLoaderFactory } from './http-loader.factory';
 
 import { StoreModule } from '@ngrx/store';
-import { reducers } from './store/reducers';
+import { reducers } from './redux/reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { DropdownUserService } from './user-list/dropdown-user.service';
 import { EffectsModule } from '@ngrx/effects';
-import { UserEffects } from './store/effects/user.effects';
+import { UserEffects } from './redux/effects/user/user.effects';
 
 @NgModule({
   declarations: [

@@ -9,10 +9,7 @@
     "info": "developer of this awesome project",
     "deleted": 0,
     "age": 25,
-    "roles": [
-      "admin",
-      "user"
-    ]
+    "role": "admin"
   },
   {
     "birthday": "1992-10-11T00:00:00.000Z",
@@ -24,9 +21,7 @@
     "info": "angular-dev",
     "deleted": 0,
     "age": 24,
-    "roles": [
-      "user"
-    ]
+    "role": "user"
   },
   {
     "birthday": "1990-11-16T00:00:00.000Z",
@@ -38,9 +33,7 @@
     "info": "dev-ops",
     "deleted": 0,
     "age": 22,
-    "roles": [
-      "user"
-    ]
+    "role": "user"
   },
   {
     "birthday": "1982-02-15T00:00:00.000Z",
@@ -52,9 +45,7 @@
     "info": "leader",
     "deleted": 0,
     "age": 35,
-    "roles": [
-      "user"
-    ]
+    "role": "user"
   },
   {
     "birthday": "1994-12-01T00:00:00.000Z",
@@ -66,9 +57,7 @@
     "info": "system administrator",
     "deleted": 0,
     "age": 30,
-    "roles": [
-      "user"
-    ]
+    "role": "user"
   },
   {
     "birthday": "1991-11-11T00:00:00.000Z",
@@ -80,8 +69,6 @@
     "info": "trytoforcedateerror",
     "deleted": 0,
     "age": 29,
-    "roles": [
-      "user"
-    ]
+    "role": "user"
   }
 ]

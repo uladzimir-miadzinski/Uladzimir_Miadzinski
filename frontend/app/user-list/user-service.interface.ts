@@ -1,5 +1,8 @@
+import { Observable } from 'rxjs';
+
 export interface UserService {
   getUsers(): User[];
+  getUsersByName(name: string): Observable<User[]>;
 }
 
 export interface User {
@@ -12,5 +15,5 @@ export interface User {
   password?: string;
   name?: string;
   deleted?: number;
-  [key: string]: number | string | undefined;
+  role?: string;
 }

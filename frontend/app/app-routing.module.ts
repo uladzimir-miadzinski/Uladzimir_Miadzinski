@@ -7,7 +7,7 @@ import { UserEditorComponent } from './user-editor/user-editor.component';
 import { AuthGuard } from './guards/auth.guard';
 import { UserTabsComponent } from './user-tabs/user-tabs.component';
 import { LoginGuard } from './guards/login.guard';
-import { UserListComponent } from './user-list/user-list/user-list.component';
+import { UserListComponent } from './user-list/user-list.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard]},
