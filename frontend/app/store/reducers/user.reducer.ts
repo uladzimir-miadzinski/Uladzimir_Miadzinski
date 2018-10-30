@@ -8,6 +8,7 @@ import {
   UsersActions
 } from '../actions/user.actions';
 import { User } from '../../user-list/user-service.interface';
+import { Map } from 'immutable';
 
 export interface UsersState {
   data: User[];
@@ -26,59 +27,54 @@ export function userReducer(state: UsersState = initialState, action: UsersActio
   switch (action.type) {
 
     case LOAD_USERS: {
-      return {
-        ...state,
-        loading: true
-      };
+      return Map(state)
+        .set('loading', true)
+        .set('loaded', false)
+        .toJS();
     }
 
     case LOAD_USERS_FAIL: {
-      return {
-        ...state
-      };
+      return Map(state)
+        .set('loading', false)
+        .set('loaded', false)
+        .toJS();
     }
 
     case LOAD_USERS_SUCCESS: {
-      return {
-        ...state,
-        loaded: true,
-        loading: false,
-        data: action.payload
-      };
+      return Map(state)
+        .set('data', action.payload)
+        .set('loading', false)
+        .set('loaded', true)
+        .toJS();
     }
 
     case POST_USER: {
-      return {
-        ...state,
-        loaded: false,
-        loading: true,
-        data: [action.payload]
-      };
+      return Map(state)
+        .set('data', action.payload)
+        .set('loading', true)
+        .set('loaded', false)
+        .toJS();
     }
 
     case POST_USER_FAIL: {
-      return {
-        ...state,
-        loaded: false,
-        loading: false,
-      };
+      return Map(state)
+        .set('data', action.payload)
+        .set('loading', false)
+        .set('loaded', false)
+        .toJS();
     }
 
 
     case POST_USER_SUCCESS: {
-      return {
-        ...state,
-        loaded: true,
-        loading: false,
-        data: [action.payload]
-      };
+      return Map(state)
+        .set('data', action.payload)
+        .set('loading', false)
+        .set('loaded', true)
+        .toJS();
     }
 
-    default:
+    default: {
       return state;
+    }
   }
 }
-
-export const getUsersLoading = (state: UsersState) => state.loading;
-export const getUsersLoaded = (state: UsersState) => state.loaded;
-export const getUsers = (state: UsersState) => state.data;

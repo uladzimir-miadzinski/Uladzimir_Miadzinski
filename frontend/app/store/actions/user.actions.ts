@@ -14,29 +14,39 @@ export class LoadUsers implements Action {
 
 export class LoadUsersFail implements Action {
   readonly type = LOAD_USERS_FAIL;
-  constructor(public payload: string) {}
+
+  constructor(public payload: string) {
+  }
 }
 
 export class LoadUsersSuccess implements Action {
   readonly type = LOAD_USERS_SUCCESS;
-  constructor(public payload: User[]) {}
+
+  constructor(public payload: User[]) {
+  }
 }
 
 export class PostUser implements Action {
   readonly type = POST_USER;
-  constructor(public payload: User) {}
+
+  constructor(public payload: User) {
+  }
 }
 
 export class PostUserFail implements Action {
   readonly type = POST_USER_FAIL;
-  constructor(public payload: string) {}
+
+  constructor(public payload: string) {
+  }
 }
 
 export class PostUserSuccess implements Action {
   readonly type = POST_USER_SUCCESS;
-  constructor(public payload: User) {}
+
+  constructor(public payload: User) {
+  }
 }
 
-export type UsersActions = LoadUsers | LoadUsersFail | LoadUsersSuccess;
-
-export type UserPostActions = PostUser | PostUserFail | PostUserSuccess;
+export type UsersActions =
+  LoadUsers | LoadUsersFail | LoadUsersSuccess |
+  PostUser | PostUserFail | PostUserSuccess;

@@ -5,16 +5,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { select, Store } from '@ngrx/store';
 import { User } from './user-list/user-service.interface';
 import { allUsers } from './store/reducers';
-// import { LoadUsers } from './store/actions/user.actions';
-// import { Observable } from 'rxjs';
-// import { map } from 'rxjs/operators';
 import { LoadUsers, PostUser } from './store/actions/user.actions';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-
-interface AppState {
-  users: User[];
-}
+import { UsersState } from './store/reducers/user.reducer';
 
 @Component({
   selector: 'app-root',
@@ -24,13 +17,12 @@ interface AppState {
 export class AppComponent implements OnInit, AfterViewChecked, OnChanges {
   selectedLang = 'en';
   users$!: Observable<User[]>;
-  users!: User[];
 
   constructor(
     public loadingService: LoadingService,
     private cdRef: ChangeDetectorRef,
     public translate: TranslateService,
-    private store: Store<AppState>
+    private store: Store<UsersState>
   ) {
     this.users$ = this.store.pipe(select(allUsers));
   }
@@ -42,7 +34,6 @@ export class AppComponent implements OnInit, AfterViewChecked, OnChanges {
 
   dispatch() {
     console.log(this.store.dispatch(new LoadUsers()));
-    // this.store.dispatch(new LoadUsers());
   }
 
   add() {
@@ -59,24 +50,6 @@ export class AppComponent implements OnInit, AfterViewChecked, OnChanges {
   }
 
   show() {
-    console.log(this.users$.forEach(item => {
-      console.log(item);
-    }));
-    this.users$.subscribe(items => {
-      this.users = items;
-    });
-    console.log(this.users$.subscribe(
-      (items) => {
-        console.log(items);
-        return items;
-      }
-    ));
-    console.log(this.users$.pipe(
-      map((users: User[]) => {
-        console.log(users);
-        return users;
-      })
-    ));
   }
 
   ngOnInit(): void {

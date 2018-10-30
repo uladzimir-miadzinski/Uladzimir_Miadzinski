@@ -16,4 +16,4 @@
 <button (click)="add()">Add User</button>
 <button (click)="show()">Show Users</button>
 
-{{users | json}}
+users = {{ users$ | async | json }}
