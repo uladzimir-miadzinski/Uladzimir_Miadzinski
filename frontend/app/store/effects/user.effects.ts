@@ -9,7 +9,7 @@ import {
   POST_USER,
   PostUser,
   PostUserSuccess,
-  PostUserFail, LoadUsers
+  PostUserFail, LoadUsers, UserPostActions
 } from '../actions/user.actions';
 import { catchError, map, mapTo, mergeMap, switchMap } from 'rxjs/operators';
 import { UserService } from '../../services/user.service';
@@ -39,7 +39,7 @@ export class UserEffects {
   );
 
   @Effect()
-  postUser$: Observable<UsersActions> = this.actions$.pipe(
+  postUser$: Observable<UserPostActions> = this.actions$.pipe(
     ofType(POST_USER),
     mergeMap((action: PostUser) => {
       return this.userService.createUser(action.payload as User)

@@ -24,6 +24,7 @@ interface AppState {
 export class AppComponent implements OnInit, AfterViewChecked, OnChanges {
   selectedLang = 'en';
   users$!: Observable<User[]>;
+  users!: User[];
 
   constructor(
     public loadingService: LoadingService,
@@ -58,7 +59,12 @@ export class AppComponent implements OnInit, AfterViewChecked, OnChanges {
   }
 
   show() {
-    console.log(this.users$);
+    console.log(this.users$.forEach(item => {
+      console.log(item);
+    }));
+    this.users$.subscribe(items => {
+      this.users = items;
+    });
     console.log(this.users$.subscribe(
       (items) => {
         console.log(items);

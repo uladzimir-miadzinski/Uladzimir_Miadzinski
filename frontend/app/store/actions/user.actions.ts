@@ -37,6 +37,6 @@ export class PostUserSuccess implements Action {
   constructor(public payload: User) {}
 }
 
-export type UsersActions =
-  LoadUsers | LoadUsersFail | LoadUsersSuccess |
-  PostUser | PostUserFail | PostUserSuccess;
+export type UsersActions = LoadUsers | LoadUsersFail | LoadUsersSuccess;
+
+export type UserPostActions = PostUser | PostUserFail | PostUserSuccess;
