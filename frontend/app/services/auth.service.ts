@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { User } from '../user-list/user-service.interface';
+import { User, UserCredentials } from '../user-list/user-service.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,8 @@ export class AuthService {
     return this.http.get(`${this.apiUrl}/login-check`);
   }
 
-  login(name: string, password: string) {
+  login(userCredentials: UserCredentials) {
+    const {name, password} = userCredentials;
     return this.http.post(`${this.apiUrl}/login`, {
       name,
       password

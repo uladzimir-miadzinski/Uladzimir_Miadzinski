@@ -1,4 +1,4 @@
-<mat-tab-group [(selectedIndex)]="selectedTab" mat-stretch-tabs (selectedTabChange)="onTabChange($event)">
+<mat-tab-group  [(selectedIndex)]="selectedTab" mat-stretch-tabs (selectedTabChange)="onTabChange($event)">
   <mat-tab label="{{'nav.viewInfo' | translate | uppercase}}">
     <app-user-info [user]="userService.user"></app-user-info>
   </mat-tab>

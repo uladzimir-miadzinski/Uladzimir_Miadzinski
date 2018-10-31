@@ -16,7 +16,7 @@
           <mat-card-content>
             <div class="form-group">
               <mat-form-field class="full-width">
-                <input matInput formControlName="name" placeholder="{{ 'login.form.username' | translate }}" autofocus
+                <input matInput formControlName="name" placeholder="{{ 'login.form.username' | translate }}"
                        autocomplete="username">
               </mat-form-field>
               <p class="text-danger"
@@ -48,6 +48,15 @@
           </mat-card-content>
 
           <mat-card-actions class="mb-2 button-row">
+            <ng-container *ngIf="currentUser$ | async as currentUser">
+              <ng-container *ngIf="!isEmptyObject(currentUser) && currentUser['status'] !== 401">
+                <button mat-flat-button color="default"
+                        routerLink="/user-tabs"
+                        type="button">
+                  {{ 'login.form.actions.enter' | translate }} {{currentUser.name}}
+                </button>
+              </ng-container>
+            </ng-container>
             <button mat-flat-button [disabled]="!loginForm.valid" color="primary">{{ 'login.form.actions.login' |
               translate }}
             </button>

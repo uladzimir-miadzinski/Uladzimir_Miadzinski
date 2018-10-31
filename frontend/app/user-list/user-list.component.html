@@ -1,14 +1,12 @@
-<div class="select d-flex flex-column w-100 panel-shadow disable-user-select">
-  <div class="chosen">
+<div class="wrapper panel-shadow">
+  <div class="chosen panel-shadow disable-user-select w-100">
     <div class="d-flex flex-row">
-      <app-user-list-chosen [selectedUser]="selectedUser"
-                       class="d-flex align-self-stretch flex-grow-1">
+      <app-user-list-chosen class="d-flex align-self-stretch flex-grow-1">
       </app-user-list-chosen>
       <app-user-list-chevron class="d-flex align-self-stretch"></app-user-list-chevron>
     </div>
   </div>
-  <div *ngIf="!(isDropdownHidden$ | async) as dropdownHidden" class="options panel-shadow">
+  <div class="options panel-shadow {{isDropdownHidden ? 'hide' : 'show'}}">
     <app-user-list-search></app-user-list-search>
   </div>
 </div>
-

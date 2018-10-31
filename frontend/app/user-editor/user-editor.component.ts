@@ -121,7 +121,7 @@ export class UserEditorComponent implements OnInit, AfterViewInit, OnChanges {
           success: true
         }
       });
-      this.userService.loadUserInfo();
+      this.userService.getCurrentUser();
     }, (err) => {
       this.dialog.open(DialogUserSavedComponent, {
         data: {

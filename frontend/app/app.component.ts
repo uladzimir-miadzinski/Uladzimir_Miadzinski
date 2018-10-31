@@ -2,10 +2,9 @@ import { AfterViewChecked, Component, OnChanges, OnInit, SimpleChanges } from '@
 import { LoadingService } from './services/loading.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { User } from './user-list/user-service.interface';
-import { allUsers } from './redux/reducers';
-import { LoadUsers, PostUser } from './redux/actions/user/user.actions';
+import { LoadCurrentUser, LoadUsers, PostUser } from './redux/actions/user/user.actions';
 import { Observable } from 'rxjs';
 import { UsersState } from './redux/reducers/user/user.reducer';
 
@@ -24,7 +23,6 @@ export class AppComponent implements OnInit, AfterViewChecked, OnChanges {
     public translate: TranslateService,
     private store: Store<UsersState>
   ) {
-    this.users$ = this.store.pipe(select(allUsers));
   }
 
   ngAfterViewChecked(): void {
@@ -50,6 +48,7 @@ export class AppComponent implements OnInit, AfterViewChecked, OnChanges {
   }
 
   show() {
+    this.store.dispatch(new LoadCurrentUser());
   }
 
   ngOnInit(): void {

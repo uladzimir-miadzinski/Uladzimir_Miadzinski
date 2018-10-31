@@ -9,13 +9,21 @@ import { Observable } from 'rxjs';
 })
 export class UserListComponent implements OnInit {
   isDropdownHidden$!: Observable<boolean>;
+  isDropdownHidden = true;
 
   constructor(
-    private dropdownUserService: DropdownUserService
+    public dropdownUserService: DropdownUserService
   ) {
   }
 
   ngOnInit() {
     this.isDropdownHidden$ = this.dropdownUserService.isDropdownHidden$;
+    this.isDropdownHidden$.subscribe((isHidden: boolean) => {
+      this.isDropdownHidden = isHidden;
+    });
+  }
+
+  getCurrentUser() {
+
   }
 }

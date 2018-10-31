@@ -7,7 +7,8 @@
       "password": "Password",
       "actions": {
         "login": "Login",
-        "forgotPassword": "Forgot password?"
+        "forgotPassword": "Forgot password?",
+        "enter": "Enter as "
       }
     }
   },
@@ -59,13 +60,15 @@
   },
   "buttons": {
     "cancel": "Cancel",
+    "add": "Add",
     "save": "Save",
     "reset": "Reset"
   },
   "nav": {
     "logout": "Logout",
     "updateInfo": "Update current user info",
-    "viewInfo": "Current user info"
+    "viewInfo": "Current user info",
+    "adminPanel": "Admin Panel"
   },
   "user": {
     "age": "Age",
@@ -81,6 +84,7 @@
   },
   "text": {
     "selectUser": "Please, select user from list",
-    "searchQuestion": "Search by name"
+    "searchQuestion": "Search by name",
+    "nameIsNotForChange": "Username can not be changed! If you change the name of the current user, a new user will be created."
   }
 }

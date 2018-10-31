@@ -245,7 +245,7 @@ function login(req: express.Request, res: express.Response) {
         expiresIn,
         subject: user.id.toString()
       });
-      res.status(STATUS.OK).cookie('jwtoken', token, { httpOnly: true, secure: true }).send();
+      res.status(STATUS.OK).cookie('jwtoken', token, { httpOnly: true, secure: true }).send(user);
     }).catch(err => {
       res.send(err);
     });

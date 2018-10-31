@@ -15,14 +15,11 @@ export class UserService {
     private http: HttpClient,
     private authService: AuthService
   ) {
-    this.loadUserInfo();
+    this.getCurrentUser();
   }
 
-  loadUserInfo() {
-    this.authService.getCurrentUser()
-      .subscribe((user: User | null) => {
-        this.user = user;
-      });
+  getCurrentUser() {
+    return this.authService.getCurrentUser();
   }
 
   updateCurrentUser(params: User) {

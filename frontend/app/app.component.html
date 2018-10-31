@@ -14,6 +14,12 @@
 
 <button (click)="dispatch()">Load Users</button>
 <button (click)="add()">Add User</button>
-<button (click)="show()">Show Users</button>
+<button (click)="show()">Load Current User</button>
+
+user = {{currentUser$ | async | json}}
+
+<br><br>
 
 users = {{ users$ | async | json }}
+
+

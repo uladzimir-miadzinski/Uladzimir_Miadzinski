@@ -36,12 +36,14 @@ import { UserListModule } from './user-list/user-list.module';
 import { HttpLoaderFactory } from './http-loader.factory';
 
 import { StoreModule } from '@ngrx/store';
-import { reducers } from './redux/reducers';
+import { dataReducers, sessionReducers } from './redux/reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { DropdownUserService } from './user-list/dropdown-user.service';
 import { EffectsModule } from '@ngrx/effects';
 import { UserEffects } from './redux/effects/user/user.effects';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { UserAdminEditorComponent } from './admin-panel/user-admin-editor/user-admin-editor.component';
+import { SharedService } from './shared.service';
 
 @NgModule({
   declarations: [
@@ -57,7 +59,8 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
     DialogUserSavedComponent,
     DialogLoginErrComponent,
     DialogPasswordAssignComponent,
-    AdminPanelComponent
+    AdminPanelComponent,
+    UserAdminEditorComponent
   ],
   entryComponents: [
     DialogLoginErrComponent,
@@ -86,7 +89,8 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
     MatTabsModule,
     ReactiveFormsModule,
     StoreModule.forRoot({}),
-    StoreModule.forFeature('users', reducers),
+    StoreModule.forFeature('Data', dataReducers),
+    StoreModule.forFeature('Session', sessionReducers),
     StoreDevtoolsModule.instrument(),
     TranslateModule.forRoot({
       loader: {
@@ -101,6 +105,7 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
     HttpInterceptorProviders,
     AuthService,
     UserService,
+    SharedService,
     DropdownUserService,
     AuthGuard
   ],

@@ -17,3 +17,8 @@ export interface User {
   deleted?: number;
   role?: string;
 }
+
+export interface UserCredentials {
+  name: string;
+  password: string;
+}

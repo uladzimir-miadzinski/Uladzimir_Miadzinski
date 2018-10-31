@@ -148,7 +148,7 @@ export class UserAdminEditorComponent implements OnInit, AfterViewInit, OnChange
           success: true
         }
       });
-      this.userService.loadUserInfo();
+      this.userService.getCurrentUser();
     }, (err) => {
       this.dialog.open(DialogUserSavedComponent, {
         data: {
