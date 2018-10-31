@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { notLegalAgeValidator } from '../../validators/not-legal-age-validator.directive';
 import { dateValidator } from '../../validators/date-validator.directive';
 import { camelCaseValidator } from '../../validators/camel-case-validator.directive';
@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material';
 import { DialogUserSavedComponent } from '../../dialogs/dialog-user-saved/dialog-user-saved.component';
 import { User } from '../../user-list/user-service.interface';
 import { UserEditorComponent } from '../../user-editor/user-editor.component';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-user-admin-editor',
@@ -19,10 +20,11 @@ import { UserEditorComponent } from '../../user-editor/user-editor.component';
 })
 export class UserAdminEditorComponent implements OnInit, AfterViewInit, OnChanges {
 
-  @Input()
-  user!: User | null;
+  @Input() selectedUser$!: Observable<User>;
 
   userForm!: FormGroup;
+  nameChanged = false;
+  selectedUser: User | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -65,6 +67,23 @@ export class UserAdminEditorComponent implements OnInit, AfterViewInit, OnChange
   }
 
   ngOnInit() {
+
+    this.selectedUser$.subscribe((user: User) => {
+      this.selectedUser = user;
+      if (typeof user !== 'undefined') {
+        this.updateFormValues(user);
+      }
+    });
+
+    this.name.valueChanges
+      .subscribe((inputName => {
+
+        if (this.selectedUser !== null && typeof this.selectedUser !== 'undefined') {
+          this.nameChanged = inputName !== this.selectedUser.name;
+        } else {
+          this.nameChanged = true;
+        }
+      }));
   }
 
   ngAfterViewInit() {
@@ -72,6 +91,7 @@ export class UserAdminEditorComponent implements OnInit, AfterViewInit, OnChange
   }
 
   onChanges(): void {
+
   }
 
   createForm() {
@@ -98,6 +118,17 @@ export class UserAdminEditorComponent implements OnInit, AfterViewInit, OnChange
     this.form.firstLogin.setValue(UserEditorComponent.formatDate(user.firstLogin));
     this.form.nextNotify.setValue(UserEditorComponent.formatDate(user.nextNotify));
     this.form.password.setValue(user.password);
+  }
+
+  validateAllFormFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if (control instanceof FormControl) {
+        control.markAsTouched({onlySelf: true});
+      } else if (control instanceof FormGroup) {
+        this.validateAllFormFields(control);
+      }
+    });
   }
 
   onSubmit() {
@@ -135,8 +166,8 @@ export class UserAdminEditorComponent implements OnInit, AfterViewInit, OnChange
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (typeof this.user !== 'undefined' && this.user !== null) {
-      this.updateFormValues(this.user);
+    if (typeof this.selectedUser !== 'undefined' && this.selectedUser !== null) {
+      this.updateFormValues(this.selectedUser);
     }
   }
 
