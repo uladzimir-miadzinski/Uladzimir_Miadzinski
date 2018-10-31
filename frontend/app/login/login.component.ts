@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
@@ -8,7 +8,7 @@ import { maxTwoWordsValidator } from '../validators/max-two-words-validator.dire
 import { DialogLoginErrComponent } from '../dialogs/dialog-login-err/dialog-login-err.component';
 import { MatDialog } from '@angular/material';
 import { isEmptyObject, SharedService } from '../shared.service';
-import { Observable, of } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { User, UserCredentials } from '../user-list/user-service.interface';
 import { SessionState } from '../redux/reducers';
 import { Store } from '@ngrx/store';
@@ -23,10 +23,11 @@ export enum STATUS {
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
 
   loginForm!: FormGroup;
-  currentUser$: Observable<User | null> = of(null);
+  currentUser$: Observable<User | null> = this.sharedService.currentUser$;
+  currentUserSubscription!: Subscription;
 
   constructor(private fb: FormBuilder,
               private authService: AuthService,
@@ -37,8 +38,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.currentUser$ = this.sharedService.currentUser$;
-
     this.loginForm = this.fb.group({
       name: ['', {
         validators: [Validators.required],
@@ -59,23 +58,6 @@ export class LoginComponent implements OnInit {
         password: form.password
       };
       this.sessionStore.dispatch(new LoginUser(userCredentials));
-      this.currentUser$
-        .subscribe(
-          (payload: User | null | number) => {
-            console.log(payload);
-            if (typeof payload !== 'number' && payload !== null && typeof payload['id'] !== 'undefined') {
-              this.router.navigateByUrl('/');
-            } else {
-              this.dialog.open(DialogLoginErrComponent);
-            }
-          },
-          (error) => {
-            console.log('my error handler');
-            console.warn(error);
-            if (error.status === STATUS.UNAUTHORIZED) {
-              this.dialog.open(DialogLoginErrComponent);
-            }
-          });
     }
   }
 
@@ -93,6 +75,20 @@ export class LoginComponent implements OnInit {
 
   get password() {
     return this.form.password;
+  }
+
+  ngOnDestroy(): void {
+    this.currentUserSubscription.unsubscribe();
+  }
+
+  ngAfterViewInit(): void {
+    this.currentUserSubscription = this.currentUser$.subscribe((user: User | null | number) => {
+      if (typeof user === 'number' && this.form.name.touched) {
+        this.dialog.open(DialogLoginErrComponent);
+      } else if (user !== null && typeof user !== 'number') {
+        this.router.navigateByUrl('/');
+      }
+    });
   }
 
 }

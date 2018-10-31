@@ -4,6 +4,9 @@ import { User, UserCredentials } from '../../../user-list/user-service.interface
 export const LOGIN_USER = '[User] Login User';
 export const LOGIN_USER_FAIL = '[User] Login User Fail';
 export const LOGIN_USER_SUCCESS = '[User] Login User Success';
+export const LOGOUT_USER = '[User] Logout User';
+export const LOGOUT_USER_FAIL = '[User] Logout User Fail';
+export const LOGOUT_USER_SUCCESS = '[User] Logout User Success';
 export const LOAD_USERS = '[User] Load Users';
 export const LOAD_USERS_FAIL = '[User] Load Users Fail';
 export const LOAD_USERS_SUCCESS = '[User] Load Users Success';
@@ -53,6 +56,21 @@ export class LoginUserSuccess implements Action {
   }
 }
 
+export class LogoutUser implements Action {
+  readonly type = LOGOUT_USER;
+}
+
+export class LogoutUserFail implements Action {
+  readonly type = LOGOUT_USER_FAIL;
+
+  constructor(public payload: string | number) {
+  }
+}
+
+export class LogoutUserSuccess implements Action {
+  readonly type = LOGOUT_USER_SUCCESS;
+}
+
 export class PostUser implements Action {
   readonly type = POST_USER;
 
@@ -96,4 +114,5 @@ export type UsersActions =
   LoadUsers | LoadUsersFail | LoadUsersSuccess |
   PostUser | PostUserFail | PostUserSuccess |
   LoadCurrentUser | LoadCurrentUserFail | LoadCurrentUserSuccess |
-  LoginUser | LoginUserFail | LoginUserSuccess;
+  LoginUser | LoginUserFail | LoginUserSuccess |
+  LogoutUser | LogoutUserFail | LogoutUserSuccess;

@@ -11,6 +11,7 @@ import { UserService } from '../services/user.service';
 import { MatDialog } from '@angular/material';
 import { DialogUserSavedComponent } from '../dialogs/dialog-user-saved/dialog-user-saved.component';
 import { User } from '../user-list/user-service.interface';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-user-editor',
@@ -20,9 +21,10 @@ import { User } from '../user-list/user-service.interface';
 export class UserEditorComponent implements OnInit, AfterViewInit, OnChanges {
 
   @Input()
-  user!: User | null;
+  currentUser$!: Observable<User>;
 
   userForm!: FormGroup;
+  currentUserSubscription!: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -138,9 +140,9 @@ export class UserEditorComponent implements OnInit, AfterViewInit, OnChanges {
     });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {/*
     if (typeof this.user !== 'undefined' && this.user !== null) {
       this.updateFormValues(this.user);
-    }
+    }*/
   }
 }

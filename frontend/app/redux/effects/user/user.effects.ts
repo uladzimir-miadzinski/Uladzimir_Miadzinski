@@ -17,7 +17,7 @@ import {
   LOGIN_USER,
   LoginUser,
   LoginUserSuccess,
-  LoginUserFail,
+  LoginUserFail, LogoutUserSuccess, LogoutUserFail, LOGOUT_USER,
 } from '../../actions/user/user.actions';
 import { catchError, map, mapTo, mergeMap, switchMap } from 'rxjs/operators';
 import { UserService } from '../../../services/user.service';
@@ -85,16 +85,24 @@ export class UserEffects {
     mergeMap((action: LoginUser) => {
       return this.authService.login(action.payload as UserCredentials)
         .pipe(
-          map((user: User) => {
-            return new LoginUserSuccess(user);
-          }),
+          map((user: User) => new LoginUserSuccess(user)),
           catchError((error: HttpErrorResponse) => {
-            if (error.status === STATUS.UNAUTHORIZED) {
-              return of(new LoginUserFail(STATUS.UNAUTHORIZED));
-            } else {
-              return of(new LoginUserFail('Unknown reason'));
-            }
+            return of(new LoginUserFail(error.status === STATUS.UNAUTHORIZED
+                ? STATUS.UNAUTHORIZED
+                : error.message));
           })
+        );
+    })
+  );
+
+  @Effect()
+  logoutUser$: Observable<UsersActions> = this.actions$.pipe(
+    ofType(LOGOUT_USER),
+    mergeMap(() => {
+      return this.authService.logout()
+        .pipe(
+          map(() => new LogoutUserSuccess()),
+          catchError((error: HttpErrorResponse) => of(new LogoutUserFail(error.message)))
         );
     })
   );

@@ -1,7 +1,7 @@
 import {
   LOAD_CURRENT_USER,
   LOAD_CURRENT_USER_FAIL,
-  LOAD_CURRENT_USER_SUCCESS, LOGIN_USER, LOGIN_USER_FAIL, LOGIN_USER_SUCCESS,
+  LOAD_CURRENT_USER_SUCCESS, LOGIN_USER, LOGIN_USER_FAIL, LOGIN_USER_SUCCESS, LOGOUT_USER, LOGOUT_USER_FAIL, LOGOUT_USER_SUCCESS,
   UsersActions
 } from '../../actions/user/user.actions';
 import { User } from '../../../user-list/user-service.interface';
@@ -43,6 +43,30 @@ export function currentUserReducer(state: CurrentUserState = initialState, actio
     case LOGIN_USER_SUCCESS: {
       return Map(state)
         .set('data', action.payload)
+        .set('loading', false)
+        .set('loaded', true)
+        .toJS();
+    }
+
+    case LOGOUT_USER: {
+      return Map(state)
+        .set('loading', true)
+        .set('loaded', false)
+        .toJS();
+    }
+
+    case LOGOUT_USER_FAIL: {
+      return Map(state)
+        .set('data', action.payload)
+        .set('loading', false)
+        .set('loaded', false)
+        .toJS();
+    }
+
+
+    case LOGOUT_USER_SUCCESS: {
+      return Map(state)
+        .set('data', {})
         .set('loading', false)
         .set('loaded', true)
         .toJS();

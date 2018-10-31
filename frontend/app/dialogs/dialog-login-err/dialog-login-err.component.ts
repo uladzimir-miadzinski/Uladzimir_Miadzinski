@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 
 @Component({
@@ -6,13 +6,18 @@ import { MatDialogRef } from '@angular/material';
   templateUrl: './dialog-login-err.component.html',
   styleUrls: ['./dialog-login-err.component.scss']
 })
-export class DialogLoginErrComponent implements OnInit {
+export class DialogLoginErrComponent implements OnInit, AfterViewInit {
 
   constructor(
-    public dialogRef: MatDialogRef<DialogLoginErrComponent>
+    public dialogRef: MatDialogRef<DialogLoginErrComponent>,
+    private cdref: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit(): void {
+    this.cdref.detectChanges();
   }
 
   onOk() {

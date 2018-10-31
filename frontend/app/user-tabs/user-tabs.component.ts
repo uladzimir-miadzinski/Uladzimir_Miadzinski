@@ -1,10 +1,14 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material';
 import { MatDialog } from '@angular/material';
 import { DialogLogoutComponent } from '../dialogs/dialog-logout/dialog-logout.component';
-import { AuthService } from '../services/auth.service';
-import { AuthGuard } from '../guards/auth.guard';
-import { UserService } from '../services/user.service';
+import { SessionState } from '../redux/reducers';
+import { Store } from '@ngrx/store';
+import { LogoutUser } from '../redux/actions/user/user.actions';
+import { Observable, Subscription } from 'rxjs';
+import { User } from '../user-list/user-service.interface';
+import { isEmptyObject, SharedService } from '../shared.service';
+import { Router } from '@angular/router';
 
 export enum Tab {
   INFO = 0,
@@ -18,14 +22,17 @@ export enum Tab {
   templateUrl: './user-tabs.component.html',
   styleUrls: ['./user-tabs.component.scss']
 })
-export class UserTabsComponent {
+export class UserTabsComponent implements AfterViewInit, OnDestroy {
   selectedTab = 0;
 
+  currentUser$: Observable<User | null> = this.sharedService.currentUser$;
+  currentUserSubscription!: Subscription;
+
   constructor(
-    private authService: AuthService,
-    private authGuard: AuthGuard,
     private dialog: MatDialog,
-    public userService: UserService
+    private sharedService: SharedService,
+    private sessionStore: Store<SessionState>,
+    private router: Router
   ) {
   }
 
@@ -45,7 +52,8 @@ export class UserTabsComponent {
   }
 
   logout() {
-    this.authService.logout().subscribe(() => this.authGuard.navigateLogin());
+    // this.authService.logout().subscribe(() => this.authGuard.navigateLogin());
+    this.sessionStore.dispatch(new LogoutUser());
   }
 
   private blurTabs() {
@@ -55,4 +63,17 @@ export class UserTabsComponent {
     });
   }
 
+  ngAfterViewInit(): void {
+    this.currentUserSubscription = this.currentUser$.subscribe(
+      (user: User | null) => {
+        if (user === null || isEmptyObject(user)) {
+          this.router.navigateByUrl('/login');
+        }
+      },
+      () => this.router.navigateByUrl('/login'));
+  }
+
+  ngOnDestroy(): void {
+    this.currentUserSubscription.unsubscribe();
+  }
 }
