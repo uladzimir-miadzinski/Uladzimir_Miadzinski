@@ -80,7 +80,8 @@
     "name": "Name",
     "nextNotify": "Next notification date",
     "password": "Password",
-    "newPassword": "New password (normal string or md5 hash)"
+    "newPassword": "New password (normal string or md5 hash)",
+    "role": "Role"
   },
   "text": {
     "selectUser": "Please, select user from list",

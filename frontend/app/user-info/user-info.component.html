@@ -1,11 +1,11 @@
 <div class="container pt-4">
   <div class="row justify-content-center">
-    <div class="col-lg-8">
-      <table class="table table-responsive-md table-hover">
+    <div class="col-12">
+      <table class="table table-responsive-md table-hover table-sm">
         <tbody>
-          <tr *ngFor="let key of userKeys">
-            <td class="w-25 text-center">{{ 'user.' + key | translate | uppercase}}</td>
-            <td class="w-75"><span class="text-info">{{user[key]}}</span></td>
+          <tr *ngFor="let item of (currentUser$ | async) | keyvalue">
+            <td class="w-25 text-center">{{'user.' + item.key | translate | uppercase}}</td>
+            <td class="w-75"><span class="text-info">{{item.value}}</span></td>
           </tr>
         </tbody>
       </table>

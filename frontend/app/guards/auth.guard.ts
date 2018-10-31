@@ -19,6 +19,7 @@ export class AuthGuard implements CanActivate {
     return this.sharedService.currentUser$
       .pipe(
         map((user: User) => {
+          console.log(user);
           return !isEmptyObject(user) && typeof user['id'] !== 'undefined' ? this.allowRoute() : this.throwOut();
         }),
         catchError(() => {

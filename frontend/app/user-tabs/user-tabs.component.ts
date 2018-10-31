@@ -52,7 +52,6 @@ export class UserTabsComponent implements AfterViewInit, OnDestroy {
   }
 
   logout() {
-    // this.authService.logout().subscribe(() => this.authGuard.navigateLogin());
     this.sessionStore.dispatch(new LogoutUser());
   }
 
@@ -67,10 +66,12 @@ export class UserTabsComponent implements AfterViewInit, OnDestroy {
     this.currentUserSubscription = this.currentUser$.subscribe(
       (user: User | null) => {
         if (user === null || isEmptyObject(user)) {
-          this.router.navigateByUrl('/login');
+          this.router.navigateByUrl('/login?err=2');
         }
       },
-      () => this.router.navigateByUrl('/login'));
+      () => {
+        this.router.navigateByUrl('/login?err=1');
+      });
   }
 
   ngOnDestroy(): void {
