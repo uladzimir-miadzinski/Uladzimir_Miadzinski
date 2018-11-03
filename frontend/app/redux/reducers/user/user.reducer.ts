@@ -4,7 +4,7 @@ import {
   LOAD_USERS_SUCCESS,
   POST_USER,
   POST_USER_FAIL,
-  POST_USER_SUCCESS,
+  POST_USER_SUCCESS, UPDATE_USER, UPDATE_USER_FAIL, UPDATE_USER_SUCCESS,
   UsersActions
 } from '../../actions/user/user.actions';
 import { User } from '../../../user-list/user-service.interface';
@@ -51,7 +51,6 @@ export function userReducer(state: UsersState = initialState, action: UsersActio
 
     case POST_USER: {
       return Map(state)
-        .set('data', action.payload)
         .set('loading', true)
         .set('loaded', false)
         .toJS();
@@ -59,16 +58,34 @@ export function userReducer(state: UsersState = initialState, action: UsersActio
 
     case POST_USER_FAIL: {
       return Map(state)
-        .set('data', action.payload)
         .set('loading', false)
         .set('loaded', false)
         .toJS();
     }
 
-
     case POST_USER_SUCCESS: {
       return Map(state)
-        .set('data', action.payload)
+        .set('loading', false)
+        .set('loaded', true)
+        .toJS();
+    }
+
+    case UPDATE_USER: {
+      return Map(state)
+        .set('loading', true)
+        .set('loaded', false)
+        .toJS();
+    }
+
+    case UPDATE_USER_FAIL: {
+      return Map(state)
+        .set('loading', false)
+        .set('loaded', false)
+        .toJS();
+    }
+
+    case UPDATE_USER_SUCCESS: {
+      return Map(state)
         .set('loading', false)
         .set('loaded', true)
         .toJS();

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { notLegalAgeValidator } from '../validators/not-legal-age-validator.directive';
 import { dateValidator } from '../validators/date-validator.directive';
@@ -7,18 +7,18 @@ import { filterSpaces, maxTwoWordsValidator } from '../validators/max-two-words-
 import { onlyLatinValidator } from '../validators/only-latin-validator.directive';
 import * as moment from 'moment';
 import { integerValidator } from '../validators/integer-validator.directive';
-import { UserService } from '../services/user.service';
-import { MatDialog } from '@angular/material';
-import { DialogUserSavedComponent } from '../dialogs/dialog-user-saved/dialog-user-saved.component';
 import { User } from '../user-list/user-service.interface';
 import { Observable, Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { UsersState } from '../redux/reducers/user/user.reducer';
+import { UpdateCurrentUser } from '../redux/actions/user/user.actions';
 
 @Component({
   selector: 'app-user-editor',
   templateUrl: './user-editor.component.html',
   styleUrls: ['./user-editor.component.scss']
 })
-export class UserEditorComponent implements OnInit, AfterViewInit, OnChanges {
+export class UserEditorComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input()
   currentUser$!: Observable<User>;
@@ -28,8 +28,7 @@ export class UserEditorComponent implements OnInit, AfterViewInit, OnChanges {
 
   constructor(
     private fb: FormBuilder,
-    private userService: UserService,
-    private dialog: MatDialog
+    private usersStore: Store<UsersState>
   ) {
     this.createForm();
   }
@@ -71,6 +70,10 @@ export class UserEditorComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnInit() {
+    this.currentUserSubscription = this.currentUser$.subscribe((user: User) => {
+      console.log(user);
+      this.updateFormValues(user);
+    });
   }
 
   ngAfterViewInit() {
@@ -84,8 +87,7 @@ export class UserEditorComponent implements OnInit, AfterViewInit, OnChanges {
     this.userForm = this.fb.group({
       name: ['', {
         validators: [Validators.required],
-        asyncValidators: [maxTwoWordsValidator(), camelCaseValidator(), onlyLatinValidator()],
-        updateOn: 'blur'
+        asyncValidators: [maxTwoWordsValidator(), camelCaseValidator(), onlyLatinValidator()]
       }],
       age: ['', [integerValidator(), notLegalAgeValidator()]],
       info: [''],
@@ -117,32 +119,10 @@ export class UserEditorComponent implements OnInit, AfterViewInit, OnChanges {
       password: this.password.value as string,
     };
 
-    this.userService.updateCurrentUser(params).subscribe(() => {
-      this.dialog.open(DialogUserSavedComponent, {
-        data: {
-          success: true
-        }
-      });
-      this.userService.getCurrentUser();
-    }, (err) => {
-      this.dialog.open(DialogUserSavedComponent, {
-        data: {
-          success: false,
-          error: err
-        }
-      });
-    });
+    this.usersStore.dispatch(new UpdateCurrentUser(params));
   }
 
-  showErrors() {
-    Object.keys(this.form).forEach(key => {
-      console.warn(this.form[key].errors);
-    });
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {/*
-    if (typeof this.user !== 'undefined' && this.user !== null) {
-      this.updateFormValues(this.user);
-    }*/
+  ngOnDestroy(): void {
+    this.currentUserSubscription.unsubscribe();
   }
 }

@@ -1,9 +1,9 @@
 <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <small class="text-secondary font-italic" [innerHTML]="'text.nameIsNotForChange' | translate"></small>
   <div class="form-group">
     <mat-form-field class="full-width">
       <input matInput formControlName="name" value="{{(selectedUser$ | async)?.name}}" placeholder="{{'user.name' | translate}}" autofocus>
     </mat-form-field>
-    <small class="text-secondary font-italic">{{'text.nameIsNotForChange' | translate}}</small>
     <p class="text-danger"
        *ngIf="name.errors !== null && (name.touched || name.dirty); else loading">
       <span *ngIf="name.errors['required']; else asyncErrors">{{'user.name' | translate}} {{'validators.required' | translate}}.</span>
@@ -22,6 +22,15 @@
     <p class="text-danger"
        *ngIf="info.errors !== null && (info.touched || info.dirty)">
       {{info.errors['message'] | translate}}
+    </p>
+  </div>
+  <div class="form-group">
+    <mat-form-field class="full-width">
+      <input matInput formControlName="role" placeholder="{{'user.role' | translate}}">
+    </mat-form-field>
+    <p class="text-danger"
+       *ngIf="role.errors !== null && (role.touched || role.dirty)">
+      {{role.errors['message'] | translate}}
     </p>
   </div>
   <div class="form-group">

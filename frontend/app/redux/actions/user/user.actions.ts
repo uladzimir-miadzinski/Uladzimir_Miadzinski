@@ -13,6 +13,12 @@ export const LOAD_USERS_SUCCESS = '[User] Load Users Success';
 export const POST_USER = '[User] Post User';
 export const POST_USER_FAIL = '[User] Post User Fail';
 export const POST_USER_SUCCESS = '[User] Post User Success';
+export const UPDATE_USER = '[User] Update User';
+export const UPDATE_USER_FAIL = '[User] Update User Fail';
+export const UPDATE_USER_SUCCESS = '[User] Update User Success';
+export const UPDATE_CURRENT_USER = '[User] Update Current User';
+export const UPDATE_CURRENT_USER_FAIL = '[User] Update Current User Fail';
+export const UPDATE_CURRENT_USER_SUCCESS = '[User] Update Current User Success';
 export const LOAD_CURRENT_USER = '[User] Load Current User';
 export const LOAD_CURRENT_USER_FAIL = '[User] Load Current User Fail';
 export const LOAD_CURRENT_USER_SUCCESS = '[User] Load Current User Success';
@@ -92,6 +98,48 @@ export class PostUserSuccess implements Action {
   }
 }
 
+export class UpdateUser implements Action {
+  readonly type = UPDATE_USER;
+
+  constructor(public payload: User) {
+  }
+}
+
+export class UpdateUserFail implements Action {
+  readonly type = UPDATE_USER_FAIL;
+
+  constructor(public payload: string) {
+  }
+}
+
+export class UpdateUserSuccess implements Action {
+  readonly type = UPDATE_USER_SUCCESS;
+
+  constructor(public payload: User) {
+  }
+}
+
+export class UpdateCurrentUser implements Action {
+  readonly type = UPDATE_CURRENT_USER;
+
+  constructor(public payload: User) {
+  }
+}
+
+export class UpdateCurrentUserFail implements Action {
+  readonly type = UPDATE_CURRENT_USER_FAIL;
+
+  constructor(public payload: string) {
+  }
+}
+
+export class UpdateCurrentUserSuccess implements Action {
+  readonly type = UPDATE_CURRENT_USER_SUCCESS;
+
+  constructor(public payload: User) {
+  }
+}
+
 export class LoadCurrentUser implements Action {
   readonly type = LOAD_CURRENT_USER;
 }
@@ -115,4 +163,6 @@ export type UsersActions =
   PostUser | PostUserFail | PostUserSuccess |
   LoadCurrentUser | LoadCurrentUserFail | LoadCurrentUserSuccess |
   LoginUser | LoginUserFail | LoginUserSuccess |
-  LogoutUser | LogoutUserFail | LogoutUserSuccess;
+  LogoutUser | LogoutUserFail | LogoutUserSuccess |
+  UpdateUser | UpdateUserFail | UpdateUserSuccess |
+  UpdateCurrentUser | UpdateCurrentUserFail | UpdateCurrentUserSuccess;

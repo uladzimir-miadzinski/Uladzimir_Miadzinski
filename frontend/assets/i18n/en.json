@@ -86,6 +86,6 @@
   "text": {
     "selectUser": "Please, select user from list",
     "searchQuestion": "Search by name",
-    "nameIsNotForChange": "Username can not be changed! If you change the name of the current user, a new user will be created."
+    "nameIsNotForChange": "Username can not be changed!<br>If you change the name of the current user, a new user will be created."
   }
 }

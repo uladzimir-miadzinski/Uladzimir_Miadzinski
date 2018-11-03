@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { notLegalAgeValidator } from '../../validators/not-legal-age-validator.directive';
 import { dateValidator } from '../../validators/date-validator.directive';
@@ -18,7 +18,7 @@ import { Observable } from 'rxjs';
   templateUrl: './user-admin-editor.component.html',
   styleUrls: ['./user-admin-editor.component.scss']
 })
-export class UserAdminEditorComponent implements OnInit, AfterViewInit, OnChanges {
+export class UserAdminEditorComponent implements OnInit, OnChanges {
 
   @Input() selectedUser$!: Observable<User>;
 
@@ -66,6 +66,10 @@ export class UserAdminEditorComponent implements OnInit, AfterViewInit, OnChange
     return this.form.password;
   }
 
+  get role() {
+    return this.form.role;
+  }
+
   ngOnInit() {
 
     this.selectedUser$.subscribe((user: User) => {
@@ -86,23 +90,15 @@ export class UserAdminEditorComponent implements OnInit, AfterViewInit, OnChange
       }));
   }
 
-  ngAfterViewInit() {
-    this.onChanges();
-  }
-
-  onChanges(): void {
-
-  }
-
   createForm() {
     this.userForm = this.fb.group({
       name: ['', {
         validators: [Validators.required],
-        asyncValidators: [maxTwoWordsValidator(), camelCaseValidator(), onlyLatinValidator()],
-        updateOn: 'blur'
+        asyncValidators: [maxTwoWordsValidator(), camelCaseValidator(), onlyLatinValidator()]
       }],
       age: ['', [integerValidator(), notLegalAgeValidator()]],
       info: [''],
+      role: [''],
       password: ['', [Validators.required]],
       birthday: ['', dateValidator()],
       firstLogin: ['', dateValidator()],
@@ -114,6 +110,7 @@ export class UserAdminEditorComponent implements OnInit, AfterViewInit, OnChange
     this.form.name.setValue(user.name);
     this.form.age.setValue(user.age);
     this.form.info.setValue(user.info);
+    this.form.role.setValue(user.role);
     this.form.birthday.setValue(UserEditorComponent.formatDate(user.birthday));
     this.form.firstLogin.setValue(UserEditorComponent.formatDate(user.firstLogin));
     this.form.nextNotify.setValue(UserEditorComponent.formatDate(user.nextNotify));
