@@ -35,7 +35,7 @@ export interface User {
   firstLogin: Date;
   nextNotify: Date;
   info: string;
-  roles: string[];
+  role: string;
   deleted: number;
 }
 
@@ -145,11 +145,14 @@ function addNewUser(req: express.Request, res: express.Response) {
 }
 
 function createUser(params: User) {
-  const { name, age, password, birthday, firstLogin, nextNotify, info, deleted = 0, roles = [] } = params;
+  const { name, age, password, birthday, firstLogin, nextNotify, info, deleted = 0, role = '' } = params;
   const id: number = users.length + 1;
 
   const newUser: User = {
-    id, name, age, password, birthday, firstLogin, nextNotify, info, deleted, roles
+    id,
+    name, age,
+    password: isMd5(password) ? password : md5(password),
+    birthday, firstLogin, nextNotify, info, deleted, role
   };
   users.push(newUser);
   return newUser;
@@ -319,7 +322,7 @@ function deleteUserById(id: number): User | boolean {
 }
 
 function updateUser(params: User): User | boolean {
-  const { id, name, age, password, birthday, firstLogin, nextNotify, info, deleted = 0 } = params;
+  const { id, name, age, password, birthday, firstLogin, nextNotify, info, deleted = 0, role } = params;
   const index = findIndexByUserId(id);
   if (index >= 0) {
     users[index].name = name;
@@ -329,6 +332,9 @@ function updateUser(params: User): User | boolean {
     users[index].firstLogin = firstLogin;
     users[index].nextNotify = nextNotify;
     users[index].info = info;
+    if (typeof role !== 'undefined') {
+      users[index].role = role;
+    }
     users[index].deleted = deleted;
     return users[index];
   } else {

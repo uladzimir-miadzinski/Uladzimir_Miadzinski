@@ -6,12 +6,11 @@ import { camelCaseValidator } from '../../validators/camel-case-validator.direct
 import { filterSpaces, maxTwoWordsValidator } from '../../validators/max-two-words-validator.directive';
 import { onlyLatinValidator } from '../../validators/only-latin-validator.directive';
 import { integerValidator } from '../../validators/integer-validator.directive';
-import { UserService } from '../../services/user.service';
-import { MatDialog } from '@angular/material';
-import { DialogUserSavedComponent } from '../../dialogs/dialog-user-saved/dialog-user-saved.component';
 import { User } from '../../user-list/user-service.interface';
 import { UserEditorComponent } from '../../user-editor/user-editor.component';
-import { Observable } from 'rxjs';
+import { DataState } from '../../redux/reducers';
+import { Store } from '@ngrx/store';
+import { CreateUser, UpdateUser } from '../../redux/actions/user/user.actions';
 
 @Component({
   selector: 'app-user-admin-editor',
@@ -20,16 +19,14 @@ import { Observable } from 'rxjs';
 })
 export class UserAdminEditorComponent implements OnInit, OnChanges {
 
-  @Input() selectedUser$!: Observable<User>;
+  @Input() selectedUser!: User;
 
   userForm!: FormGroup;
   nameChanged = false;
-  selectedUser: User | null = null;
 
   constructor(
     private fb: FormBuilder,
-    private userService: UserService,
-    private dialog: MatDialog
+    private dataStore: Store<DataState>
   ) {
     this.createForm();
   }
@@ -71,14 +68,6 @@ export class UserAdminEditorComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-
-   /* this.selectedUser$.subscribe((user: User) => {
-      this.selectedUser = user;
-      if (typeof user !== 'undefined') {
-        this.updateFormValues(user);
-      }
-    });*/
-
     this.name.valueChanges
       .subscribe((inputName => {
 
@@ -133,33 +122,19 @@ export class UserAdminEditorComponent implements OnInit, OnChanges {
       name: filterSpaces(this.name.value).join(' ') as string,
       age: this.age.value as number,
       info: this.info.value as string,
+      role: this.role.value as string,
       birthday: this.birthday.value as string,
       firstLogin: this.firstLogin.value as string,
       nextNotify: this.nextNotify.value as string,
       password: this.password.value as string,
     };
 
-    this.userService.updateCurrentUser(params).subscribe(() => {
-      this.dialog.open(DialogUserSavedComponent, {
-        data: {
-          success: true
-        }
-      });
-      this.userService.getCurrentUser();
-    }, (err) => {
-      this.dialog.open(DialogUserSavedComponent, {
-        data: {
-          success: false,
-          error: err
-        }
-      });
-    });
-  }
-
-  showErrors() {
-    Object.keys(this.form).forEach(key => {
-      console.warn(this.form[key].errors);
-    });
+    if (this.nameChanged) {
+      this.dataStore.dispatch(new CreateUser(params));
+    } else {
+      params.id = this.selectedUser.id;
+      this.dataStore.dispatch(new UpdateUser(params));
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {

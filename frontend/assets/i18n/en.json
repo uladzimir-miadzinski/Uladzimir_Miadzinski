@@ -59,6 +59,7 @@
     }
   },
   "buttons": {
+    "logout": "Logout",
     "cancel": "Cancel",
     "add": "Add",
     "save": "Save",

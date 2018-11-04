@@ -2,7 +2,7 @@
   <small class="text-secondary font-italic" [innerHTML]="'text.nameIsNotForChange' | translate"></small>
   <div class="form-group">
     <mat-form-field class="full-width">
-      <input matInput formControlName="name" value="{{(selectedUser$ | async)?.name}}" placeholder="{{'user.name' | translate}}" autofocus>
+      <input matInput formControlName="name" placeholder="{{'user.name' | translate}}" autofocus>
     </mat-form-field>
     <p class="text-danger"
        *ngIf="name.errors !== null && (name.touched || name.dirty); else loading">

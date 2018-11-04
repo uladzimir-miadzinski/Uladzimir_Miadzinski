@@ -1,12 +1,21 @@
-<mat-tab-group  [(selectedIndex)]="selectedTab" mat-stretch-tabs (selectedTabChange)="onTabChange($event)">
+<mat-tab-group  [(selectedIndex)]="selectedTab" mat-stretch-tabs>
   <mat-tab label="{{'nav.viewInfo' | translate | uppercase}}">
     <app-user-info [currentUser$]="currentUser$"></app-user-info>
   </mat-tab>
   <mat-tab label="{{'nav.updateInfo' | translate | uppercase}}">
     <app-user-editor [currentUser$]="currentUser$"></app-user-editor>
   </mat-tab>
-  <mat-tab label="{{'nav.adminPanel' | translate | uppercase}}">
+  <mat-tab *ngIf="(currentUser$ | async)?.role === 'admin'" label="{{'nav.adminPanel' | translate | uppercase}}">
     <app-admin-panel></app-admin-panel>
   </mat-tab>
-  <mat-tab label="{{'nav.logout' | translate | uppercase}}" class="text-danger"></mat-tab>
+  <mat-tab label="{{'nav.logout' | translate | uppercase}}" class="text-danger">
+    <div class="container-fluid pt-4">
+      <div class="row text-center">
+        <div class="col">
+          <button mat-flat-button (click)="confirmLogout()"
+                  color="warn" type="button">{{'buttons.logout' | translate}}</button>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
 </mat-tab-group>

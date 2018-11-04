@@ -1,10 +1,9 @@
 import {
+  CREATE_USER, CREATE_USER_FAIL, CREATE_USER_SUCCESS,
   LOAD_USERS,
   LOAD_USERS_FAIL,
   LOAD_USERS_SUCCESS,
-  POST_USER,
-  POST_USER_FAIL,
-  POST_USER_SUCCESS, UPDATE_USER, UPDATE_USER_FAIL, UPDATE_USER_SUCCESS,
+  UPDATE_USER, UPDATE_USER_FAIL, UPDATE_USER_SUCCESS,
   UsersActions
 } from '../../actions/user/user.actions';
 import { User } from '../../../user-list/user-service.interface';
@@ -49,21 +48,21 @@ export function userReducer(state: UsersState = initialState, action: UsersActio
         .toJS();
     }
 
-    case POST_USER: {
+    case CREATE_USER: {
       return Map(state)
         .set('loading', true)
         .set('loaded', false)
         .toJS();
     }
 
-    case POST_USER_FAIL: {
+    case CREATE_USER_FAIL: {
       return Map(state)
         .set('loading', false)
         .set('loaded', false)
         .toJS();
     }
 
-    case POST_USER_SUCCESS: {
+    case CREATE_USER_SUCCESS: {
       return Map(state)
         .set('loading', false)
         .set('loaded', true)

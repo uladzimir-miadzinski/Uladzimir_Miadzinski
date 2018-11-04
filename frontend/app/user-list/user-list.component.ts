@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { User } from './user-service.interface';
 
 @Component({
@@ -9,6 +9,8 @@ import { User } from './user-service.interface';
 export class UserListComponent implements OnInit, OnChanges {
   isDropdownHidden = true;
   selectedUser?: User;
+
+  @Output() selectedUserChange: EventEmitter<User> = new EventEmitter<User>();
 
   constructor(
   ) {
@@ -27,6 +29,7 @@ export class UserListComponent implements OnInit, OnChanges {
 
   onSelectedUserChange(user: User) {
     this.selectedUser = user;
+    this.selectedUserChange.emit(this.selectedUser);
     this.closeDropdown();
   }
 }

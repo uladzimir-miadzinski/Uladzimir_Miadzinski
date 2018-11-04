@@ -2,11 +2,8 @@ import { AfterViewChecked, Component, OnChanges, OnInit, SimpleChanges } from '@
 import { LoadingService } from './services/loading.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Store } from '@ngrx/store';
 import { User } from './user-list/user-service.interface';
-import { LoadCurrentUser, LoadUsers, PostUser } from './redux/actions/user/user.actions';
 import { Observable } from 'rxjs';
-import { UsersState } from './redux/reducers/user/user.reducer';
 
 @Component({
   selector: 'app-root',
@@ -20,35 +17,13 @@ export class AppComponent implements OnInit, AfterViewChecked, OnChanges {
   constructor(
     public loadingService: LoadingService,
     private cdRef: ChangeDetectorRef,
-    public translate: TranslateService,
-    private store: Store<UsersState>
+    public translate: TranslateService
   ) {
   }
 
   ngAfterViewChecked(): void {
     this.translate.use(this.selectedLang);
     this.cdRef.detectChanges();
-  }
-
-  dispatch() {
-    console.log(this.store.dispatch(new LoadUsers()));
-  }
-
-  add() {
-    console.log(this.store.dispatch(new PostUser({
-      age: 18,
-      birthday: '2018/10/12',
-      deleted: 0,
-      firstLogin: '2017/12/12',
-      info: 'hjhj hjh j jh jh',
-      name: 'niii',
-      nextNotify: '2016/10/01',
-      password: '123'
-    })));
-  }
-
-  show() {
-    this.store.dispatch(new LoadCurrentUser());
   }
 
   ngOnInit(): void {

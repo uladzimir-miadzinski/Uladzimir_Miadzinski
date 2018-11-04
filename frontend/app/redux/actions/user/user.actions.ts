@@ -10,9 +10,9 @@ export const LOGOUT_USER_SUCCESS = '[User] Logout User Success';
 export const LOAD_USERS = '[User] Load Users';
 export const LOAD_USERS_FAIL = '[User] Load Users Fail';
 export const LOAD_USERS_SUCCESS = '[User] Load Users Success';
-export const POST_USER = '[User] Post User';
-export const POST_USER_FAIL = '[User] Post User Fail';
-export const POST_USER_SUCCESS = '[User] Post User Success';
+export const CREATE_USER = '[User] Create User';
+export const CREATE_USER_FAIL = '[User] Create User Fail';
+export const CREATE_USER_SUCCESS = '[User] Create User Success';
 export const UPDATE_USER = '[User] Update User';
 export const UPDATE_USER_FAIL = '[User] Update User Fail';
 export const UPDATE_USER_SUCCESS = '[User] Update User Success';
@@ -77,22 +77,22 @@ export class LogoutUserSuccess implements Action {
   readonly type = LOGOUT_USER_SUCCESS;
 }
 
-export class PostUser implements Action {
-  readonly type = POST_USER;
+export class CreateUser implements Action {
+  readonly type = CREATE_USER;
 
   constructor(public payload: User) {
   }
 }
 
-export class PostUserFail implements Action {
-  readonly type = POST_USER_FAIL;
+export class CreateUserFail implements Action {
+  readonly type = CREATE_USER_FAIL;
 
   constructor(public payload: string) {
   }
 }
 
-export class PostUserSuccess implements Action {
-  readonly type = POST_USER_SUCCESS;
+export class CreateUserSuccess implements Action {
+  readonly type = CREATE_USER_SUCCESS;
 
   constructor(public payload: User) {
   }
@@ -160,7 +160,7 @@ export class LoadCurrentUserSuccess implements Action {
 
 export type UsersActions =
   LoadUsers | LoadUsersFail | LoadUsersSuccess |
-  PostUser | PostUserFail | PostUserSuccess |
+  CreateUser | CreateUserFail | CreateUserSuccess |
   LoadCurrentUser | LoadCurrentUserFail | LoadCurrentUserSuccess |
   LoginUser | LoginUserFail | LoginUserSuccess |
   LogoutUser | LogoutUserFail | LogoutUserSuccess |

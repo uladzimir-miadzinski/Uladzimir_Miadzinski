@@ -6,10 +6,6 @@ import {
   LOAD_USERS,
   LoadUsersSuccess,
   LoadUsersFail,
-  POST_USER,
-  PostUser,
-  PostUserSuccess,
-  PostUserFail,
   LoadUsers,
   LOAD_CURRENT_USER,
   LoadCurrentUserSuccess,
@@ -21,7 +17,14 @@ import {
   LogoutUserSuccess,
   LogoutUserFail,
   LOGOUT_USER,
-  LoadCurrentUser, UPDATE_CURRENT_USER, UpdateCurrentUser, UpdateCurrentUserSuccess, UpdateCurrentUserFail,
+  LoadCurrentUser,
+  UPDATE_CURRENT_USER,
+  UpdateCurrentUser,
+  UpdateCurrentUserSuccess,
+  UpdateCurrentUserFail,
+  CREATE_USER,
+  CreateUser,
+  CreateUserSuccess, CreateUserFail, UPDATE_USER, UpdateUserSuccess, UpdateUserFail,
 } from '../../actions/user/user.actions';
 import { catchError, map, mapTo, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { UserService } from '../../../services/user.service';
@@ -72,16 +75,22 @@ export class UserEffects {
   );
 
   @Effect()
-  postUser$: Observable<UsersActions> = this.actions$.pipe(
-    ofType(POST_USER),
-    mergeMap((action: PostUser) => {
+  createUser$: Observable<UsersActions> = this.actions$.pipe(
+    ofType(CREATE_USER),
+    mergeMap((action: CreateUser) => {
       return this.userService.createUser(action.payload as User)
         .pipe(
           map((user: User) => {
-            return new PostUserSuccess(user);
+            return new CreateUserSuccess(user);
+          }),
+          tap(() => {
+            this.dialogSuccess();
           }),
           mapTo(new LoadUsers()),
-          catchError((error: string) => of(new PostUserFail(error)))
+          catchError((error: string) => {
+            this.dialogError();
+            return of(new CreateUserFail(error));
+          })
         );
     })
   );
@@ -96,23 +105,39 @@ export class UserEffects {
             return new UpdateCurrentUserSuccess(user);
           }),
           tap(() => {
-            this.dialog.open(DialogUserSavedComponent, {
-              data: {
-                success: true
-              }
-            });
+            this.dialogSuccess();
           }),
           switchMap(() => [
             new LoadCurrentUser(),
             new LoadUsers()
           ]),
           catchError((error: string) => {
-            this.dialog.open(DialogUserSavedComponent, {
-              data: {
-                success: false
-              }
-            });
+            this.dialogError();
             return of(new UpdateCurrentUserFail(error));
+          })
+        );
+    })
+  );
+
+  @Effect()
+  updateUser$: Observable<UsersActions> = this.actions$.pipe(
+    ofType(UPDATE_USER),
+    mergeMap((action: UpdateCurrentUser) => {
+      return this.userService.updateUser(action.payload as User)
+        .pipe(
+          map((user: User) => {
+            return new UpdateUserSuccess(user);
+          }),
+          tap(() => {
+            this.dialogSuccess();
+          }),
+          switchMap(() => [
+            new LoadCurrentUser(),
+            new LoadUsers()
+          ]),
+          catchError((error: string) => {
+            this.dialogError();
+            return of(new UpdateUserFail(error));
           })
         );
     })
@@ -146,6 +171,21 @@ export class UserEffects {
     })
   );
 
+  dialogSuccess() {
+    this.dialog.open(DialogUserSavedComponent, {
+      data: {
+        success: true
+      }
+    });
+  }
+
+  dialogError() {
+    this.dialog.open(DialogUserSavedComponent, {
+      data: {
+        success: false
+      }
+    });
+  }
 }
 
 

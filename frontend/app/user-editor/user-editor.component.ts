@@ -66,12 +66,11 @@ export class UserEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   static formatDate(date: string | undefined) {
-    return typeof date === 'undefined' ? '' : moment(date).format('YYYY/MM/DD');
+    return typeof date === 'undefined' || date === '' ? '' : moment(date).format('YYYY/MM/DD');
   }
 
   ngOnInit() {
     this.currentUserSubscription = this.currentUser$.subscribe((user: User) => {
-      console.log(user);
       this.updateFormValues(user);
     });
   }

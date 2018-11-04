@@ -26,6 +26,10 @@ export class UserService {
     return this.http.put(`${this.apiUrl}/current-user`, params);
   }
 
+  updateUser(params: User) {
+    return this.http.put(`${this.apiUrl}/users/${params.id}`, params);
+  }
+
   createUser(params: User) {
     return this.http.post(`${this.apiUrl}/users`, params);
   }

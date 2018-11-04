@@ -2,7 +2,7 @@
 <router-outlet></router-outlet>
 <div class="container text-center pt-4">
   <div class="row justify-content-center">
-    <div class="col-2">
+    <div class="col-6">
       <mat-form-field>
         <mat-select [(value)]="selectedLang" (valueChange)="onLangChange()" #langSelect placeholder="Language">
           <mat-option *ngFor="let lang of translate.getLangs()" [value]="lang">{{ lang }}</mat-option>
@@ -11,15 +11,3 @@
     </div>
   </div>
 </div>
-
-<button (click)="dispatch()">Load Users</button>
-<button (click)="add()">Add User</button>
-<button (click)="show()">Load Current User</button>
-
-user = {{currentUser$ | async | json}}
-
-<br><br>
-
-users = {{ users$ | async | json }}
-
-

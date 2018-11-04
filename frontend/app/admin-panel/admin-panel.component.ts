@@ -1,6 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { User } from '../user-list/user-service.interface';
-// import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-admin-panel',
@@ -8,15 +7,17 @@ import { User } from '../user-list/user-service.interface';
   styleUrls: ['./admin-panel.component.scss']
 })
 export class AdminPanelComponent implements OnInit {
-  @Input() user!: User;
-  //selectedUser$!: Observable<User>;
+  selectedUser!: User;
 
   constructor(
   ) {
   }
 
   ngOnInit() {
-     //this.selectedUser$ = this.dropdownUserService.getCurrentUser$;
+  }
+
+  onSelectedUserChange(user: User) {
+    this.selectedUser = user;
   }
 
 }
