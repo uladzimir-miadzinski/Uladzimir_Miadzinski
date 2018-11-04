@@ -11,8 +11,7 @@ export class UserChosenComponent implements OnInit {
   @Input() isDropdownHidden = true;
   @Output() isDropdownHiddenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor(
-  ) {
+  constructor() {
   }
 
   ngOnInit() {
@@ -20,6 +19,10 @@ export class UserChosenComponent implements OnInit {
 
   openList() {
     this.isDropdownHiddenChange.emit(!this.isDropdownHidden);
+  }
+
+  userSelected() {
+    return this.selectedUser !== undefined && this.selectedUser !== null && Object.keys(this.selectedUser).length !== 0;
   }
 
 }

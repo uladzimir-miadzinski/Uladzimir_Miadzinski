@@ -59,11 +59,11 @@ export class UserTabsComponent implements AfterViewInit, OnDestroy {
     this.currentUserSubscription = this.currentUser$.subscribe(
       (user: User | null) => {
         if (user === null || isEmptyObject(user)) {
-          this.router.navigateByUrl('/login?err=2');
+          this.router.navigateByUrl('/login');
         }
       },
       () => {
-        this.router.navigateByUrl('/login?err=1');
+        this.router.navigateByUrl('/login');
       });
   }
 

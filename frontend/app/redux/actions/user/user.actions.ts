@@ -16,6 +16,12 @@ export const CREATE_USER_SUCCESS = '[User] Create User Success';
 export const UPDATE_USER = '[User] Update User';
 export const UPDATE_USER_FAIL = '[User] Update User Fail';
 export const UPDATE_USER_SUCCESS = '[User] Update User Success';
+export const DELETE_USER = '[User] Delete User';
+export const DELETE_USER_FAIL = '[User] Delete User Fail';
+export const DELETE_USER_SUCCESS = '[User] Delete User Success';
+export const ASSIGN_USER_PASSWORD = '[User] Assign User Password';
+export const ASSIGN_USER_PASSWORD_FAIL = '[User] Assign User Password Fail';
+export const ASSIGN_USER_PASSWORD_SUCCESS = '[User] Assign User Password Success';
 export const UPDATE_CURRENT_USER = '[User] Update Current User';
 export const UPDATE_CURRENT_USER_FAIL = '[User] Update Current User Fail';
 export const UPDATE_CURRENT_USER_SUCCESS = '[User] Update Current User Success';
@@ -112,8 +118,48 @@ export class UpdateUserFail implements Action {
   }
 }
 
+
+export class AssignUserPassword implements Action {
+  readonly type = ASSIGN_USER_PASSWORD;
+
+  constructor(public payload: UserCredentials) {
+  }
+}
+
+export class AssignUserPasswordFail implements Action {
+  readonly type = ASSIGN_USER_PASSWORD_FAIL;
+
+  constructor(public payload: string) {
+  }
+}
+
+export class AssignUserPasswordSuccess implements Action {
+  readonly type = ASSIGN_USER_PASSWORD_SUCCESS;
+}
+
 export class UpdateUserSuccess implements Action {
   readonly type = UPDATE_USER_SUCCESS;
+
+  constructor(public payload: User) {
+  }
+}
+
+export class DeleteUser implements Action {
+  readonly type = DELETE_USER;
+
+  constructor(public payload: number | undefined) {
+  }
+}
+
+export class DeleteUserFail implements Action {
+  readonly type = DELETE_USER_FAIL;
+
+  constructor(public payload: string) {
+  }
+}
+
+export class DeleteUserSuccess implements Action {
+  readonly type = DELETE_USER_SUCCESS;
 
   constructor(public payload: User) {
   }
@@ -165,4 +211,6 @@ export type UsersActions =
   LoginUser | LoginUserFail | LoginUserSuccess |
   LogoutUser | LogoutUserFail | LogoutUserSuccess |
   UpdateUser | UpdateUserFail | UpdateUserSuccess |
-  UpdateCurrentUser | UpdateCurrentUserFail | UpdateCurrentUserSuccess;
+  UpdateCurrentUser | UpdateCurrentUserFail | UpdateCurrentUserSuccess |
+  DeleteUser | DeleteUserFail | DeleteUserSuccess |
+  AssignUserPassword | AssignUserPasswordFail | AssignUserPasswordSuccess;

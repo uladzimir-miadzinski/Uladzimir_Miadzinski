@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { notLegalAgeValidator } from '../../validators/not-legal-age-validator.directive';
 import { dateValidator } from '../../validators/date-validator.directive';
@@ -10,7 +10,7 @@ import { User } from '../../user-list/user-service.interface';
 import { UserEditorComponent } from '../../user-editor/user-editor.component';
 import { DataState } from '../../redux/reducers';
 import { Store } from '@ngrx/store';
-import { CreateUser, UpdateUser } from '../../redux/actions/user/user.actions';
+import { CreateUser, DeleteUser, UpdateUser } from '../../redux/actions/user/user.actions';
 
 @Component({
   selector: 'app-user-admin-editor',
@@ -20,9 +20,11 @@ import { CreateUser, UpdateUser } from '../../redux/actions/user/user.actions';
 export class UserAdminEditorComponent implements OnInit, OnChanges {
 
   @Input() selectedUser!: User;
+  @Output() selectedUserChange: EventEmitter<User> = new EventEmitter<User>();
 
   userForm!: FormGroup;
   nameChanged = false;
+  isUserSelected = false;
 
   constructor(
     private fb: FormBuilder,
@@ -76,6 +78,8 @@ export class UserAdminEditorComponent implements OnInit, OnChanges {
         } else {
           this.nameChanged = true;
         }
+
+        this.isUserSelected = !this.nameChanged;
       }));
   }
 
@@ -110,7 +114,7 @@ export class UserAdminEditorComponent implements OnInit, OnChanges {
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);
       if (control instanceof FormControl) {
-        control.markAsTouched({onlySelf: true});
+        control.markAsTouched({ onlySelf: true });
       } else if (control instanceof FormGroup) {
         this.validateAllFormFields(control);
       }
@@ -139,8 +143,15 @@ export class UserAdminEditorComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (typeof this.selectedUser !== 'undefined' && this.selectedUser !== null) {
+      this.isUserSelected = true;
       this.updateFormValues(this.selectedUser);
     }
+  }
+
+  deleteSelectedUser() {
+    this.dataStore.dispatch(new DeleteUser(this.selectedUser.id));
+    this.selectedUser = {};
+    this.selectedUserChange.emit(this.selectedUser);
   }
 
 }

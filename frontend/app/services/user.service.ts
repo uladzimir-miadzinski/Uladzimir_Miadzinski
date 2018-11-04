@@ -30,6 +30,10 @@ export class UserService {
     return this.http.put(`${this.apiUrl}/users/${params.id}`, params);
   }
 
+  deleteUser(userId: number) {
+    return this.http.delete(`${this.apiUrl}/users/${userId}`);
+  }
+
   createUser(params: User) {
     return this.http.post(`${this.apiUrl}/users`, params);
   }

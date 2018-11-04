@@ -54,12 +54,13 @@
       "errorContent": "New password was not assigned!"
     },
     "user-saved": {
-      "successContent": "User was saved successfully!",
-      "errorContent": "User was not saved!"
+      "successContent": "User updated successfully!",
+      "errorContent": "User was not updated!"
     }
   },
   "buttons": {
     "logout": "Logout",
+    "delete": "Delete",
     "cancel": "Cancel",
     "add": "Add",
     "save": "Save",

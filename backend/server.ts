@@ -161,7 +161,7 @@ function createUser(params: User) {
 function getCurrentUser(req: express.Request, res: express.Response) {
   const { jwtoken } = req.cookies;
   const user = getUserFromJwt(jwtoken);
-  res.status(user !== null ? STATUS.OK : STATUS.UNAUTHORIZED).send(user);
+  res.status(user !== null && user.deleted !== 1 ? STATUS.OK : STATUS.UNAUTHORIZED).send(user);
 }
 
 function getUserFromJwt(jwtoken: string): User | null {

@@ -1,8 +1,8 @@
 <div class="container-fluid pt-3">
-  <app-user-list (selectedUserChange)="onSelectedUserChange($event)"></app-user-list>
+  <app-user-list [selectedUser]="selectedUser" (selectedUserChange)="onSelectedUserChange($event)"></app-user-list>
   <div class="row justify-content-center pt-3">
     <div class="col-6 text-center">
-      <app-user-admin-editor [selectedUser]="selectedUser"></app-user-admin-editor>
+      <app-user-admin-editor [(selectedUser)]="selectedUser"></app-user-admin-editor>
     </div>
   </div>
 </div>

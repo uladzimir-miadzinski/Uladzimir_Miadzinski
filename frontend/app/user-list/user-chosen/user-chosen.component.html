@@ -1,6 +1,6 @@
 <div (click)="openList()"
      class="d-flex flex-row flex-grow-1 user-chosen hover cursor-pointer p-2">
-  <div *ngIf="selectedUser !== undefined && selectedUser !== null; else pleaseSelectUser" class="d-flex flex-grow-1">
+  <div *ngIf="userSelected(); else pleaseSelectUser" class="d-flex flex-grow-1">
     <div class="first-col w-50">
       <div class="ellipsis-oneliner">
         {{'user.name' | translate}}: <span class="text-primary">{{selectedUser.name}}</span>

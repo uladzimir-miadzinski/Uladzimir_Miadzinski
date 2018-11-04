@@ -1,5 +1,6 @@
 import {
-  CREATE_USER, CREATE_USER_FAIL, CREATE_USER_SUCCESS,
+  ASSIGN_USER_PASSWORD, ASSIGN_USER_PASSWORD_FAIL, ASSIGN_USER_PASSWORD_SUCCESS,
+  CREATE_USER, CREATE_USER_FAIL, CREATE_USER_SUCCESS, DELETE_USER, DELETE_USER_FAIL, DELETE_USER_SUCCESS,
   LOAD_USERS,
   LOAD_USERS_FAIL,
   LOAD_USERS_SUCCESS,
@@ -84,6 +85,48 @@ export function userReducer(state: UsersState = initialState, action: UsersActio
     }
 
     case UPDATE_USER_SUCCESS: {
+      return Map(state)
+        .set('loading', false)
+        .set('loaded', true)
+        .toJS();
+    }
+
+    case ASSIGN_USER_PASSWORD: {
+      return Map(state)
+        .set('loading', true)
+        .set('loaded', false)
+        .toJS();
+    }
+
+    case ASSIGN_USER_PASSWORD_FAIL: {
+      return Map(state)
+        .set('loading', false)
+        .set('loaded', false)
+        .toJS();
+    }
+
+    case ASSIGN_USER_PASSWORD_SUCCESS: {
+      return Map(state)
+        .set('loading', false)
+        .set('loaded', true)
+        .toJS();
+    }
+
+    case DELETE_USER: {
+      return Map(state)
+        .set('loading', true)
+        .set('loaded', false)
+        .toJS();
+    }
+
+    case DELETE_USER_FAIL: {
+      return Map(state)
+        .set('loading', false)
+        .set('loaded', false)
+        .toJS();
+    }
+
+    case DELETE_USER_SUCCESS: {
       return Map(state)
         .set('loading', false)
         .set('loaded', true)

@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { usernameExistsValidator } from '../validators/username-exists-validator.directive';
 import { camelCaseValidator } from '../validators/camel-case-validator.directive';
 import { AuthService } from '../services/auth.service';
-import { MatDialog } from '@angular/material';
-import { DialogPasswordAssignComponent } from '../dialogs/dialog-password-assign/dialog-password-assign.component';
-import { AuthGuard } from '../guards/auth.guard';
+import { AssignUserPassword } from '../redux/actions/user/user.actions';
+import { Store } from '@ngrx/store';
+import { DataState } from '../redux/reducers';
 
 @Component({
   selector: 'app-forgot-password',
@@ -18,8 +18,7 @@ export class ForgotPasswordComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private dialog: MatDialog,
-    private authGuard: AuthGuard
+    private dataStore: Store<DataState>
   ) {
   }
 
@@ -37,26 +36,10 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   onSubmit() {
-    this.authService.assignNewPassword(this.name.value, this.password.value).subscribe(
-      () => {
-        const dialogRef = this.dialog.open(DialogPasswordAssignComponent, {
-          data: {
-            success: true
-          }
-        });
-
-        dialogRef.afterClosed().subscribe(() => {
-          this.authGuard.navigateLogin();
-        });
-      }, (err) => {
-        this.dialog.open(DialogPasswordAssignComponent, {
-          data: {
-            success: false,
-            error: err
-          }
-        });
-      }
-    );
+    this.dataStore.dispatch(new AssignUserPassword({
+      name: this.name.value,
+      password: this.password.value
+    }));
   }
 
   get form() {

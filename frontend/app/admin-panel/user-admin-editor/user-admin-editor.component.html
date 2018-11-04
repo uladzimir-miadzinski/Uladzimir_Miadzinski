@@ -89,7 +89,7 @@
       {{(nameChanged ? 'buttons.add' : 'buttons.save') | translate | titlecase}}
     </button>
     <button mat-flat-button color="accent" type="reset">{{'buttons.reset' | translate}}</button>
-    <!--<button mat-flat-button color="warn" type="button" (click)="showErrors();">Show errors in console</button>-->
+    <button mat-flat-button color="warn" type="button"
+            [disabled]="!isUserSelected" (click)="deleteSelectedUser();">{{'buttons.delete' | translate}}</button>
   </div>
-
 </form>

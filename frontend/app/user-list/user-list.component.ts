@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { User } from './user-service.interface';
 
 @Component({
@@ -6,10 +6,10 @@ import { User } from './user-service.interface';
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss']
 })
-export class UserListComponent implements OnInit, OnChanges {
+export class UserListComponent implements OnInit {
   isDropdownHidden = true;
-  selectedUser?: User;
 
+  @Input() selectedUser?: User;
   @Output() selectedUserChange: EventEmitter<User> = new EventEmitter<User>();
 
   constructor(
@@ -17,10 +17,6 @@ export class UserListComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
   }
 
   closeDropdown() {

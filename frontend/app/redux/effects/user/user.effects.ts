@@ -24,7 +24,15 @@ import {
   UpdateCurrentUserFail,
   CREATE_USER,
   CreateUser,
-  CreateUserSuccess, CreateUserFail, UPDATE_USER, UpdateUserSuccess, UpdateUserFail,
+  CreateUserSuccess,
+  CreateUserFail,
+  UPDATE_USER,
+  UpdateUserSuccess,
+  UpdateUserFail,
+  DELETE_USER,
+  DeleteUser,
+  DeleteUserSuccess,
+  DeleteUserFail, ASSIGN_USER_PASSWORD, AssignUserPassword, AssignUserPasswordSuccess, AssignUserPasswordFail,
 } from '../../actions/user/user.actions';
 import { catchError, map, mapTo, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { UserService } from '../../../services/user.service';
@@ -34,6 +42,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { STATUS } from '../../../login/login.component';
 import { DialogUserSavedComponent } from '../../../dialogs/dialog-user-saved/dialog-user-saved.component';
 import { MatDialog } from '@angular/material';
+import { DialogPasswordAssignComponent } from '../../../dialogs/dialog-password-assign/dialog-password-assign.component';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class UserEffects {
@@ -42,7 +52,8 @@ export class UserEffects {
     private actions$: Actions,
     private userService: UserService,
     private authService: AuthService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) {
   }
 
@@ -144,6 +155,51 @@ export class UserEffects {
   );
 
   @Effect()
+  assignUserPassword$: Observable<UsersActions> = this.actions$.pipe(
+    ofType(ASSIGN_USER_PASSWORD),
+    mergeMap((action: AssignUserPassword) => {
+      const {name, password} = action.payload as UserCredentials;
+      return this.authService.assignNewPassword(name, password)
+        .pipe(
+          map(() => {
+            return new AssignUserPasswordSuccess();
+          }),
+          tap(() => {
+            this.dialogAssignPasswordSuccess();
+          }),
+          catchError((error: string) => {
+            this.dialogAssignPasswordFail(error);
+            return of(new AssignUserPasswordFail(error));
+          })
+        );
+    })
+  );
+
+  @Effect()
+  deleteUser$: Observable<UsersActions> = this.actions$.pipe(
+    ofType(DELETE_USER),
+    mergeMap((action: DeleteUser) => {
+      return this.userService.deleteUser(action.payload as number)
+        .pipe(
+          map((user: User) => {
+            return new DeleteUserSuccess(user);
+          }),
+          tap(() => {
+            this.dialogSuccess();
+          }),
+          switchMap(() => [
+            new LoadCurrentUser(),
+            new LoadUsers()
+          ]),
+          catchError((error: string) => {
+            this.dialogError();
+            return of(new DeleteUserFail(error));
+          })
+        );
+    })
+  );
+
+  @Effect()
   loginUser$: Observable<UsersActions> = this.actions$.pipe(
     ofType(LOGIN_USER),
     mergeMap((action: LoginUser) => {
@@ -183,6 +239,27 @@ export class UserEffects {
     this.dialog.open(DialogUserSavedComponent, {
       data: {
         success: false
+      }
+    });
+  }
+
+  dialogAssignPasswordSuccess() {
+    const dialogRef = this.dialog.open(DialogPasswordAssignComponent, {
+      data: {
+        success: true
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.router.navigate(['login']);
+    });
+  }
+
+  dialogAssignPasswordFail(err: string) {
+    this.dialog.open(DialogPasswordAssignComponent, {
+      data: {
+        success: false,
+        error: err
       }
     });
   }
