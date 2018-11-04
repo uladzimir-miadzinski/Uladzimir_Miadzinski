@@ -12,6 +12,7 @@ import { SearchBtnComponent } from './search/search-btn/search-btn.component';
 import { SearchResultsComponent } from './search/search-results/search-results.component';
 import { SearchResultsItemComponent } from './search/search-results/search-results-item/search-results-item.component';
 import { MatProgressBarModule } from '@angular/material';
+import { ClickElsewhereDirective } from './click-elsewhere.directive';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import { MatProgressBarModule } from '@angular/material';
     SearchFieldComponent,
     SearchBtnComponent,
     SearchResultsComponent,
-    SearchResultsItemComponent
+    SearchResultsItemComponent,
+    ClickElsewhereDirective
   ],
   exports: [
     UserListComponent

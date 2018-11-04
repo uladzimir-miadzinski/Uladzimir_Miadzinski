@@ -1,5 +1,4 @@
-import { Component, Input, OnInit} from '@angular/core';
-import { DropdownUserService } from '../../../dropdown-user.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { User } from '../../../user-service.interface';
 
 @Component({
@@ -9,9 +8,9 @@ import { User } from '../../../user-service.interface';
 })
 export class SearchResultsItemComponent implements OnInit {
   @Input() user!: User;
+  @Output() selectedUserChange: EventEmitter<User> = new EventEmitter<User>();
 
   constructor(
-    private dropdownUserService: DropdownUserService
   ) {
   }
 
@@ -19,7 +18,6 @@ export class SearchResultsItemComponent implements OnInit {
   }
 
   changeSelectedUser() {
-    this.dropdownUserService.changeUser(this.user);
-    this.dropdownUserService.toggleDropdown();
+    this.selectedUserChange.emit(this.user);
   }
 }

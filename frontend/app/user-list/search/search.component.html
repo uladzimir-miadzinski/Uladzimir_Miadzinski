@@ -1,7 +1,7 @@
 <div class="d-flex flex-column">
   <div class="d-flex flex-row panel-shadow">
-    <app-search-field [(name)]="name" class="d-flex flex-grow-1" (keydown)="searchOnEnter($event)"></app-search-field>
+    <app-search-field class="d-flex flex-grow-1" (keydown)="searchOnEnter($event)"></app-search-field>
     <app-search-btn class="d-flex align-self-stretch" (click)="search()"></app-search-btn>
   </div>
-  <app-search-results [users$]="users$"></app-search-results>
+  <app-search-results [users]="filteredUsers" (selectedUserChange)="onSelectedUserChange($event)"></app-search-results>
 </div>

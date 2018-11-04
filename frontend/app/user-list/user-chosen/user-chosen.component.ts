@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { DropdownUserService } from '../dropdown-user.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { User } from '../user-service.interface';
 
 @Component({
@@ -9,18 +8,18 @@ import { User } from '../user-service.interface';
 })
 export class UserChosenComponent implements OnInit {
   @Input() selectedUser?: User;
+  @Input() isDropdownHidden = true;
+  @Output() isDropdownHiddenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
-    private dropdownUserService: DropdownUserService
   ) {
   }
 
   ngOnInit() {
-    this.dropdownUserService.getCurrentUser$.subscribe((user: User | undefined) => this.selectedUser = user);
   }
 
   openList() {
-    this.dropdownUserService.toggleDropdown();
+    this.isDropdownHiddenChange.emit(!this.isDropdownHidden);
   }
 
 }

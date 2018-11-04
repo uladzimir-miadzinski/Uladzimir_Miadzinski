@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { DropdownUserService } from '../dropdown-user.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 
 @Component({
@@ -8,16 +7,17 @@ import { DropdownUserService } from '../dropdown-user.service';
   styleUrls: ['./chevron.component.scss']
 })
 export class ChevronComponent implements OnInit {
+  @Input() isDropdownHidden = true;
+  @Output() isDropdownHiddenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
-    private dropdownUserService: DropdownUserService
   ) {
   }
 
   ngOnInit() {
   }
 
-  toggleOptions() {
-    this.dropdownUserService.toggleDropdown();
+  toggleDropdown() {
+    this.isDropdownHiddenChange.emit(!this.isDropdownHidden);
   }
 }

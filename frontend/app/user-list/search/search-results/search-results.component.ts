@@ -1,6 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { User } from '../../user-service.interface';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-search-results',
@@ -8,13 +7,18 @@ import { Observable } from 'rxjs';
   styleUrls: ['./search-results.component.scss']
 })
 export class SearchResultsComponent implements OnInit {
-  @Input() users$?: Observable<User[]>;
+  @Input() users?: User[];
+  @Output() selectedUserChange: EventEmitter<User> = new EventEmitter<User>();
 
   constructor(
   ) {
   }
 
   ngOnInit() {
+  }
+
+  onSelectedUserChange(user: User) {
+    this.selectedUserChange.emit(user);
   }
 
 }

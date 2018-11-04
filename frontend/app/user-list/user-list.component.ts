@@ -1,29 +1,32 @@
-import { Component, OnInit } from '@angular/core';
-import { DropdownUserService } from './dropdown-user.service';
-import { Observable } from 'rxjs';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { User } from './user-service.interface';
 
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss']
 })
-export class UserListComponent implements OnInit {
-  isDropdownHidden$!: Observable<boolean>;
+export class UserListComponent implements OnInit, OnChanges {
   isDropdownHidden = true;
+  selectedUser?: User;
 
   constructor(
-    public dropdownUserService: DropdownUserService
   ) {
   }
 
   ngOnInit() {
-    this.isDropdownHidden$ = this.dropdownUserService.isDropdownHidden$;
-    this.isDropdownHidden$.subscribe((isHidden: boolean) => {
-      this.isDropdownHidden = isHidden;
-    });
   }
 
-  getCurrentUser() {
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
+  }
 
+  closeDropdown() {
+    this.isDropdownHidden = true;
+  }
+
+  onSelectedUserChange(user: User) {
+    this.selectedUser = user;
+    this.closeDropdown();
   }
 }

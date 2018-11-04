@@ -72,12 +72,12 @@ export class UserAdminEditorComponent implements OnInit, OnChanges {
 
   ngOnInit() {
 
-    this.selectedUser$.subscribe((user: User) => {
+   /* this.selectedUser$.subscribe((user: User) => {
       this.selectedUser = user;
       if (typeof user !== 'undefined') {
         this.updateFormValues(user);
       }
-    });
+    });*/
 
     this.name.valueChanges
       .subscribe((inputName => {

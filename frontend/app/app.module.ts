@@ -38,7 +38,6 @@ import { HttpLoaderFactory } from './http-loader.factory';
 import { StoreModule } from '@ngrx/store';
 import { dataReducers, sessionReducers } from './redux/reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { DropdownUserService } from './user-list/dropdown-user.service';
 import { EffectsModule } from '@ngrx/effects';
 import { UserEffects } from './redux/effects/user/user.effects';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
@@ -106,7 +105,6 @@ import { SharedService } from './shared.service';
     AuthService,
     UserService,
     SharedService,
-    DropdownUserService,
     AuthGuard
   ],
   bootstrap: [AppComponent]

@@ -1,3 +1,5 @@
 <div class="search-results-container panel-shadow">
-  <app-search-results-item *ngFor="let user of users$ | async;" [user]="user"></app-search-results-item>
+  <app-search-results-item *ngFor="let user of users"
+                           [user]="user"
+                           (selectedUserChange)="onSelectedUserChange($event)"></app-search-results-item>
 </div>
