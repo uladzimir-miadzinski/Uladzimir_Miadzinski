@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@angular-builders/jest@7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@angular-builders/jest/-/jest-7.0.0.tgz#7d927a57dfa3b9813da0d1d02f58e588a006c7ad"
+  dependencies:
+    jest-preset-angular "^6.0.0"
+    lodash "^4.17.10"
+
 "@angular-devkit/architect@0.8.3":
   version "0.8.3"
   resolved "https://registry.yarnpkg.com/@angular-devkit/architect/-/architect-0.8.3.tgz#320c7de2e2e7b984a0e4be51dc60dfe12d4c973e"
@@ -4144,7 +4151,7 @@ jest-mock@^23.2.0:
   version "23.2.0"
   resolved "https://registry.yarnpkg.com/jest-mock/-/jest-mock-23.2.0.tgz#ad1c60f29e8719d47c26e1138098b6d18b261134"
 
-jest-preset-angular@6.0.1:
+jest-preset-angular@6.0.1, jest-preset-angular@^6.0.0:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/jest-preset-angular/-/jest-preset-angular-6.0.1.tgz#40a6c16ca5bbf3ac83a8594ac190643d7c6e7a07"
   dependencies:
