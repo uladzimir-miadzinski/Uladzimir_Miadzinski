@@ -8,9 +8,13 @@
     "build": "ng build --prod --build-optimizer && yarn build:backend",
     "build:backend": "tsc -p \"backend/tsconfig.json\" && copyfiles -u 1 backend/server.crt dist/ && copyfiles -u 1 backend/server.csr dist/ && copyfiles -u 1 backend/server.key dist/ && copyfiles -u 1 backend/users.json dist/ && copyfiles -u 1 backend/server.pub dist/",
     "ng": "ng",
-    "test": "ng test",
+    "test": "jest",
     "lint": "ng lint",
     "e2e": "ng e2e"
+  },
+  "jest": {
+    "preset": "jest-preset-angular",
+    "setupTestFrameworkScriptFile": "<rootDir>/frontend/jest.conf.ts"
   },
   "private": true,
   "dependencies": {
@@ -73,6 +77,8 @@
     "copyfiles": "2.1.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
+    "jest": "23.6.0",
+    "jest-preset-angular": "6.0.1",
     "karma": "~3.0.0",
     "karma-chrome-launcher": "~2.2.0",
     "karma-coverage-istanbul-reporter": "~2.0.1",
