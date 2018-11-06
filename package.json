@@ -14,7 +14,13 @@
   },
   "jest": {
     "preset": "jest-preset-angular",
-    "setupTestFrameworkScriptFile": "<rootDir>/frontend/jest.conf.ts"
+    "setupTestFrameworkScriptFile": "<rootDir>/frontend/jest.conf.ts",
+    "globals": {
+      "ts-jest": {
+        "tsConfigFile": "frontend/tsconfig.spec.json"
+      },
+      "__TRANSFORM_HTML__": true
+    }
   },
   "private": true,
   "dependencies": {
@@ -65,8 +71,9 @@
     "@types/cors": "2.8.4",
     "@types/express": "4.16.0",
     "@types/express-jwt": "0.0.40",
-    "@types/jasmine": "~2.8.8",
+    "@types/jasmine": "2.8.11",
     "@types/jasminewd2": "~2.0.3",
+    "@types/jest": "23.3.9",
     "@types/jsonwebtoken": "7.2.8",
     "@types/md5": "2.1.33",
     "@types/node": "~8.9.4",
