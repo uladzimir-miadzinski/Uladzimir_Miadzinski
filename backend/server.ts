@@ -225,7 +225,11 @@ function findNameInUsername(name: string, username: string) {
 }
 
 function getActiveUsers(req: express.Request, res: express.Response) {
-  res.status(STATUS.OK).json(fetchActiveUsers(req.query));
+  const { jwtoken } = req.cookies;
+  const user: User | null = getUserFromJwt(jwtoken);
+  return user !== null && user.role !== 'admin' || user === null
+     ? res.status(STATUS.OK).json([])
+     : res.status(STATUS.OK).json(fetchActiveUsers(req.query));
 }
 
 function getUserById(req: express.Request, res: express.Response) {

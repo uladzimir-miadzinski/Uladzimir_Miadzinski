@@ -162,7 +162,7 @@ export class UserEffects {
   assignUserPassword$: Observable<UsersActions> = this.actions$.pipe(
     ofType(ASSIGN_USER_PASSWORD),
     mergeMap((action: AssignUserPassword) => {
-      const {name, password} = action.payload as UserCredentials;
+      const { name, password } = action.payload as UserCredentials;
       return this.authService.assignNewPassword(name, password)
         .pipe(
           map(() => {
