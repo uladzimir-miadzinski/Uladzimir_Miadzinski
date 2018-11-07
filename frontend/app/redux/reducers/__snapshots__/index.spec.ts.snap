@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login current user with name and password should start loading 1`] = `
+Object {
+  "data": Object {
+    "name": "Medinsky",
+    "password": "1",
+  },
+  "loaded": false,
+  "loading": true,
+}
+`;
