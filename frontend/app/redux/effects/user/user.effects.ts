@@ -32,7 +32,11 @@ import {
   DELETE_USER,
   DeleteUser,
   DeleteUserSuccess,
-  DeleteUserFail, ASSIGN_USER_PASSWORD, AssignUserPassword, AssignUserPasswordSuccess, AssignUserPasswordFail,
+  DeleteUserFail,
+  ASSIGN_USER_PASSWORD,
+  AssignUserPassword,
+  AssignUserPasswordSuccess,
+  AssignUserPasswordFail, ResetDataState,
 } from '../../actions/user/user.actions';
 import { catchError, map, mapTo, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { UserService } from '../../../services/user.service';
@@ -221,7 +225,10 @@ export class UserEffects {
     mergeMap(() => {
       return this.authService.logout()
         .pipe(
-          map(() => new LogoutUserSuccess()),
+          switchMap(() => [
+            new ResetDataState(),
+            new LogoutUserSuccess()
+          ]),
           catchError((error: HttpErrorResponse) => of(new LogoutUserFail(error.message)))
         );
     })

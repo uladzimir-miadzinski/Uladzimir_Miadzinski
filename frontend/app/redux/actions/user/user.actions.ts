@@ -28,6 +28,7 @@ export const UPDATE_CURRENT_USER_SUCCESS = '[User] Update Current User Success';
 export const LOAD_CURRENT_USER = '[User] Load Current User';
 export const LOAD_CURRENT_USER_FAIL = '[User] Load Current User Fail';
 export const LOAD_CURRENT_USER_SUCCESS = '[User] Load Current User Success';
+export const RESET_DATA_STATE = '[User] Reset Data State';
 
 export class LoadUsers implements Action {
   readonly type = LOAD_USERS;
@@ -204,8 +205,12 @@ export class LoadCurrentUserSuccess implements Action {
   }
 }
 
+export class ResetDataState implements Action {
+  readonly type = RESET_DATA_STATE;
+}
+
 export type UsersActions =
-  LoadUsers | LoadUsersFail | LoadUsersSuccess |
+  ResetDataState | LoadUsers | LoadUsersFail | LoadUsersSuccess |
   CreateUser | CreateUserFail | CreateUserSuccess |
   LoadCurrentUser | LoadCurrentUserFail | LoadCurrentUserSuccess |
   LoginUser | LoginUserFail | LoginUserSuccess |

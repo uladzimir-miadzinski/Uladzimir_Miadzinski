@@ -3,7 +3,7 @@ import {
   CREATE_USER, CREATE_USER_FAIL, CREATE_USER_SUCCESS, DELETE_USER, DELETE_USER_FAIL, DELETE_USER_SUCCESS,
   LOAD_USERS,
   LOAD_USERS_FAIL,
-  LOAD_USERS_SUCCESS,
+  LOAD_USERS_SUCCESS, RESET_DATA_STATE,
   UPDATE_USER, UPDATE_USER_FAIL, UPDATE_USER_SUCCESS,
   UsersActions
 } from '../../actions/user/user.actions';
@@ -25,6 +25,14 @@ export const initialState: UsersState = {
 export function userReducer(state: UsersState = initialState, action: UsersActions): UsersState {
 
   switch (action.type) {
+
+    case RESET_DATA_STATE: {
+      return Map(state)
+        .set('data', [])
+        .set('loading', false)
+        .set('loaded', false)
+        .toJS();
+    }
 
     case LOAD_USERS: {
       return Map(state)
