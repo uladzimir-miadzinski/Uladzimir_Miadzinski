@@ -40,12 +40,9 @@ export class AuthService {
 
   getCurrentUser() {
     return this.http.get<User>(`${this.apiUrl}/current-user`).pipe(
-      map((user: User) => {
-        return user;
-      }),
-      catchError(() => {
-        return of(null);
-      }));
+      map((user: User) => user),
+      catchError(() => of(null))
+    );
   }
 
   getUserByUsername(username: string) {

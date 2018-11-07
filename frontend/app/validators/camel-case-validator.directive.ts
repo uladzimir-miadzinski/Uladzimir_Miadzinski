@@ -16,9 +16,7 @@ export function camelCaseValidator(): AsyncValidatorFn {
           const words: string[] = value.split(' ');
           const camelcaseWords: string[] = words.map(firstUpper);
 
-          const found = words.find((word: string, index: number) => {
-            return word !== camelcaseWords[index];
-          });
+          const found = words.find((word: string, index: number) => word !== camelcaseWords[index]);
 
           if (typeof found !== 'undefined') {
             resolve({

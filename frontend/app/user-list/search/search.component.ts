@@ -49,9 +49,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
       return true;
     } else if (typeof user !== 'undefined' && typeof user.name !== 'undefined') {
       const words = user.name.split(' ');
-      return words.find((word: string) => {
-        return word.toLowerCase().startsWith(nameToFind.toLowerCase());
-      }) !== undefined;
+      return words.find((word: string) => word.toLowerCase().startsWith(nameToFind.toLowerCase())) !== undefined;
     } else {
       return false;
     }

@@ -18,12 +18,8 @@ export class AuthGuard implements CanActivate {
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     return this.sharedService.currentUser$
       .pipe(
-        map((user: User) => {
-          return !isEmptyObject(user) && typeof user['id'] !== 'undefined' ? this.allowRoute() : this.throwOut();
-        }),
-        catchError(() => {
-          return this.throwOut();
-        })
+        map((user: User) => !isEmptyObject(user) && typeof user['id'] !== 'undefined' ? this.allowRoute() : this.throwOut()),
+        catchError(() => this.throwOut())
       );
   }
 

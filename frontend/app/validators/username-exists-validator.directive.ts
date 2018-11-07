@@ -7,13 +7,11 @@ import { ValidationError } from './validation-error';
 export function usernameExistsValidator(authService: AuthService): AsyncValidatorFn {
 
   return (control: AbstractControl): Promise<ValidationError | null> | Observable<ValidationError | null> => {
-    const {value} = control;
+    const { value } = control;
     return authService.getUserByUsername(value).pipe(
-      map(userExists => {
-        return userExists ? null : {
-          current: value,
-          message: 'validators.usernameNotFound'
-        };
+      map(userExists => userExists ? null : {
+        current: value,
+        message: 'validators.usernameNotFound'
       })
     );
   };
