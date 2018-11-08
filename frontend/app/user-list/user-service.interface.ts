@@ -1,9 +1,3 @@
-import { Observable } from 'rxjs';
-
-export interface UserService {
-  getUsers(): Observable<User[]>;
-}
-
 export interface User {
   id?: number;
   age?: number;

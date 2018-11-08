@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { HttpClient } from '@angular/common/http';
-import { User, UserService as UserListService } from '../user-list/user-service.interface';
+import { User } from '../user-list/user-service.interface';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService implements UserListService {
+export class UserService {
   apiUrl = 'https://localhost:3000';
   public user!: User | null;
 
@@ -41,5 +41,5 @@ export class UserService implements UserListService {
   getUsers() {
     return this.http.get<User[]>(`${this.apiUrl}/users`);
   }
-  
+
 }
