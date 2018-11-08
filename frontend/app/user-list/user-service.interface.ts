@@ -1,8 +1,7 @@
 import { Observable } from 'rxjs';
 
 export interface UserService {
-  getUsers(): User[];
-  getUsersByName(name: string): Observable<User[]>;
+  getUsers(): Observable<User[]>;
 }
 
 export interface User {
