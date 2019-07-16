@@ -51,16 +51,16 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class UserEffects {
-
+  
   constructor(
-    private actions$: Actions,
+    private actions$: Actions<UsersActions>,
     private userService: UserService,
     private authService: AuthService,
     private dialog: MatDialog,
     private router: Router
   ) {
   }
-
+  
   @Effect()
   loadUsers$: Observable<UsersActions> = this.actions$.pipe(
     ofType(LOAD_USERS),
@@ -70,23 +70,24 @@ export class UserEffects {
       )
     )
   );
-
+  
   @Effect()
   loadCurrentUser$: Observable<UsersActions> = this.actions$.pipe(
     ofType(LOAD_CURRENT_USER),
-    switchMap(() => this.userService.getCurrentUser().pipe(
-      map((user: User) => new LoadCurrentUserSuccess(user)),
-      catchError((error: string) => of(new LoadCurrentUserFail(error)))
+    switchMap(() => this.userService.getCurrentUser()
+      .pipe(
+        map((user: User | null) => user ? new LoadCurrentUserSuccess(user) : new LoadCurrentUserFail('Cant get user')),
+        catchError((error: string) => of(new LoadCurrentUserFail(error)))
       )
     )
   );
-
+  
   @Effect()
   createUser$: Observable<UsersActions> = this.actions$.pipe(
-    ofType(CREATE_USER),
-    mergeMap((action: CreateUser) => this.userService.createUser(action.payload as User)
+    ofType<CreateUser>(CREATE_USER),
+    mergeMap((action: CreateUser) => this.userService.createUser(action.payload)
       .pipe(
-        map((user: User) => new CreateUserSuccess(user)),
+        map((user: User | null) => new CreateUserSuccess(user)),
         tap(() => this.dialogSuccess()),
         mapTo(new LoadUsers()),
         catchError((error: string) => {
@@ -96,48 +97,50 @@ export class UserEffects {
       )
     )
   );
-
+  
   @Effect()
   updateCurrentUser$: Observable<UsersActions> = this.actions$.pipe(
-    ofType(UPDATE_CURRENT_USER),
-    mergeMap((action: UpdateCurrentUser) => this.userService.updateCurrentUser(action.payload as User).pipe(
-      map((user: User) => new UpdateCurrentUserSuccess(user)),
-      tap(() => this.dialogSuccess()),
-      switchMap(() => [
-        new LoadCurrentUser(),
-        new LoadUsers()
-      ]),
-      catchError((error: string) => {
-        this.dialogError();
-        return of(new UpdateCurrentUserFail(error));
-      })
+    ofType<UpdateCurrentUser>(UPDATE_CURRENT_USER),
+    mergeMap((action: UpdateCurrentUser) => this.userService.updateCurrentUser(action.payload)
+      .pipe(
+        map((user: User) => new UpdateCurrentUserSuccess(user)),
+        tap(() => this.dialogSuccess()),
+        switchMap(() => [
+          new LoadCurrentUser(),
+          new LoadUsers()
+        ]),
+        catchError((error: string) => {
+          this.dialogError();
+          return of(new UpdateCurrentUserFail(error));
+        })
       )
     )
   );
-
+  
   @Effect()
   updateUser$: Observable<UsersActions> = this.actions$.pipe(
-    ofType(UPDATE_USER),
-    mergeMap((action: UpdateCurrentUser) => this.userService.updateUser(action.payload as User).pipe(
-      map((user: User) => new UpdateUserSuccess(user)),
-      tap(() => this.dialogSuccess()),
-      switchMap(() => [
-        new LoadCurrentUser(),
-        new LoadUsers()
-      ]),
-      catchError((error: string) => {
-        this.dialogError();
-        return of(new UpdateUserFail(error));
-      })
+    ofType<UpdateCurrentUser>(UPDATE_USER),
+    mergeMap((action: UpdateCurrentUser) => this.userService.updateUser(action.payload)
+      .pipe(
+        map((user: User) => new UpdateUserSuccess(user)),
+        tap(() => this.dialogSuccess()),
+        switchMap(() => [
+          new LoadCurrentUser(),
+          new LoadUsers()
+        ]),
+        catchError((error: string) => {
+          this.dialogError();
+          return of(new UpdateUserFail(error));
+        })
       )
     )
   );
-
+  
   @Effect()
   assignUserPassword$: Observable<UsersActions> = this.actions$.pipe(
-    ofType(ASSIGN_USER_PASSWORD),
+    ofType<AssignUserPassword>(ASSIGN_USER_PASSWORD),
     mergeMap((action: AssignUserPassword) => {
-      const { name, password } = action.payload as UserCredentials;
+      const {name, password} = action.payload as UserCredentials;
       return this.authService.assignNewPassword(name, password)
         .pipe(
           map(() => new AssignUserPasswordSuccess()),
@@ -149,37 +152,39 @@ export class UserEffects {
         );
     })
   );
-
+  
   @Effect()
   deleteUser$: Observable<UsersActions> = this.actions$.pipe(
-    ofType(DELETE_USER),
-    mergeMap((action: DeleteUser) => this.userService.deleteUser(action.payload as number).pipe(
-      map((user: User) => new DeleteUserSuccess(user)),
-      tap(() => this.dialogSuccess()),
-      switchMap(() => [
-        new LoadCurrentUser(),
-        new LoadUsers()
-      ]),
-      catchError((error: string) => {
-        this.dialogError();
-        return of(new DeleteUserFail(error));
-      })
+    ofType<DeleteUser>(DELETE_USER),
+    mergeMap((action: DeleteUser) => this.userService.deleteUser(action.payload as number)
+      .pipe(
+        map((user: User) => new DeleteUserSuccess(user)),
+        tap(() => this.dialogSuccess()),
+        switchMap(() => [
+          new LoadCurrentUser(),
+          new LoadUsers()
+        ]),
+        catchError((error: string) => {
+          this.dialogError();
+          return of(new DeleteUserFail(error));
+        })
       )
     )
   );
-
+  
   @Effect()
   loginUser$: Observable<UsersActions> = this.actions$.pipe(
-    ofType(LOGIN_USER),
-    mergeMap((action: LoginUser) => this.authService.login(action.payload as UserCredentials).pipe(
-      map((user: User) => new LoginUserSuccess(user)),
-      catchError((error: HttpErrorResponse) => of(
-        new LoginUserFail(error.status === STATUS.UNAUTHORIZED ? STATUS.UNAUTHORIZED : error.message))
-      )
+    ofType<LoginUser>(LOGIN_USER),
+    mergeMap((action: LoginUser) => this.authService.login(action.payload as UserCredentials)
+      .pipe(
+        map((user: User) => new LoginUserSuccess(user)),
+        catchError((error: HttpErrorResponse) => of(
+          new LoginUserFail(error.status === STATUS.UNAUTHORIZED ? STATUS.UNAUTHORIZED : error.message))
+        )
       )
     )
   );
-
+  
   @Effect()
   logoutUser$: Observable<UsersActions> = this.actions$.pipe(
     ofType(LOGOUT_USER),
@@ -193,7 +198,7 @@ export class UserEffects {
       )
     )
   );
-
+  
   dialogSuccess() {
     this.dialog.open(DialogUserSavedComponent, {
       data: {
@@ -201,7 +206,7 @@ export class UserEffects {
       }
     });
   }
-
+  
   dialogError() {
     this.dialog.open(DialogUserSavedComponent, {
       data: {
@@ -209,19 +214,19 @@ export class UserEffects {
       }
     });
   }
-
+  
   dialogAssignPasswordSuccess() {
     const dialogRef = this.dialog.open(DialogPasswordAssignComponent, {
       data: {
         success: true
       }
     });
-
+    
     dialogRef.afterClosed().subscribe(() => {
       this.router.navigate(['login']);
     });
   }
-
+  
   dialogAssignPasswordFail(err: string) {
     this.dialog.open(DialogPasswordAssignComponent, {
       data: {

@@ -25,7 +25,6 @@ export const initialState: UsersState = {
 export function userReducer(state: UsersState = initialState, action: UsersActions): UsersState {
 
   switch (action.type) {
-
     case RESET_DATA_STATE: {
       return Map(state)
         .set('data', [])

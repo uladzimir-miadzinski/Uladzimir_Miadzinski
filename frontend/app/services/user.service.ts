@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../user-list/user-service.interface';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -18,7 +19,7 @@ export class UserService {
     this.getCurrentUser();
   }
 
-  getCurrentUser() {
+  getCurrentUser(): Observable<User | null> {
     return this.authService.getCurrentUser();
   }
 
