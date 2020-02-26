@@ -32,98 +32,98 @@ export const RESET_DATA_STATE = '[User] Reset Data State';
 
 export class LoadUsers implements Action {
   readonly type = LOAD_USERS;
-  
+
   constructor(public payload?: string) {
   }
 }
 
 export class LoadUsersFail implements Action {
   readonly type = LOAD_USERS_FAIL;
-  
+
   constructor(public payload: string = 'LoadUsersFail') {
   }
 }
 
 export class LoadUsersSuccess implements Action {
   readonly type = LOAD_USERS_SUCCESS;
-  
+
   constructor(public payload: User[]) {
   }
 }
 
 export class LoginUser implements Action {
-  type = LOGIN_USER;
-  
+  readonly type = LOGIN_USER;
+
   constructor(public payload: UserCredentials) {
   }
 }
 
 export class LoginUserFail implements Action {
   readonly type = LOGIN_USER_FAIL;
-  
+
   constructor(public payload: string | number) {
   }
 }
 
 export class LoginUserSuccess implements Action {
   readonly type = LOGIN_USER_SUCCESS;
-  
+
   constructor(public payload: User) {
   }
 }
 
 export class LogoutUser implements Action {
   readonly type = LOGOUT_USER;
-  
+
   constructor(public payload?: any) {
   }
 }
 
 export class LogoutUserFail implements Action {
   readonly type = LOGOUT_USER_FAIL;
-  
+
   constructor(public payload: string | number) {
   }
 }
 
 export class LogoutUserSuccess implements Action {
   readonly type = LOGOUT_USER_SUCCESS;
-  
+
   constructor(public payload?: any) {
   }
 }
 
 export class CreateUser implements Action {
   readonly type = CREATE_USER;
-  
+
   constructor(public payload: User) {
   }
 }
 
 export class CreateUserFail implements Action {
   readonly type = CREATE_USER_FAIL;
-  
+
   constructor(public payload: string) {
   }
 }
 
 export class CreateUserSuccess implements Action {
   readonly type = CREATE_USER_SUCCESS;
-  
+
   constructor(public payload: User | null) {
   }
 }
 
 export class UpdateUser implements Action {
   readonly type = UPDATE_USER;
-  
+
   constructor(public payload: User) {
   }
 }
 
 export class UpdateUserFail implements Action {
   readonly type = UPDATE_USER_FAIL;
-  
+
   constructor(public payload: string) {
   }
 }
@@ -131,98 +131,98 @@ export class UpdateUserFail implements Action {
 
 export class AssignUserPassword implements Action {
   readonly type = ASSIGN_USER_PASSWORD;
-  
+
   constructor(public payload: UserCredentials) {
   }
 }
 
 export class AssignUserPasswordFail implements Action {
   readonly type = ASSIGN_USER_PASSWORD_FAIL;
-  
+
   constructor(public payload: string) {
   }
 }
 
 export class AssignUserPasswordSuccess implements Action {
   readonly type = ASSIGN_USER_PASSWORD_SUCCESS;
-  
+
   constructor(public payload?: User) {
   }
 }
 
 export class UpdateUserSuccess implements Action {
   readonly type = UPDATE_USER_SUCCESS;
-  
+
   constructor(public payload: User) {
   }
 }
 
 export class DeleteUser implements Action {
   readonly type = DELETE_USER;
-  
+
   constructor(public payload: number | undefined) {
   }
 }
 
 export class DeleteUserFail implements Action {
   readonly type = DELETE_USER_FAIL;
-  
+
   constructor(public payload: string) {
   }
 }
 
 export class DeleteUserSuccess implements Action {
   readonly type = DELETE_USER_SUCCESS;
-  
+
   constructor(public payload: User) {
   }
 }
 
 export class UpdateCurrentUser implements Action {
   readonly type = UPDATE_CURRENT_USER;
-  
+
   constructor(public payload: User) {
   }
 }
 
 export class UpdateCurrentUserFail implements Action {
   readonly type = UPDATE_CURRENT_USER_FAIL;
-  
+
   constructor(public payload: string) {
   }
 }
 
 export class UpdateCurrentUserSuccess implements Action {
   readonly type = UPDATE_CURRENT_USER_SUCCESS;
-  
+
   constructor(public payload: User) {
   }
 }
 
 export class LoadCurrentUser implements Action {
   readonly type = LOAD_CURRENT_USER;
-  
+
   constructor(public payload?: any) {
   }
 }
 
 export class LoadCurrentUserFail implements Action {
   readonly type = LOAD_CURRENT_USER_FAIL;
-  
+
   constructor(public payload: string) {
   }
 }
 
 export class LoadCurrentUserSuccess implements Action {
   readonly type = LOAD_CURRENT_USER_SUCCESS;
-  
+
   constructor(public payload: User) {
   }
 }
 
 export class ResetDataState implements Action {
   readonly type = RESET_DATA_STATE;
-  
+
   constructor(public payload?: any) {
   }
 }

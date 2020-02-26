@@ -7,8 +7,8 @@ import {
   UPDATE_USER, UPDATE_USER_FAIL, UPDATE_USER_SUCCESS,
   UsersActions
 } from '../../actions/user/user.actions';
-import { User } from '../../../user-list/user-service.interface';
-import { Map } from 'immutable';
+import {User} from '../../../user-list/user-service.interface';
+import {Map} from 'immutable';
 
 export interface UsersState {
   data: User[];
@@ -25,6 +25,7 @@ export const initialState: UsersState = {
 export function userReducer(state: UsersState = initialState, action: UsersActions): UsersState {
 
   switch (action.type) {
+
     case RESET_DATA_STATE: {
       return Map(state)
         .set('data', [])

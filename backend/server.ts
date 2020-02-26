@@ -2,12 +2,8 @@ import * as express from 'express';
 import * as compression from 'compression';
 import * as jwt from 'jsonwebtoken';
 import * as md5 from 'md5';
-import { createServer } from 'spdy';
-import { json, urlencoded } from 'body-parser';
-import { readFile } from 'fs';
-import { promisify } from 'util';
+import {json, urlencoded} from 'body-parser';
 import * as cors from 'cors';
-import * as moment from 'moment';
 // @ts-ignore
 import * as cookieParser from 'cookie-parser';
 // @ts-ignore
@@ -51,7 +47,7 @@ const urlencodedOptions = {
   extended: true
 };
 const corsOptions = {
-  origin: 'https://localhost:4200',
+  origin: 'http://localhost:4200',
   credentials: true
 };
 
@@ -62,26 +58,9 @@ app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(loadingDelay);
 
-const key: Promise<string> = readFileAsync(`${__dirname}/server.key`);
-const cert: Promise<string> = readFileAsync(`${__dirname}/server.crt`);
-
-Promise.all([key, cert])
-  .then(contents => {
-    const [key, cert] = contents;
-    return {
-      key,
-      cert
-    };
-  })
-  .then(serverOptions => {
-    return createServer(serverOptions, app).listen(PORT, (err: string) => {
-      if (err) {
-        throw new Error(err);
-      }
-      console.log(`Server started and listening on port ${PORT}, please, use https://localhost:${PORT} for requests!`);
-    });
-  })
-  .catch(err => console.error(err));
+app.listen(PORT, function () {
+  console.log('Example app listening on port 3000!');
+});
 
 app.get('/users', getActiveUsers);
 app.get('/users/:id', getUserById);
@@ -103,11 +82,11 @@ function loadingDelay(req: express.Request, res: express.Response, next: express
 }
 
 function updateCurrentUser(req: express.Request, res: express.Response) {
-  const { jwtoken } = req.cookies;
+  const {jwtoken} = req.cookies;
   const user = getUserFromJwt(jwtoken);
 
   if (user !== null) {
-    const updatedUser: User | boolean = updateUser(Object.assign({}, { id: user.id }, req.body));
+    const updatedUser: User | boolean = updateUser(Object.assign({}, {id: user.id}, req.body));
 
     if (updatedUser) {
       res.status(STATUS.OK);
@@ -131,7 +110,7 @@ function updateUserById(req: express.Request, res: express.Response) {
 }
 
 function deleteUser(req: express.Request, res: express.Response) {
-  const deletedUser: User | boolean = deleteUserById(req.params.id);
+  const deletedUser: User | boolean = deleteUserById(+req.params.id);
   if (deletedUser) {
     res.status(STATUS.OK);
     res.json(deletedUser);
@@ -145,7 +124,7 @@ function addNewUser(req: express.Request, res: express.Response) {
 }
 
 function createUser(params: User) {
-  const { name, age, password, birthday, firstLogin, nextNotify, info, deleted = 0, role = '' } = params;
+  const {name, age, password, birthday, firstLogin, nextNotify, info, deleted = 0, role = ''} = params;
   const id: number = users.length + 1;
 
   const newUser: User = {
@@ -159,22 +138,22 @@ function createUser(params: User) {
 }
 
 function getCurrentUser(req: express.Request, res: express.Response) {
-  const { jwtoken } = req.cookies;
+  const {jwtoken} = req.cookies;
   const user = getUserFromJwt(jwtoken);
   res.status(user !== null && user.deleted !== 1 ? STATUS.OK : STATUS.UNAUTHORIZED).send(user);
 }
 
 function getUserFromJwt(jwtoken: string): User | null {
   if (jwtoken !== 'undefined') {
-    const parsedJwt = parseJwt(jwtoken);
-    return parsedJwt !== null ? findUserById(parsedJwt.sub) : null;
+    const user = parseJwt(jwtoken);
+    return user !== null ? findUserById(user.id) : null;
   } else {
     return null;
   }
 }
 
 function reassignPassword(req: express.Request, res: express.Response) {
-  const { name, password } = req.body;
+  const {name, password} = req.body;
   const user = findUserByName(name);
   if (user !== null) {
     const updatedUser: User | boolean = assignPassword(user, password);
@@ -185,23 +164,23 @@ function reassignPassword(req: express.Request, res: express.Response) {
 }
 
 function assignPassword(user: User, password: string): User | boolean {
-  return updateUser({ ...user, password: md5(password) });
+  return updateUser({...user, password: md5(password)});
 }
 
 function checkIfUserExists(req: express.Request, res: express.Response) {
-  const { query } = req;
+  const {query} = req;
   query.exact = '1';
   res.status(STATUS.OK).send(fetchActiveUsers(query).length > 0);
 }
 
 function fetchActiveUsers(query: UserQuery) {
-  const { exact } = query;
+  const {exact} = query;
 
   return exact === '1' ? usersExactFiltering(query) : usersFiltering(query);
 }
 
 function usersExactFiltering(query: UserQuery) {
-  const { name } = query;
+  const {name} = query;
   return users.filter((user: User) => {
     const filterByName = (typeof name !== 'undefined') ? user.name === name : true;
     return user.deleted === 0 && filterByName;
@@ -209,7 +188,7 @@ function usersExactFiltering(query: UserQuery) {
 }
 
 function usersFiltering(query: UserQuery) {
-  const { name } = query;
+  const {name} = query;
   return users.filter((user: User) => {
     const filterByName = (typeof name !== 'undefined') ? findNameInUsername(name, user.name) : true;
     return user.deleted === 0 && filterByName;
@@ -225,11 +204,12 @@ function findNameInUsername(name: string, username: string) {
 }
 
 function getActiveUsers(req: express.Request, res: express.Response) {
-  const { jwtoken } = req.cookies;
+  const {jwtoken} = req.cookies;
   const user: User | null = getUserFromJwt(jwtoken);
+
   return user !== null && user.role !== 'admin' || user === null
-     ? res.status(STATUS.OK).json([])
-     : res.status(STATUS.OK).json(fetchActiveUsers(req.query));
+    ? res.status(STATUS.OK).json([])
+    : res.status(STATUS.OK).json(fetchActiveUsers(req.query));
 }
 
 function getUserById(req: express.Request, res: express.Response) {
@@ -242,20 +222,11 @@ function getUserById(req: express.Request, res: express.Response) {
 }
 
 function login(req: express.Request, res: express.Response) {
-  const { name, password } = req.body;
+  const {name, password} = req.body;
   const user: User | false = validateUserNamePassword(name, password);
   if (user) {
-    key.then((RSA_PRIVATE_KEY: string) => {
-      const expiresIn = '60m';
-      const token = jwt.sign({}, RSA_PRIVATE_KEY, {
-        algorithm: 'RS256',
-        expiresIn,
-        subject: user.id.toString()
-      });
-      res.status(STATUS.OK).cookie('jwtoken', token, { httpOnly: true, secure: true }).send(user);
-    }).catch(err => {
-      res.send(err);
-    });
+    const token = jwt.sign(user, 'anything');
+    res.status(STATUS.OK).cookie('jwtoken', token, {httpOnly: true}).send(user);
   } else {
     res.status(STATUS.UNAUTHORIZED).send();
   }
@@ -266,7 +237,7 @@ function logout(req: express.Request, res: express.Response) {
 }
 
 function loginCheck(req: express.Request, res: express.Response) {
-  const { jwtoken } = req.cookies;
+  const {jwtoken} = req.cookies;
   if (typeof jwtoken !== 'undefined') {
     const status = getAuthorizeStatusCode(parseJwt(jwtoken));
     res.status(status).send();
@@ -275,16 +246,12 @@ function loginCheck(req: express.Request, res: express.Response) {
   }
 }
 
-function parseJwt(jwtoken: string): Jwt | null {
-  return jwt.decode(jwtoken) as Jwt;
+function parseJwt(jwtoken: string): User | null {
+  return jwt.decode(jwtoken) as User;
 }
 
-function getAuthorizeStatusCode(jwtoken: Jwt | null) {
-  return jwtoken === null || jwtIsExpired(jwtoken) || findActiveUserById(jwtoken.sub) === null ? STATUS.UNAUTHORIZED : STATUS.OK;
-}
-
-function jwtIsExpired(jwtoken: Jwt) {
-  return moment.unix(jwtoken.exp).isBefore(moment());
+function getAuthorizeStatusCode(user: User | null) {
+  return user === null || findActiveUserById(user.id) === null ? STATUS.UNAUTHORIZED : STATUS.OK;
 }
 
 function validateUserNamePassword(name: string, password: string): User | false {
@@ -326,7 +293,7 @@ function deleteUserById(id: number): User | boolean {
 }
 
 function updateUser(params: User): User | boolean {
-  const { id, name, age, password, birthday, firstLogin, nextNotify, info, deleted = 0, role } = params;
+  const {id, name, age, password, birthday, firstLogin, nextNotify, info, deleted = 0, role} = params;
   const index = findIndexByUserId(id);
   if (index >= 0) {
     users[index].name = name;
@@ -343,14 +310,5 @@ function updateUser(params: User): User | boolean {
     return users[index];
   } else {
     return false;
-  }
-}
-
-async function readFileAsync(filepath: string): Promise<string> {
-  try {
-    return await promisify(readFile)(filepath, 'utf8');
-  } catch (err) {
-    console.error(err);
-    return err;
   }
 }

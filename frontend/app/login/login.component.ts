@@ -52,11 +52,13 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onSubmit() {
     const form = this.loginForm.value;
+
     if (form.name && form.password) {
       const userCredentials: UserCredentials = {
         name: form.name,
         password: form.password
       };
+
       this.sessionStore.dispatch(new LoginUser(userCredentials));
     }
   }

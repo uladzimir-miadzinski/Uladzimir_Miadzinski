@@ -10,8 +10,8 @@ import {
   LOGOUT_USER_SUCCESS, UPDATE_CURRENT_USER, UPDATE_CURRENT_USER_FAIL, UPDATE_CURRENT_USER_SUCCESS,
   UsersActions
 } from '../../actions/user/user.actions';
-import { User } from '../../../user-list/user-service.interface';
-import { Map } from 'immutable';
+import {User} from '../../../user-list/user-service.interface';
+import {Map} from 'immutable';
 
 export interface CurrentUserState {
   data: User;
@@ -44,7 +44,6 @@ export function currentUserReducer(state: CurrentUserState = initialState, actio
         .set('loaded', false)
         .toJS();
     }
-
 
     case LOGIN_USER_SUCCESS: {
       return Map(state)

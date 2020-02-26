@@ -3,13 +3,13 @@ import { AuthService } from './auth.service';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../user-list/user-service.interface';
 import { Observable } from 'rxjs';
-
+import {config} from '../app.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  apiUrl = 'https://localhost:3000';
+  apiUrl = config.serverUrl;
   public user!: User | null;
 
   constructor(
