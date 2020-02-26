@@ -1,29 +1,26 @@
-Nodejs API [https://localhost:3000/users](https://localhost:3000/users)
+Demo: https://youtu.be/4ucRGlT6Zhs
 
-Angular Frontend [https://localhost:4200](https://localhost:4200)
+Nodejs API [http://localhost:3000/users](https://localhost:3000/users)
+
+Angular Frontend [http://localhost:4200](https://localhost:4200)
 ##
-Keywords: `http2`, `https`, `angular6`, `express`
+Keywords: `http`, `angular6`, `express`
 ##
 How to run project?
 
-First install dependencies (you should have `yarn` installed): 
-- `yarn install`
+First install dependencies (you should have `npm` installed): 
+- `npm install`
 
 Type in terminal or cmd: 
-- `yarn build`
-- `yarn start`
+- `npm build`
+- `npm start`
 
 or 
-- `yarn build:backend`
-- `yarn start:backend`
-- `yarn build:frontend`
-- `yarn start:frontend`
+- `npm run build:backend`
+- `npm run start:backend`
+- `npm run build:frontend`
+- `npm run start:frontend`
 
-##
-Possible errors:
-- ERR_CERT_AUTHORITY_INVALID: 
-  - you should apply both certificates on `:3000` and `:4200` (just go to this routes and get certs)
-  - if certs does not shows to you, rebuild backend (`yarn build:backend`)
 ##
 Availible routes:
 
@@ -54,7 +51,7 @@ Conditions:
 - all users must be located in users.json file as array, and we will never modify it programmatically with fields like:
   - id, name, password, date of birth, date of first login, date of next notification, information.
 - all dates have to be in ISO strings
-- use `https` for requests, example: `https://localhost:3000/users`
+- use `http` for requests, example: `http://localhost:3000/users`
 
 ##
 for any questions - skype: `medinky_skype`
@@ -86,3 +83,10 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+
+---- 
+
+commit a047304a2126228a3d5bad5a49664dae61cf05ff - NodeJS 10, http2 + spdy + jwt with RSA
+
+commit cc7f4efed675be246027b30118eace9ec0e307f4 - NodeJS 12, http + jwt with HS256
